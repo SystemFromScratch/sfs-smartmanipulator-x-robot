@@ -1,11 +1,14 @@
-# Development environment
+# Firmware development environment
 
-The repository uses two separate environments:
+This page describes the controller firmware repository
+(SmartManipulator-X-Controller). The Robot PC repository has its own
+[development page](../development.md). The firmware repository uses separate
+environments:
 
 | Environment | Runs where | Contains |
 | --- | --- | --- |
 | **Firmware** | Docker image (Dev Container, Compose, or CI) | Zephyr, west, Zephyr SDK with `arm-zephyr-eabi`, CMake, Ninja, ccache, and the DynamixelSDK host library |
-| **Host tools** | Repository `.venv` on Windows or Linux | Python dependencies of `tools/dxl_test_gui` and of the documentation build (`requirements.txt`) |
+| **Host tools** | Repository `.venv` on Windows or Linux | Python dependencies of `tools/dxl_test_gui` (`requirements.txt`) |
 | **FPGA / hardware** | Host only | Microchip Libero SoC and licenses: MSS, clocks, fabric, pins, programming |
 
 Libero and Microchip licenses are never installed in the image or committed to
@@ -23,19 +26,15 @@ the repository.
 │   ├── tests/protocol2_test.c          host unit tests for the codec
 │   ├── prj.conf, prj_sim.conf, Kconfig, CMakeLists.txt
 ├── tools/dxl_test_gui/                 Protocol 2.0 motor tester (Python/Tkinter)
-├── docs/                               this documentation (Markdown, built with MkDocs)
-├── tools/docs/                         PDF build script, cover page, MkDocs hooks
-├── mkdocs.yml                          documentation site and PDF configuration
-├── .agents/skills/                     engineering rules for coding agents
 ├── .devcontainer/devcontainer.json     Dev Container (uses ../Dockerfile)
 ├── .vscode/                            tasks, workspace menu scripts, settings
 ├── Dockerfile, compose.yaml            firmware build image
 ├── west.yml                            Zephyr manifest (pinned revision)
-├── requirements.txt                    host Python dependencies (.venv): GUI and documentation build
+├── requirements.txt                    host Python dependencies (.venv) of the GUI
 └── .gitattributes                      line-ending rules (LF; CRLF for .bat/.ps1)
 ```
 
-Generated directories (`build/`, `.west/`, `.ccache/`, `.venv/`, `site/`, `zephyr/`
+Generated directories (`build/`, `.west/`, `.ccache/`, `.venv/`, `zephyr/`
 checkouts) are ignored and must not be committed.
 
 ## Pinned tool versions
@@ -95,12 +94,10 @@ operating system:
 | | **Run simulation on PC (native_sim)**: builds the simulation for `native_sim/native/64` and runs it; the UART is a `/dev/pts/N` | |
 | Windows host | **Create .venv**: creates `.venv`, upgrades pip, installs `requirements.txt`, checks Tkinter | `.vscode/host-menu.ps1` |
 | | **Run motor tester GUI** / **(simulator)**: creates `.venv` if needed, then starts `tools/dxl_test_gui` | |
-| Linux and Windows | **Build PDF documentation**: sets up the docs tools if needed, then runs `tools/docs/build_pdf.py` (on Linux in a separate `.venv-linux` when `.venv` is a Windows environment) | both scripts |
 
 Individual tasks are available under **Tasks: Run Task**: *Zephyr: Build*,
 *Zephyr: Pristine Build*, *Zephyr: Build (simulation)* (all depend on *Zephyr: Ensure workspace*),
-*Zephyr: Clean*, *Zephyr: Ccache Stats*, *Zephyr: Ccache Clear*, and
-*Docs: Build PDF* (also under **Tasks: Run Build Task**). Keep shell
+*Zephyr: Clean*, *Zephyr: Ccache Stats*, *Zephyr: Ccache Clear*. Keep shell
 logic in the scripts under `.vscode/`, not inline in `tasks.json`.
 
 ## Building
@@ -115,7 +112,7 @@ west build -b native_sim/native/64 -s apps/SmartManipulator_Controller -d build-
 ```
 
 Use a separate build directory per variant. The variants are described in
-[Firmware variants](../firmware/index.md#firmware-variants). Run these
+[Firmware variants](index.md#firmware-variants). Run these
 commands from the workspace root. The root is a west workspace, and `-s`
 selects the application. Make a **pristine build** after changes to
 `prj.conf`, Kconfig, DeviceTree overlays, CMake files, the Zephyr version, or
@@ -156,9 +153,8 @@ the host tests, and a test on the kit.
 ## Host Python environment (.venv)
 
 `requirements.txt` in the repository root lists the host dependencies:
-`pyserial==3.5` for the GUI, and MkDocs, mkdocs-material,
-mkdocs-print-site-plugin, Playwright and pypdf for the documentation. Tkinter
-comes with Python and cannot be installed with pip.
+`pyserial==3.5` for the GUI. Tkinter comes with Python and cannot be installed
+with pip.
 
 ```powershell
 # Windows (PowerShell, repository root)
@@ -211,61 +207,10 @@ This needs `pyserial` in the container Python; the image does not include it
 (`pip install pyserial==3.5`). The motor backends have no
 unit tests; `motor_tmc5160.c` must be tested on hardware.
 
-## Documentation and PDF manual
+## Documentation
 
-The documentation is the Markdown in `docs/`. `mkdocs.yml` turns it into a
-website and into a printable A4 manual with a cover page, a table of contents
-with page numbers, numbered chapters, headings and figures, a running header,
-and page numbers. The `print-site` plugin combines all pages into
-`site/print_page/`, and `tools/docs/build_pdf.py` prints that page with
-Chromium (through Playwright) and adds PDF bookmarks.
-
-The docs tools are in `requirements.txt`, so the repository `.venv` of the
-GUI has them. The **Build PDF documentation** menu action (or the
-*Docs: Build PDF* task) does the steps below. By hand:
-
-```powershell
-# Windows (PowerShell, repository root)
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe tools\docs\build_pdf.py
-```
-
-```sh
-# Linux (repository root)
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m playwright install chromium     # once; Windows uses Edge instead
-.venv/bin/python tools/docs/build_pdf.py
-```
-
-The result is `site/SmartManipulator-X-Controller.pdf`. The cover shows the
-`git describe` version and the build date.
-
-| Command | Result |
-| --- | --- |
-| `python -m mkdocs serve` | Live HTML preview at <http://127.0.0.1:8000>; the combined print view is at `/print_page/` |
-| `python -m mkdocs build` | Static website in `site/` (strict mode: a broken link or missing file fails the build) |
-| `python tools/docs/build_pdf.py` | Runs `mkdocs build`, then writes the PDF |
-| `... build_pdf.py --output manual.pdf` | Writes the PDF elsewhere |
-| `... build_pdf.py --browser msedge` | Uses a specific browser: `chromium` (Playwright), `msedge`, or `chrome`. The default `auto` tries them in that order. |
-| `... build_pdf.py --mermaid-js mermaid.min.js` | Offline build: serves a local Mermaid 11 script instead of loading it from unpkg.com |
-
-Writing rules that keep the PDF correct:
-
-- Start every page with exactly one `# Title`. Chapter and heading numbers are
-  added automatically, so do not number headings by hand.
-- A new page must also be added to `nav` in `mkdocs.yml`, otherwise it is
-  missing from the site and the PDF.
-- An image on a line of its own, `![Caption](images/file.png)`, becomes a
-  numbered figure, and its alt text becomes the caption (`tools/docs/hooks.py`).
-- Link to other pages with relative `.md` paths (`../gui/index.md#starting`);
-  strict mode then checks them.
-- Mermaid diagrams (` ```mermaid `) are rendered in the browser. Tall diagrams
-  are scaled down to fit on one page.
-- Print styling lives in `docs/assets/stylesheets/print.css`, and the cover page
-  in `tools/docs/cover_page.tpl`.
-
-MkDocs is pinned below 2.0, because MkDocs 2.0 removes the plugin system that
-the theme and the PDF build depend on.
+The system documentation, including these firmware pages, is maintained in the
+Robot PC repository. See [Documentation](../development.md#documentation) there.
 
 ## Code style
 

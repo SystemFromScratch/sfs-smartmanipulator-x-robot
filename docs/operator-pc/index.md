@@ -13,9 +13,9 @@ It does not own the SmartFusion2 USB connection, motor hardware, or physical `ro
 
 ## Separate repository
 
-Operator PC implementation is maintained in a separate repository; this repository contains its architecture guidance only. Keep Operator-specific launch files, MoveIt configuration, RViz setup, Gazebo assets, and runtime/container configuration in that repository. The Robot PC Docker image must remain free of Operator PC GUI and simulation dependencies.
+Operator PC implementation is maintained in the separate [sfs-smartmanipulator-x-operator](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator) repository; this documentation contains its architecture guidance only. Keep Operator-specific launch files, MoveIt configuration, RViz setup, Gazebo assets, and runtime/container configuration in that repository. The Robot PC Docker image must remain free of Operator PC GUI and simulation dependencies.
 
-Consume the canonical robot description from `smartmanipulator_x_description` or a future shared-description repository. The current description package is only an empty scaffold, so a validated BCN3D Moveo model must be integrated before configuring planning or simulation. Do not duplicate an independent URDF/Xacro or substitute the OpenMANIPULATOR-X model for Moveo.
+Consume the canonical robot description from `smartmanipulator_x_description` (in the Robot PC repository) or a future shared-description repository. The package is generated from the BCN3D Moveo CAD (see [BCN3D Moveo mechanics](../mechanical/index.md)); its joint limits are placeholders until measured on the arm, so planning limits must be revisited then. Do not duplicate an independent URDF/Xacro or substitute the OpenMANIPULATOR-X model for Moveo.
 
 ## Real robot and simulation
 
@@ -26,7 +26,7 @@ Real robot: MoveIt -> DDS -> Robot PC ros2_control -> verified DYNAMIXEL path ->
 Simulation: MoveIt -> Gazebo ros2_control integration -> simulated Moveo joints
 ```
 
-Use the physical path only after SmartFusion2 compatibility and robot bringup are verified. Gazebo integration and Moveit configuration are not implemented in this repository.
+Use the physical path only after SmartFusion2 compatibility and robot bringup are verified. Gazebo integration and MoveIt configuration belong to the Operator PC repository.
 
 ## DDS checklist
 

@@ -1,115 +1,234 @@
-# MkDocs configuration for the SmartManipulator-X documentation.
+# MkDocs configuration of the SmartManipulator-X documentation
+# (SystemFromScratch® documentation style).
 #
-#   HTML preview:  mkdocs serve
-#   HTML site:     mkdocs build            (output: site/)
-#   PDF manual:    python tools/docs/build_pdf.py   (output: site/SmartManipulator-X.pdf)
+#   Preview:     python -m mkdocs serve
+#   Website:     python -m mkdocs build                (output: site/)
+#   PDF manual:  python tools/docs/build_manual.py     (settings: extra.manual)
 #
-# Dependencies: requirements-docs.txt.
+# Dependencies: requirements-docs.txt. See docs/development.md.
 
 site_name: SmartManipulator-X
 site_description: >-
-  OpenMANIPULATOR-X software concepts on BCN3D Moveo mechanics: ROS 2 Robot PC,
-  SmartFusion2 controller firmware exposing the stepper axes as virtual
-  DYNAMIXEL devices, hardware and wiring.
+  A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2
+  stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives
+  the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.
 site_author: Anton Vynohradov
-site_url: https://antonvynohradov.github.io/SmartManipulator-X-Robot-PC/
-repo_url: https://github.com/AntonVynohradov/SmartManipulator-X-Robot-PC
+site_url: https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/   # GitHub Pages path = repository name
+repo_url: https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot
+repo_name: SystemFromScratch/sfs-smartmanipulator-x-robot
 edit_uri: ""
+copyright: >-
+  Copyright &copy; 2026 Anton Vynohradov ·
+  <a href="https://systemfromscratch.com">SystemFromScratch®</a> ·
+  Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
 
 docs_dir: docs
 site_dir: site
 strict: true
+exclude_docs: |
+  diagrams/
+  **/diagrams/
 
 nav:
-  - Overview: index.md
-  - Guides:
-      - Getting started: getting-started.md
-      - Development environment: development/index.md
-  - Firmware:
-      - Firmware architecture: firmware/index.md
-      - Motor tester GUI: gui/index.md
-  - Hardware:
-      - Hello FPGA Kit wiring: hardware/wiring.md
-      - TMC5160 driver modules: hardware/tmc5160.md
-      - Gripper servo (MG996R): hardware/servo.md
-  - System context:
-      - System architecture: architecture/index.md
-      - DYNAMIXEL compatibility: dynamixel/compatibility-spec.md
+  - Home: index.md
+  - Guide:
+      - Overview: overview.md
+      - Getting Started: getting-started.md
+      - Development: development.md
+  - Robot PC:
       - Robot PC: robot-pc/index.md
+      - BCN3D Moveo Mechanics: mechanical/index.md
+  - System:
+      - System Architecture: architecture/index.md
+      - DYNAMIXEL Compatibility: dynamixel/compatibility-spec.md
       - Operator PC: operator-pc/index.md
-      - BCN3D Moveo mechanics: mechanical/index.md
+  - Firmware:
+      - Getting Started: firmware/getting-started.md
+      - Development Environment: firmware/development.md
+      - Firmware Architecture: firmware/index.md
+      - Motor Tester GUI: gui/index.md
+  - Hardware:
+      - Hello FPGA Kit Wiring: hardware/wiring.md
+      - TMC5160 Driver Modules: hardware/tmc5160.md
+      - Gripper Servo (MG996R): hardware/servo.md
+  - About:
+      - Author & Company: about.md
+      - License: LICENSE.md
 
 theme:
   name: material
-  custom_dir: overrides  # home page banner, PDF button in the header
+  custom_dir: overrides
   language: en
-  logo: assets/images/logo.svg
-  favicon: assets/images/logo.svg
+  logo: assets/images/brand/systemfromscratch-logo-on-dark.png
+  favicon: assets/images/brand/systemfromscratch-logo.png
   font:
     text: Inter
     code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
   palette:
-    # First entry: follow the system setting. The PDF build emulates a light
-    # screen, so the printed manual always uses the light scheme.
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: material/brightness-auto
-        name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: custom
       accent: custom
       toggle:
-        icon: material/weather-sunny
+        icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: custom
       accent: custom
       toggle:
-        icon: material/weather-night
-        name: Switch to system preference
-  icon:
-    repo: fontawesome/brands/github
+        icon: material/weather-sunny
+        name: Switch to light mode
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.path
     - navigation.top
     - navigation.footer
+    - navigation.instant
     - navigation.tracking
-    - toc.follow
     - search.suggest
     - search.highlight
-    - search.share
     - content.code.copy
     - content.code.annotate
-    - content.tooltips
+    - toc.follow
 
 extra:
   generator: false
-  pdf: SmartManipulator-X.pdf   # written to site/ by tools/docs/build_pdf.py
+  # Header download button (overrides/partials/header.html); CI builds the PDF
+  # into docs/downloads/ before deploying.
+  manual_pdf: downloads/SmartManipulator-X_User_Manual.pdf
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/AntonVynohradov/SmartManipulator-X-Robot-PC
-      name: Robot PC repository
-    - icon: fontawesome/brands/github
-      link: https://github.com/AntonVynohradov/SmartManipulator-X-Controller
-      name: Controller firmware repository
-  # Shown on the PDF cover page. tools/docs/build_pdf.py sets both variables
-  # (git describe and today's date); plain `mkdocs build` uses the defaults.
-  doc_version: !ENV [SMX_DOCS_VERSION, "development snapshot"]
-  doc_date: !ENV [SMX_DOCS_DATE, ""]
+      link: https://github.com/AntonVynohradov
+      name: Anton Vynohradov on GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/vynohradov
+      name: Anton Vynohradov on LinkedIn
+    - icon: fontawesome/brands/orcid
+      link: https://orcid.org/0009-0005-6965-0911
+      name: Anton Vynohradov on ORCID
+    - icon: material/web
+      link: https://systemfromscratch.com
+      name: SystemFromScratch®
 
-copyright: Copyright &copy; 2026 Anton Vynohradov &middot; Apache License 2.0
+  # ---------------------------------------------------------------- landing page
+  # Rendered by overrides/home.html. Story: hero -> the problem (3 problem->solution
+  # cards) -> what you get (6 linked cards) -> stats -> quick start (docs/index.md)
+  # -> SystemFromScratch® portfolio banner.
+  landing:
+    eyebrow: Open-source robotics project
+    title: ROS 2 robot arm
+    accent: on virtual DYNAMIXEL
+    lead: >-
+      SmartManipulator-X lets the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack drive
+      a BCN3D Moveo arm: a SmartFusion2 controller answers DYNAMIXEL Protocol 2.0 as
+      virtual servos and drives the stepper motors, while the Robot PC runs ros2_control
+      in Docker.
+    hero_image: assets/images/hero-3d.svg
+    hero_alt: >-
+      Isometric scene: a Robot PC running ROS 2 sends DYNAMIXEL packets over USB to a
+      SmartFusion2 board with six TMC5160 drivers, which moves a BCN3D Moveo arm
+    buttons:
+      - {text: Get started, link: getting-started/, style: primary}
+      - {text: View on GitHub, link: "https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot", style: outline}
+    features:
+      - {icon: layers, line1: ROS 2 Jazzy, line2: in Docker}
+      - {icon: chip, line1: SmartFusion2, line2: Zephyr RTOS}
+      - {icon: bus, line1: DYNAMIXEL, line2: Protocol 2.0}
+      - {icon: code, line1: Apache-2.0, line2: open source}
+    problem:
+      eyebrow: The problem
+      title: Servo software, stepper hardware
+      intro: >-
+        The ROBOTIS OpenMANIPULATOR-X stack is a complete ROS 2 arm application, but it
+        expects DYNAMIXEL smart servos that answer Protocol 2.0 from their Control
+        Tables. The BCN3D Moveo is a printed arm with NEMA stepper motors and no bus at
+        all. Porting the ROS side to every new arm is expensive, so SmartManipulator-X
+        moves the adaptation into a controller that looks like DYNAMIXEL servos to the
+        host.
+      cards:
+        - icon: bus
+          title: Keep the ROS 2 stack unchanged
+          text: >-
+            The SmartFusion2 answers as virtual DYNAMIXEL devices: six stepper axes
+            (IDs 1–6), the gripper servo (ID 7) and a controller device. The simulation
+            firmware passes the protocol conformance check, 49 of 49, on native_sim.
+          tags: [Protocol 2.0, Control Table, Zephyr]
+        - icon: monitor
+          title: Develop without the arm
+          text: >-
+            The Robot PC runs ros2_control with mock hardware on a Docker network that
+            stands in for the Ethernet link; a second container checks discovery, the
+            controllers and a trajectory over DDS.
+          tags: [Docker, ros2_control, DDS]
+        - icon: layers
+          title: A model from the real mechanics
+          text: >-
+            The robot description is generated from the BCN3D Moveo CAD: joint axes from
+            the axles, link lengths of 231.64, 221.12 and 223.00 mm, visual and collision
+            meshes, the gripper linkage.
+          tags: [STEP to URDF, Xacro, Meshes]
+    offer:
+      eyebrow: What you get
+      title: One system from MoveIt to the stepper driver
+      intro: >-
+        Three computers and one contract: the Robot PC with ROS 2 control, the
+        SmartFusion2 controller with its firmware and FPGA design, and the Operator PC
+        for planning and simulation, documented together.
+      cards:
+        - {icon: monitor, title: Robot PC, text: "ROS 2 Jazzy image with ros2_control, the ROBOTIS DYNAMIXEL interface and the USB link to the controller.", tags: [Docker, ros2_control], link: robot-pc/}
+        - {icon: chip, title: Virtual DYNAMIXEL firmware, text: "Zephyr firmware on the SmartFusion2 Cortex-M3: Protocol 2.0, Control Tables, TMC5160 axes and the gripper servo.", tags: [Zephyr, Protocol 2.0], link: firmware/}
+        - {icon: plug, title: Hardware, text: "Hello FPGA Kit wiring, six TMC5160 driver modules, the MG996R gripper servo and power.", tags: [TMC5160, Wiring], link: hardware/wiring/}
+        - {icon: lock, title: The shared contract, text: "System architecture, component boundaries and the DYNAMIXEL compatibility specification, with what is verified and what is not.", tags: [Architecture, Verification], link: architecture/}
+        - {icon: document, title: Complete documentation, text: "Guides, the Robot PC, the firmware, the hardware and the mechanics on one site, also as a PDF user manual.", tags: [Guides, PDF], link: overview/}
+        - {icon: check, title: Checked end to end, text: "Smoke test over DDS for the Robot PC, protocol conformance check and motor tester GUI for the firmware.", tags: [Smoke test, Conformance], link: gui/}
+    stats:
+      - {value: "6 + 1", label: stepper axes + gripper}
+      - {value: "49/49", label: protocol checks on native_sim}
+      - {value: "460800", label: bps host link}
+      - {value: "Jazzy", label: ROS 2 on the Robot PC}
+    portfolio:
+      title: Part of an open-source embedded portfolio
+      text: >-
+        SmartManipulator-X is developed by Anton Vynohradov under SystemFromScratch® —
+        embedded software and hardware built from the first schematic to certification.
+      buttons:
+        - {text: SystemFromScratch®, link: "https://systemfromscratch.com", style: primary}
+        - {text: About the author, link: about/, style: outline}
+    trademark: >-
+      SystemFromScratch® is a registered trademark. ROBOTIS, DYNAMIXEL and OpenMANIPULATOR
+      are trademarks of ROBOTIS Co., Ltd.; SmartFusion2 is a trademark of Microchip
+      Technology Inc.; SmartManipulator-X is not affiliated with or endorsed by them.
+
+  # ---------------------------------------------------------------- PDF manual
+  # Read by tools/docs/build_manual.py.
+  manual:
+    title: SmartManipulator-X
+    subtitle: ROS 2 Robot Arm on Virtual DYNAMIXEL Servos
+    output: build/manual/SmartManipulator-X_User_Manual_v{version}.pdf
+    eyebrow: Open-source robotics project
+    cover_image: assets/images/hero-3d.svg
+    appendices: [LICENSE.md]
+    unnumbered: [about.md]
+    web_only: [index.md]
+    keywords: robot arm, ROS 2, ros2_control, DYNAMIXEL, SmartFusion2, Zephyr, BCN3D Moveo, TMC5160
+    vendor_trademarks: >-
+      ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd.
+      SmartFusion2 and Libero are trademarks of Microchip Technology Inc. TRINAMIC and
+      TMC5160 are trademarks of Analog Devices, Inc. ROS is a trademark of Open Source
+      Robotics Foundation, Inc. SmartManipulator-X is not affiliated with or endorsed by
+      these companies.
 
 extra_css:
-  - assets/stylesheets/extra.css   # website look (screen only)
-  - assets/stylesheets/print.css   # PDF manual layout
+  - assets/stylesheets/extra.css
 
 hooks:
   - tools/docs/hooks.py      # captioned figures from plain Markdown images
+
+plugins:
+  - search
 
 markdown_extensions:
   - abbr
@@ -121,30 +240,17 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
-      title: Contents
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
+      use_pygments: true
   - pymdownx.inlinehilite
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-
-plugins:
-  - search
-  # Must be the last plugin: it combines all pages into site/print_page/,
-  # which tools/docs/build_pdf.py prints to PDF.
-  - print-site:
-      add_to_navigation: false
-      print_page_title: SmartManipulator-X
-      add_cover_page: true
-      cover_page_template: tools/docs/cover_page.tpl
-      add_table_of_contents: true
-      toc_title: Table of contents
-      toc_depth: 4
-      enumerate_headings: true
-      enumerate_figures: true
-      add_full_urls: false
-      add_print_site_banner: false
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg

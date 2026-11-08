@@ -1,6 +1,7 @@
 # Firmware architecture
 
-The application in `apps/SmartManipulator_Controller` turns the SmartFusion2
+The application in `apps/SmartManipulator_Controller` of the controller
+repository (SmartManipulator-X-Controller) turns the SmartFusion2
 Cortex-M3 into six virtual DYNAMIXEL XW430-T333-R devices. Protocol 2.0 packets
 from the Robot PC arrive on the host UART. They are decoded and applied to a
 per-axis Control Table model, then executed by a **motor backend**: either six
@@ -72,25 +73,7 @@ like this:
 
 ## Layering
 
-```mermaid
-flowchart TB
-    host["Robot PC / GUI<br/>DYNAMIXEL Protocol 2.0"] -->|"USB 460800 → PIC32 → 230400 → MMUART_0<br/>(PIC32 passes data after &)"| uart["uart0<br/>(zephyr,console)"]
-    subgraph fw["Zephyr firmware (Cortex-M3)"]
-        uart --> isr["uart_rx_isr<br/>(interrupt)"]
-        isr -->|k_msgq_put, K_NO_WAIT| rxq[("rx_byte_queue<br/>512 × 1 B")]
-        rxq --> rx["dxl_protocol2_rx thread<br/>prio 5 · 2048 B stack"]
-        rx -->|dxl2_parser_feed| codec["protocol2.c<br/>parser / encoder / CRC"]
-        rx -->|packet callback| x430["dynamixel_x430<br/>Control Table × 6"]
-        x430 -->|"motor_submit_async<br/>+ k_sem_take(K_FOREVER)"| q0[("axis queue 0..5<br/>8 commands each")]
-        q0 --> w["motor_axis_worker × 6<br/>prio 6 · 1536 B stack"]
-        w -->|"k_mutex motor_backend_mutex"| be{{"motor backend<br/>(compile-time choice)"}}
-        be -->|target| api["motor_tmc5160.c<br/>Zephyr stepper / stepper_ctrl<br/>adi,tmc51xx driver"]
-        be -->|simulation| sim["motor_sim.c<br/>ramp model + telemetry"]
-        x430 -->|"dxl_comm_send_packet<br/>k_mutex tx_mutex"| tx["uart_poll_out"]
-    end
-    api -->|"spi0, mode 3, ≤ 2 MHz<br/>CS0..CS5"| tmc["6 × TMC5160<br/>motion-controller mode"]
-    tx --> host
-```
+![Firmware layers: from the host UART through the protocol thread and the axis workers to the TMC5160 drivers](images/layering.svg)
 
 ## Start-up order
 
@@ -160,28 +143,7 @@ runs, the protocol thread is blocked on the command's semaphore.
 
 A WRITE of *Goal Position* to ID 1 with torque on:
 
-```mermaid
-sequenceDiagram
-    participant Host as Robot PC / GUI
-    participant ISR as uart_rx_isr
-    participant RX as dxl_protocol2_rx
-    participant X as dynamixel_x430
-    participant W as axis worker 0
-    participant TMC as backend (TMC5160 CS0 / sim)
-    Host->>ISR: FF FF FD 00 01 … 03 74 00 <pos> CRC
-    ISR->>RX: bytes via rx_byte_queue
-    RX->>RX: dxl2_parser_feed → CRC OK, unstuff
-    RX->>X: handle_packet(WRITE 116)
-    X->>X: validate (width 4, mode 3: 0–4095), scale with microsteps/rev
-    X->>W: submit CONFIGURE_RAMP (profile, 0 = defaults), wait on sem
-    W->>TMC: CONFIGURE_RAMP (holds motor_backend_mutex)
-    W-->>X: completion → k_sem_give
-    X->>W: submit MOVE_TO, wait on sem
-    W->>TMC: MOVE_TO (holds motor_backend_mutex)
-    W-->>X: completion (status)
-    X->>X: busy-wait Return Delay Time × 2 µs (default 500 µs)
-    X->>Host: STATUS (err) via dxl_comm_send_packet (tx_mutex)
-```
+![Request flow of a WRITE of Goal Position to ID 1](images/request-flow.svg)
 
 `SYNC_READ` and `SYNC_WRITE` repeat the per-axis part for each listed ID, one
 after another. `SYNC_WRITE` therefore does not start the axes at the same
@@ -274,7 +236,7 @@ Behaviour that differs from a plain register store:
   so). Place the arm in a known pose before switching on, or set Homing Offset.
 
 The full register list with access rules is in
-`.agents/skills/smartfusion2/SKILL.md`. Shoulder axes A1a and A1b drive the
+`smartfusion2` skill (shared `sfs-smartmanipulator-x-skills` repository). Shoulder axes A1a and A1b drive the
 same joint. Configure them identically and command both goals back-to-back
 (wiring note 8).
 

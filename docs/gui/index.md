@@ -1,6 +1,7 @@
 # Motor tester GUI
 
-`tools/dxl_test_gui` is a desktop application for testing the firmware and
+`tools/dxl_test_gui` in the controller repository (SmartManipulator-X-Controller)
+is a desktop application for testing the firmware and
 every stepper axis over **DYNAMIXEL Protocol 2.0**
 ([ROBOTIS specification](https://docs.robotis.com/docs/dxl/protocol/protocol2/)).
 It acts as the bus master, the same role the Robot PC has. It runs on Windows
@@ -16,7 +17,7 @@ or Linux and needs only Python, Tkinter, and `pyserial`.
 | Windows, no VS Code | double-click `tools\dxl_test_gui\run_gui.bat` (creates `.venv` on first run) |
 | Any OS | `.venv` Python: `python tools/dxl_test_gui/dxl_gui.py [--port COM5] [--sim] [--sim-uncalibrated]` |
 
-Set up `.venv` first; see [Development environment](../development/index.md#host-python-environment-venv).
+Set up `.venv` first; see [Development environment](../firmware/development.md#host-python-environment-venv).
 
 | Option | Meaning |
 | --- | --- |

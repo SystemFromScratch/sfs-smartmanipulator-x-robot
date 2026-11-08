@@ -1,75 +1,11 @@
 {
+    // Ctrl+Shift+B opens a picker with every task in the "build" group.
+    // No task is marked "isDefault", so the picker is always shown.
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Docs: Build PDF",
-            "type": "process",
-            "command": "bash",
-            "args": [
-                "tools/docs/build_pdf.sh"
-            ],
-            "windows": {
-                "command": "powershell.exe",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-File",
-                    "tools/docs/build_pdf.ps1"
-                ]
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Docs: Live preview",
-            "type": "process",
-            "command": "bash",
-            "args": [
-                "tools/docs/build_pdf.sh",
-                "--serve"
-            ],
-            "windows": {
-                "command": "powershell.exe",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-File",
-                    "tools/docs/build_pdf.ps1",
-                    "-Serve"
-                ]
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "isBackground": true,
-            "problemMatcher": []
-        },
-        {
-            "label": "Robot PC: Build image",
-            "type": "process",
-            "command": "docker",
-            "args": [
-                "compose",
-                "-f",
-                "docker/docker-compose.yml",
-                "build",
-                "robot_pc"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": []
-        },
-        {
             "label": "Robot PC: Start (mock hardware)",
+            "detail": "Build the image if needed and run the Robot PC; logs stay in this terminal.",
             "type": "process",
             "command": "docker",
             "args": [
@@ -83,11 +19,18 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "group": "build",
+            "isBackground": true,
             "problemMatcher": [],
-            "isBackground": true
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "always",
+                "clear": true
+            }
         },
         {
             "label": "Robot PC: Stop",
+            "detail": "Stop and remove the Robot PC containers and the smx_net network.",
             "type": "process",
             "command": "docker",
             "args": [
@@ -99,6 +42,72 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Rebuild and restart",
+            "detail": "Stop, rebuild the image and start the Robot PC again with fresh containers.",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "up",
+                "--build",
+                "--force-recreate",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "Robot PC: Stop",
+            "group": "build",
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "always",
+                "clear": true
+            }
+        },
+        {
+            "label": "Robot PC: Build image",
+            "detail": "Build the Robot PC image without starting it.",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "build",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Rebuild image (no cache)",
+            "detail": "Full rebuild from scratch, pulling the base image again. Slow.",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "build",
+                "--no-cache",
+                "--pull",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
             "problemMatcher": []
         },
         {
@@ -117,6 +126,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "group": "test",
             "problemMatcher": []
         },
         {
@@ -135,6 +145,48 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": []
+        },
+        {
+            "label": "Docs: Build PDF manual",
+            "detail": "Write the PDF user manual to build/manual/ (needs .venv with requirements-docs.txt).",
+            "type": "process",
+            "command": "${workspaceFolder}/.venv/bin/python",
+            "windows": {
+                "command": "${workspaceFolder}/.venv/Scripts/python.exe"
+            },
+            "args": [
+                "tools/docs/build_manual.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "NO_MKDOCS_2_WARNING": "1"
+                }
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Docs: Live preview",
+            "detail": "mkdocs serve at http://127.0.0.1:8000",
+            "type": "process",
+            "command": "${workspaceFolder}/.venv/bin/python",
+            "windows": {
+                "command": "${workspaceFolder}/.venv/Scripts/python.exe"
+            },
+            "args": [
+                "-m",
+                "mkdocs",
+                "serve"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "NO_MKDOCS_2_WARNING": "1"
+                }
+            },
+            "isBackground": true,
             "problemMatcher": []
         }
     ]

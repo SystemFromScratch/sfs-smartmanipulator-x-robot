@@ -1,7 +1,7 @@
 {#-
-  Copy of mkdocs-material 9.7 partials/header.html with one addition: the
-  "PDF" download button (config.extra.pdf) before the repository link.
-  After a theme upgrade, compare with the new upstream file.
+  Copy of mkdocs-material 9.7.7 partials/header.html with one addition:
+  a "Download PDF user manual" button driven by mkdocs.yml -> extra.manual_pdf.
+  Re-copy from the theme when upgrading Material and re-apply that block.
 -#}
 {% set class = "md-header" %}
 {% if "navigation.tabs.sticky" in features %}
@@ -44,6 +44,11 @@
     {% if not config.theme.palette is mapping %}
       {% include "partials/javascripts/palette.html" %}
     {% endif %}
+    {% if config.extra.manual_pdf %}
+      <a href="{{ config.extra.manual_pdf | url }}" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
+        {% include ".icons/material/file-pdf-box.svg" %}
+      </a>
+    {% endif %}
     {% if config.extra.alternate %}
       {% include "partials/alternate.html" %}
     {% endif %}
@@ -56,12 +61,6 @@
         </label>
         {% include "partials/search.html" %}
       {% endif %}
-    {% endif %}
-    {% if config.extra.pdf %}
-      <a href="{{ config.extra.pdf | url }}" class="md-header__button smx-pdf-button" title="Download the documentation as PDF" download>
-        {% include ".icons/material/file-pdf-box.svg" %}
-        <span>PDF</span>
-      </a>
     {% endif %}
     {% if config.repo_url %}
       <div class="md-header__source">

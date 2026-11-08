@@ -42,7 +42,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/antonvynohradov/smartmanipulator-x-robot-pc
+          images: ghcr.io/systemfromscratch/sfs-smartmanipulator-x-robot
           tags: |
             type=ref,event=branch
             type=ref,event=tag

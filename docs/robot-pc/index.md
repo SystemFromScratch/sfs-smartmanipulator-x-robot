@@ -17,7 +17,7 @@ The stock ROBOTIS hardware interface is the preferred starting point, but it mus
 
 ## Host and container
 
-The target Robot PC host is Ubuntu 24.04 with Docker Engine and Docker Compose. The paths below (`docker/`, `ros2_ws/`, `ros2_robot.repos`) are in the **Robot PC repository**, not in this firmware repository. Its current `docker/` profile is based on `ros:jazzy-ros-base`. It imports the DYNAMIXEL SDK/interface dependencies through `ros2_robot.repos` and builds the project-owned packages; `docker-compose.hw.yml` maps `/dev/ttyACM0` into the container with the `dialout` group.
+The target Robot PC host is Ubuntu 24.04 with Docker Engine and Docker Compose. The paths below (`docker/`, `ros2_ws/`, `ros2_robot.repos`) are in this repository. The current `docker/` profile is based on `ros:jazzy-ros-base`. It imports the DYNAMIXEL SDK/interface dependencies through `ros2_robot.repos` and builds the project-owned packages; `docker-compose.hw.yml` maps `/dev/ttyACM0` into the container with the `dialout` group.
 
 MoveIt 2, RViz2, Gazebo, and the Operator PC application are intentionally excluded from this image. The Operator PC owns those dependencies and connects over ROS 2 DDS.
 
@@ -38,7 +38,7 @@ Until the hardware path is verified, the Robot PC runs with `mock_components/Gen
  └──────────────────────── ROS 2 DDS, UDPv4, ROS_DOMAIN_ID=42 ────────────────────────┘
 ```
 
-From the Robot PC repository root:
+From the repository root (the [getting started](../getting-started.md) guide walks through it):
 
 ```bash
 docker compose -f docker/docker-compose.yml up --build robot_pc                 # Robot PC
@@ -96,7 +96,7 @@ The image has no host-specific state. On a Raspberry Pi CM4 or a Jetson (both ar
 
 ## Hardware shell
 
-Build and start an interactive Robot PC shell with the USB device from the Robot PC repository root:
+Build and start an interactive Robot PC shell with the USB device from the repository root:
 
 ```bash
 docker compose -f docker/docker-compose.yml -f docker/docker-compose.hw.yml run --rm robot_pc bash

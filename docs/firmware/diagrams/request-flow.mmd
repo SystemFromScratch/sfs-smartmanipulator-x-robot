@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant Host as Robot PC / GUI
+    participant ISR as uart_rx_isr
+    participant RX as dxl_protocol2_rx
+    participant X as dynamixel_x430
+    participant W as axis worker 0
+    participant TMC as backend (TMC5160 CS0 / sim)
+    Host->>ISR: FF FF FD 00 01 … 03 74 00 <pos> CRC
+    ISR->>RX: bytes via rx_byte_queue
+    RX->>RX: dxl2_parser_feed → CRC OK, unstuff
+    RX->>X: handle_packet(WRITE 116)
+    X->>X: validate (width 4, mode 3: 0–4095), scale with microsteps/rev
+    X->>W: submit CONFIGURE_RAMP (profile, 0 = defaults), wait on sem
+    W->>TMC: CONFIGURE_RAMP (holds motor_backend_mutex)
+    W-->>X: completion → k_sem_give
+    X->>W: submit MOVE_TO, wait on sem
+    W->>TMC: MOVE_TO (holds motor_backend_mutex)
+    W-->>X: completion (status)
+    X->>X: busy-wait Return Delay Time × 2 µs (default 500 µs)
+    X->>Host: STATUS (err) via dxl_comm_send_packet (tx_mutex)

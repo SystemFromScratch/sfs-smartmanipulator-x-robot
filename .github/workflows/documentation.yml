@@ -1,9 +1,10 @@
-name: The SmartManipulator-X Documentation Deployment
+name: Build and Deploy Documentation
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,8 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
-          fetch-depth: 0   # git describe: document version on the PDF cover
+          fetch-depth: 0   # tags and commit for the version on the PDF cover
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,29 +26,32 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0
           pip install -r requirements-docs.txt
-          python -m playwright install --with-deps chromium
 
+      - name: Build PDF manual
+        env:
+          NO_MKDOCS_2_WARNING: "1"
+        run: |
+          # Published with the site as /downloads/SmartManipulator-X_User_Manual.pdf
+          python tools/docs/build_manual.py --output docs/downloads/SmartManipulator-X_User_Manual.pdf
+
+      - name: Upload PDF manual
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartManipulator-X-User-Manual
+          path: docs/downloads/SmartManipulator-X_User_Manual.pdf
+
+      # actions/checkout leaves an HTTPS remote authenticated with GITHUB_TOKEN
+      # (contents: write), so gh-deploy can push to gh-pages without a deploy key.
       - name: Configure git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Runs `mkdocs build` (strict) and writes site/SmartManipulator-X.pdf,
-      # so the published site also serves the PDF manual.
-      - name: Build HTML site and PDF manual
+      - name: Deploying documentation
         env:
           NO_MKDOCS_2_WARNING: "1"
-        run: python tools/docs/build_pdf.py --browser chromium
-
-      - name: Upload PDF manual
-        uses: actions/upload-artifact@v4
-        with:
-          name: SmartManipulator-X-pdf
-          path: site/SmartManipulator-X.pdf
-
-      # `mkdocs gh-deploy` would rebuild site/ and drop the PDF, so the
-      # already built site/ is pushed with ghp-import (a MkDocs dependency).
-      - name: Deploying documentation
         run: |
-          ghp-import --no-jekyll --push --force --no-history site
+          mkdocs gh-deploy --force

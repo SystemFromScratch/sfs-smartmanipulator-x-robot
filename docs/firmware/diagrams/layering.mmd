@@ -1,0 +1,17 @@
+flowchart TB
+    host["Robot PC / GUI<br/>DYNAMIXEL Protocol 2.0"] -->|"USB 460800 → PIC32 → 230400 → MMUART_0<br/>(PIC32 passes data after #38;)"| uart["uart0<br/>(zephyr,console)"]
+    subgraph fw["Zephyr firmware (Cortex-M3)"]
+        uart --> isr["uart_rx_isr<br/>(interrupt)"]
+        isr -->|k_msgq_put, K_NO_WAIT| rxq[("rx_byte_queue<br/>512 × 1 B")]
+        rxq --> rx["dxl_protocol2_rx thread<br/>prio 5 · 2048 B stack"]
+        rx -->|dxl2_parser_feed| codec["protocol2.c<br/>parser / encoder / CRC"]
+        rx -->|packet callback| x430["dynamixel_x430<br/>Control Table × 6"]
+        x430 -->|"motor_submit_async<br/>then k_sem_take(K_FOREVER)"| q0[("axis queue 0..5<br/>8 commands each")]
+        q0 --> w["motor_axis_worker × 6<br/>prio 6 · 1536 B stack"]
+        w -->|"k_mutex motor_backend_mutex"| be{{"motor backend<br/>(compile-time choice)"}}
+        be -->|target| api["motor_tmc5160.c<br/>Zephyr stepper / stepper_ctrl<br/>adi,tmc51xx driver"]
+        be -->|simulation| sim["motor_sim.c<br/>ramp model + telemetry"]
+        x430 -->|"dxl_comm_send_packet<br/>k_mutex tx_mutex"| tx["uart_poll_out"]
+    end
+    api -->|"spi0, mode 3, ≤ 2 MHz<br/>CS0..CS5"| tmc["6 × TMC5160<br/>motion-controller mode"]
+    tx --> host

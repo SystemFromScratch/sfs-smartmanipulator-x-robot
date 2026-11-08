@@ -1,4 +1,4 @@
-"""MkDocs hooks for the SmartManipulator-X documentation.
+"""MkDocs hook of the SmartManipulator-X documentation.
 
 Turns an image that stands alone on its line, the usual Markdown form
 
@@ -8,27 +8,22 @@ into a captioned figure (rendered with the md_in_html extension):
 
     <figure class="smx-figure"><img ...><figcaption>Caption text</figcaption></figure>
 
-The Markdown files stay plain, so they also render on GitHub, and the printed
-manual gets numbered captions ("Figure 3: ...") from mkdocs-print-site-plugin.
-The change is made on the Markdown so that the print page sees it as well.
-
-`mkdocs serve` builds into a temporary directory without the PDF manual, so
-the "PDF" buttons would point nowhere; the last PDF written by
-tools/docs/build_pdf.py (site/<extra.pdf>) is copied there if it exists.
+The Markdown files stay plain, so they also render on GitHub. tools/docs/build_manual.py
+imports `figures()` so that the PDF manual gets the same captions.
 """
 
 from __future__ import annotations
 
 import html
 import re
-import shutil
-from pathlib import Path
 
 _IMAGE_LINE = re.compile(r"^!\[(?P<alt>[^\]]+)\]\((?P<src>[^)\s]+)\)[ \t]*$", re.MULTILINE)
 _FENCE = re.compile(r"^(```|~~~).*?^\1[ \t]*$", re.MULTILINE | re.DOTALL)
 
 
-def on_page_markdown(markdown: str, **kwargs) -> str:
+def figures(markdown: str) -> str:
+    """Wrap every stand-alone image outside fenced code in a captioned figure."""
+
     def to_figure(match: re.Match) -> str:
         alt, src = match.group("alt"), match.group("src")
         caption = html.escape(alt, quote=False)
@@ -39,7 +34,6 @@ def on_page_markdown(markdown: str, **kwargs) -> str:
             "</figure>"
         )
 
-    # Leave fenced code blocks untouched.
     parts, last = [], 0
     for fence in _FENCE.finditer(markdown):
         parts.append(_IMAGE_LINE.sub(to_figure, markdown[last:fence.start()]))
@@ -49,11 +43,5 @@ def on_page_markdown(markdown: str, **kwargs) -> str:
     return "".join(parts)
 
 
-def on_post_build(config, **kwargs) -> None:
-    name = config.extra.get("pdf")
-    if not name:
-        return
-    built = Path(config.config_file_path).parent / "site" / name
-    target = Path(config.site_dir) / name
-    if built.is_file() and built.resolve() != target.resolve():
-        shutil.copyfile(built, target)
+def on_page_markdown(markdown: str, **kwargs) -> str:
+    return figures(markdown)

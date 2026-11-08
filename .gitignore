@@ -16,3 +16,7 @@ Thumbs.db
 
 # Local Compose overrides (template: docker/env.example)
 docker/.env
+
+# Documentation build output (PDF manual; CI writes docs/downloads/ before deploying)
+/build/
+/docs/downloads/

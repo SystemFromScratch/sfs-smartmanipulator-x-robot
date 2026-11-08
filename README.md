@@ -1,69 +1,138 @@
-# SmartManipulator-X
+<p align="center">
+  <img src="docs/assets/images/hero-3d.svg" alt="A Robot PC running ROS 2 sends DYNAMIXEL packets over USB to a SmartFusion2 board with six TMC5160 drivers, which moves a BCN3D Moveo arm" width="720">
+</p>
 
-SmartManipulator-X combines the ROS control approach of ROBOTIS OpenMANIPULATOR-X with the mechanical design of [BCN3D Moveo](https://github.com/BCN3D/BCN3D-Moveo). A SmartFusion2-based controller is intended to replace the original actuator electronics and drive stepper motors while providing the verified DYNAMIXEL Protocol 2.0 behavior required by the ROS host stack. The target Robot PC is Ubuntu 24.04; its ROS environment is ROS 2 Jazzy in Docker.
+<h1 align="center">SmartManipulator-X</h1>
 
-The SmartFusion2 is intended to act as a virtual DYNAMIXEL device over USB CDC, not as a USB-to-DYNAMIXEL bridge. Control Table addresses, operating modes, timing, and device responses remain unverified until checked against current ROBOTIS sources.
+<p align="center">
+  <b>A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack, through a SmartFusion2 controller that answers as DYNAMIXEL servos.</b><br>
+  ROS 2 Jazzy in Docker · ros2_control · DYNAMIXEL Protocol 2.0 · Zephyr on SmartFusion2
+</p>
 
-## Repository layout
+<p align="center">
+  <a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot/actions/workflows/docker-publish.yml"><img src="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot/actions/workflows/docker-publish.yml/badge.svg" alt="Robot PC image"></a>
+  <a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot/actions/workflows/documentation.yml"><img src="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot/actions/workflows/documentation.yml/badge.svg" alt="Documentation"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a>
+</p>
 
-- `.agents/skills/`: governing project architecture and focused Robot PC, Operator PC, and SmartFusion2 guidance. The Operator PC skill is cross-repository guidance; its implementation lives in a separate repository.
-- `docker/`: ROS 2 Jazzy Robot PC image, Compose service, and entrypoint.
-- `ros2_ws/src/smartmanipulator_x/`: project-owned description, bringup, configuration, and test areas.
-- `ros2_ws/src/robotis/`: checkout target for upstream repositories selected by `ros2_robot.repos` in the Robot PC image; `ros2.repos` remains the broader workspace manifest.
-- SmartFusion2 firmware is maintained in a separate repository and is not included in this repository.
-- `tools/`: diagnostics and USB utilities.
-- `docs/`: the MkDocs site covering architecture, Moveo mechanics, Robot PC, Operator PC, SmartFusion2 firmware and hardware, DYNAMIXEL compatibility, and development. See [`docs/index.md`](docs/index.md).
+<p align="center">
+  <a href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/">Documentation</a> ·
+  <a href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/downloads/SmartManipulator-X_User_Manual.pdf">PDF manual</a> ·
+  <a href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/getting-started/">Getting started</a>
+</p>
 
-Use the repository-local `.venv` for MkDocs (`requirements-docs.txt`). The VS Code task **Docs: Build PDF** (default build task) creates the `.venv` if needed and writes the PDF manual to `site/SmartManipulator-X.pdf`; by hand, run `python tools/docs/build_pdf.py`. **Docs: Live preview** runs `mkdocs serve`. The GitHub Pages deployment publishes the same PDF next to the site. Follow the platform-specific setup and Docker development workflow in the [development guide](docs/development/index.md); the [documentation home](docs/index.md) provides the site overview.
+---
 
-## Prerequisites
+## Overview
 
-- Simulation (mock hardware): any computer with Docker Engine or Docker Desktop (Windows with the WSL 2 backend works) and Docker Compose v2.
-- Real hardware: an Ubuntu 24.04 Linux Robot PC (arm64 or amd64) and the SmartFusion2 board enumerated as USB CDC, typically `/dev/ttyACM0`. Docker Desktop on Windows does not expose a Linux `/dev/ttyACM0` device.
+SmartManipulator-X combines the ROS 2 control approach of ROBOTIS OpenMANIPULATOR-X with
+the mechanical design of [BCN3D Moveo](https://github.com/BCN3D/BCN3D-Moveo). A
+SmartFusion2 controller replaces the DYNAMIXEL actuators: it drives the stepper motors
+and the gripper servo and presents them to the ROS 2 host as virtual DYNAMIXEL devices
+over Protocol 2.0, over USB CDC — not as a USB-to-DYNAMIXEL bridge.
 
-## Robot PC in simulation on one computer
+This repository is the **Robot PC**: Ubuntu 24.04 with ROS 2 Jazzy in Docker, the project
+ROS 2 packages, the robot description generated from the Moveo CAD, diagnostics, and the
+documentation of the whole system.
 
-The Compose file creates the Docker network `smx_net` (`10.77.0.0/24`), which stands in for the Ethernet link between the Robot PC and the Operator PC. The Robot PC container (`10.77.0.10`) runs `robot_state_publisher`, `ros2_control` with mock hardware, and the controllers; any other container on `smx_net` with the same `ROS_DOMAIN_ID` (default 42; to change it, copy `docker/env.example` to `docker/.env`) sees it through ROS 2 DDS like a second machine on the LAN. From the repository root:
+| Component | Repository |
+| --- | --- |
+| Robot PC: ROS 2 control, robot description, documentation | this repository |
+| Operator PC: MoveIt 2, RViz2, Gazebo | [sfs-smartmanipulator-x-operator](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator) |
+| Engineering rules for coding agents, shared by all repositories | [sfs-smartmanipulator-x-skills](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-skills) |
+| SmartFusion2 controller firmware and FPGA design | SmartManipulator-X-Controller, SmartManipulator-X-Libero |
+
+## Project status
+
+- [x] Robot PC image (ROS 2 Jazzy, ROBOTIS DYNAMIXEL SDK and hardware interface)
+- [x] Simulation with mock hardware on a Docker network, smoke test from a second host
+- [x] Robot description generated from the BCN3D Moveo CAD
+- [ ] Joint limits measured on the arm (the URDF values are placeholders)
+- [ ] Control Table, protocol behavior and timing verified against the ROBOTIS Jazzy sources ([compatibility specification](docs/dynamixel/compatibility-spec.md))
+- [ ] Real-hardware `ros2_control` path (`robot.launch.py` refuses `use_mock_hardware:=false` until then)
+
+## Quick start
+
+Any computer with Docker and Docker Compose v2 (Windows with the WSL 2 backend works):
 
 ```bash
-docker compose -f docker/docker-compose.yml up --build robot_pc      # terminal 1: the Robot PC
-docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh   # terminal 2: check from a second host
+git clone https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot.git
+cd sfs-smartmanipulator-x-robot
+
+docker compose -f docker/docker-compose.yml up --build robot_pc                 # terminal 1: the Robot PC
+docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh    # terminal 2: a second host
 ```
 
-The smoke test passes when it receives `/joint_states`, finds `joint_state_broadcaster`, `arm_controller`, and `gripper_controller` active, and `arm_controller` executes a short trajectory. `run --rm probe bash` opens a shell on that second host for your own `ros2` commands. The same steps are VS Code tasks (**Robot PC: …**). Stop with **Ctrl+C** or `docker compose -f docker/docker-compose.yml down`.
+The Compose file creates the network `smx_net` (`10.77.0.0/24`), which stands in for the
+Ethernet link to the Operator PC. The smoke test passes when it receives `/joint_states`,
+finds `joint_state_broadcaster`, `arm_controller` and `gripper_controller` active, and
+`arm_controller` executes a short trajectory. Stop with **Ctrl+C** or
+`docker compose -f docker/docker-compose.yml down`.
 
-The robot description is generated from the BCN3D Moveo CAD (link lengths, joint axes, meshes, gripper linkage; see `tools/cad/` and [BCN3D Moveo mechanics](docs/mechanical/index.md)); joint limits are still placeholders until measured on the arm. The details, including how the Operator PC joins `smx_net`, are in [Robot PC](docs/robot-pc/index.md).
+In VS Code, **Ctrl+Shift+B** offers *Robot PC: Start (mock hardware)*, *Stop*,
+*Rebuild and restart*, *Build image*, *Rebuild image (no cache)* and
+*Docs: Build PDF manual*; the smoke test is under **Tasks: Run Test Task**.
 
-## Robot PC with the SmartFusion2 (Linux)
+## Real hardware (Linux)
 
-Connect the SmartFusion2 to the Robot PC and check that Linux sees the USB CDC device:
-
-```bash
-lsusb
-ls -l /dev/ttyACM0
-```
-
-If the board appears under another `/dev/ttyACM*` path, set `SMX_SERIAL_DEVICE` in `docker/.env` (template: `docker/env.example`). Check `ros2_robot.repos`; its `jazzy` refs are branch names and can move. The hardware override `docker/docker-compose.hw.yml` passes the device into the container. Start an interactive Robot PC shell with it:
+Connect the SmartFusion2 board and check that it enumerates (`ls -l /dev/ttyACM0`; set
+`SMX_SERIAL_DEVICE` in `docker/.env` for another path, template `docker/env.example`).
+Start a Robot PC shell with the device:
 
 ```bash
 docker compose -f docker/docker-compose.yml -f docker/docker-compose.hw.yml run --rm robot_pc bash
 ```
 
-The container entrypoint sources ROS Jazzy and the built workspace automatically. Inside it, confirm the USB node and key ROS packages are visible:
+The real-hardware `ros2_control` path is not configured yet; use this shell for device
+diagnostics. Details: [Robot PC](docs/robot-pc/index.md).
 
-```bash
-ls -l /dev/ttyACM0
-ros2 pkg list | grep -E '^(dynamixel_sdk|dynamixel_interfaces|dynamixel_hardware_interface|smartmanipulator_x_)'
+## Project structure
+
+```text
+docker/                         Robot PC image, Compose services, DDS profile
+ros2_ws/src/smartmanipulator_x/ bringup, config, description (from the Moveo CAD), tests
+ros2_robot.repos                upstream ROBOTIS sources built into the image
+tools/cad/                      STEP → URDF pipeline of the robot description
+tools/diagnostics/              smoke test over DDS
+tools/docs/                     PDF manual builder, hero illustration, Mermaid rendering
+docs/, overrides/, mkdocs.yml   documentation (website and PDF manual)
 ```
 
-Type `exit` to stop the interactive shell; `--rm` removes that container. The image uses `ros:jazzy-ros-base` and contains ROS control, the DYNAMIXEL SDK/interface, Robot PC packages, USB diagnostics, and build tools. It deliberately excludes MoveIt 2, RViz2, Gazebo, and the upstream OpenMANIPULATOR GUI/bringup packages. The workspace is baked into the image, not bind-mounted, so rebuild after changing project sources or `ros2_robot.repos`.
+## Documentation
 
-The real-hardware `ros2_control` path is not configured yet: `robot.launch.py` refuses `use_mock_hardware:=false`. Hardware operation is not yet validated: the Control Table, protocol behavior, timing, and final robot configuration remain to be verified in [`docs/dynamixel/compatibility-spec.md`](docs/dynamixel/compatibility-spec.md), and the joint limits of the robot description are placeholders until measured on the arm. Operator PC code and assets are maintained in a separate repository and are not included here.
+The website and the PDF user manual are built from `docs/` and published by CI to
+[GitHub Pages](https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/).
+Locally, in the repository `.venv` (`pip install -r requirements-docs.txt`; WeasyPrint
+needs Pango):
 
-## Development
+```bash
+python -m mkdocs serve                  # live preview
+python tools/docs/build_manual.py       # build/manual/SmartManipulator-X_User_Manual_v<version>.pdf
+```
 
-See the [development guide](docs/development/index.md) for prerequisites, `.venv` setup, Docker image build/use, and the staged integration roadmap.
+See [Development](docs/development.md) for the details.
 
-Project-owned files are licensed under Apache License 2.0, matching the ROBOTIS OpenMANIPULATOR-X ROS 2 repository. Third-party dependencies retain their own licenses; see [`LICENSE`](LICENSE).
+## Author
 
-No actuator addresses, operating modes, or compatibility claims are assumed by this scaffold; the 100 Hz controller rate in `controllers.yaml` is a starting value for mock hardware only.
+**Anton Vynohradov** — Embedded Systems Engineer · Founder of SystemFromScratch®
+
+[systemfromscratch.com](https://systemfromscratch.com) ·
+[GitHub](https://github.com/AntonVynohradov) ·
+[LinkedIn](https://www.linkedin.com/in/vynohradov) ·
+[ORCID 0009-0005-6965-0911](https://orcid.org/0009-0005-6965-0911) ·
+[avynohradov@systemfromscratch.com](mailto:avynohradov@systemfromscratch.com)
+
+## License
+
+Copyright © 2026 Anton Vynohradov. Project-owned files are licensed under the
+[Apache License 2.0](LICENSE), matching the ROBOTIS OpenMANIPULATOR-X ROS 2 repository.
+Third-party sources keep their own licenses: the ROBOTIS packages checked out through
+`ros2_robot.repos`, and the BCN3D Moveo meshes (MIT,
+`ros2_ws/src/smartmanipulator_x/smartmanipulator_x_description/meshes/LICENSE-BCN3D-Moveo`).
+
+SystemFromScratch® is a registered trademark. The Apache License 2.0 grants no rights to
+use the SystemFromScratch® name or logo; they may not be used to endorse or promote
+products derived from SmartManipulator-X without prior written permission. ROBOTIS,
+DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd.; SmartFusion2 is a
+trademark of Microchip Technology Inc.; SmartManipulator-X is not affiliated with or
+endorsed by them.

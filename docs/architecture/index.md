@@ -36,14 +36,12 @@ As built (Libero stage 2, firmware on `main`):
 
 | Component | Responsibility | Repository boundary |
 | --- | --- | --- |
-| SmartFusion2 firmware | DYNAMIXEL Protocol 2.0 device behavior, Control Tables, TMC5160 configuration and commands, gripper servo | **This repository** (`apps/SmartManipulator_Controller`), plus the host motor tester (`tools/dxl_test_gui`) |
+| SmartFusion2 firmware | DYNAMIXEL Protocol 2.0 device behavior, Control Tables, TMC5160 configuration and commands, gripper servo | Controller repository (`SmartManipulator-X-Controller`: `apps/SmartManipulator_Controller`, plus the host motor tester `tools/dxl_test_gui`) |
 | SmartFusion2 FPGA design | Pin routing, CorePWM, clocks; the hardware contract for the firmware | Separate Libero repository (`SmartManipulator-X-Libero`, `docs/firmware_interface.md`) |
-| Robot PC | ROS 2 Jazzy, `ros2_control`, verified ROBOTIS hardware path, USB access, robot bringup | Separate Robot PC repository |
-| Operator PC | MoveIt 2, RViz2, Gazebo, operator workflows, ROS 2 DDS client | Separate Operator PC repository |
-| BCN3D Moveo | Mechanical links, joints, printed parts, assembly and mechanical limits | Upstream mechanical source; project model integration belongs in the Robot PC repository or a shared description repository |
+| Robot PC | ROS 2 Jazzy, `ros2_control`, verified ROBOTIS hardware path, USB access, robot bringup, canonical robot description | Robot PC repository (`sfs-smartmanipulator-x-robot`, which also publishes this documentation) |
+| Operator PC | MoveIt 2, RViz2, Gazebo, operator workflows, ROS 2 DDS client | Operator PC repository (`sfs-smartmanipulator-x-operator`) |
+| BCN3D Moveo | Mechanical links, joints, printed parts, assembly and mechanical limits | Upstream mechanical source; the project model (`smartmanipulator_x_description`) is generated from its CAD in the Robot PC repository |
 | ROBOTIS packages | Reusable SDK, hardware interface, messages, and upstream OpenMANIPULATOR software | Separate upstream checkouts managed by the Robot PC manifests |
-
-The pages under *System context* are shared with the Robot PC repository. When this page changes, update the copy there as well.
 
 ## Software reuse boundary
 
@@ -81,10 +79,10 @@ The Robot PC image is intentionally separate from the Operator PC runtime. MoveI
 
 | Area | Current state | Target or open verification |
 | --- | --- | --- |
-| SmartFusion2 firmware | Implemented in this repository: 6 axes, gripper servo, controller device. Passes `firmware_check.py` 49/49 on `native_sim`. On the kit: host link, TMC5160 detection, register mapping and ramp generator on A0, and the gripper servo work | Motion of the axes (A0 module in STEP/DIR mode, `SD_MODE=1`); servo travel calibration; gear ratios, joint limits |
+| SmartFusion2 firmware | Implemented in the controller repository: 6 axes, gripper servo, controller device. Passes `firmware_check.py` 49/49 on `native_sim`. On the kit: host link, TMC5160 detection, register mapping and ramp generator on A0, and the gripper servo work | Motion of the axes (A0 module in STEP/DIR mode, `SD_MODE=1`); servo travel calibration; gear ratios, joint limits |
 | FPGA design | Libero stage 2: pin routing and CorePWM; the CorePWM output drives the servo on the kit | Pulse widths not measured with an oscilloscope yet |
-| Robot description | Not in this repository | Import/author the BCN3D Moveo model; verify frame, joint, limit, and visual/collision data |
-| Robot PC | Separate repository | Verify upstream Jazzy sources against the device behavior (model numbers, registers, `&` and `0x25` handling) |
+| Robot description | Generated from the BCN3D Moveo CAD (`tools/cad/`): link lengths, joint axes, visual and collision meshes, gripper linkage | Measure joint limits on the arm; verify motor directions against the model conventions |
+| Robot PC | ROS 2 Jazzy image; runs with mock hardware on `smx_net`, smoke test passes from a second container; real-hardware `ros2_control` path not configured | Verify upstream Jazzy sources against the device behavior (model numbers, registers, `&` and `0x25` handling) |
 | Operator PC | Separate repository | Consume the canonical Moveo description and validate DDS |
 | Mechanical/electrical integration | Wiring Rev. D (draft): six TMC5160T Pro, MG996R gripper servo, 24 V and 6 V supplies | Joint-to-motor mapping on the real arm, shoulder pairing (IDs 2 and 3), limits, safety (emergency stop) |
 

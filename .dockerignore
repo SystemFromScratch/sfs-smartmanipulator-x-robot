@@ -1,6 +1,5 @@
 .git
 .github
-.agents
 .vscode
 .idea
 .DS_Store
@@ -14,3 +13,6 @@ ros2_ws/log
 **/log
 
 .gitignore
+site
+build
+docs/downloads
