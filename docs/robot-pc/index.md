@@ -53,7 +53,7 @@ docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh    
 | `docker/dds/fastdds_udp.xml` | Fast DDS profile: UDPv4 only, no shared memory between containers |
 | `smartmanipulator_x_bringup/launch/robot.launch.py` | `robot_state_publisher`, `ros2_control_node`, controller spawner |
 | `smartmanipulator_x_config/config/controllers.yaml` | `joint_state_broadcaster`, `arm_controller` (J1–J5), `gripper_controller`, 100 Hz |
-| `smartmanipulator_x_description/urdf/` | Placeholder Moveo model and its `ros2_control` block |
+| `smartmanipulator_x_description/` | Moveo model generated from the BCN3D CAD (`tools/cad/`) and its `ros2_control` block |
 | `tools/diagnostics/smx_smoke_test.sh` | Discovery, controller state, and trajectory check from another host |
 
 ### Joint contract
@@ -69,7 +69,7 @@ The Operator PC, the simulation, and the real hardware must use the same joint n
 | `j5_wrist` | J5 wrist | 6 | `arm_controller` |
 | `gripper` | gripper servo | 7 | `gripper_controller` |
 
-Lengths, joint origins, and limits in the URDF are placeholders (`TODO(CAD)`), not measured Moveo values. On the real robot, `dynamixel_hardware_interface` can map the two shoulder motors onto one joint with its `transmission_to_joint_matrix` and `joint_to_transmission_matrix` parameters; this is still to be configured and verified.
+Lengths, joint axes, and meshes come from the BCN3D Moveo CAD ([BCN3D Moveo mechanics](../mechanical/index.md)); joint limits are placeholders until measured on the arm. The gripper also has mimic joints (`gripper_idler_gear`, `gripper_pivot_*`, `gripper_finger_*`) that follow `gripper`; they are not in `ros2_control`. On the real robot, `dynamixel_hardware_interface` can map the two shoulder motors onto one joint with its `transmission_to_joint_matrix` and `joint_to_transmission_matrix` parameters; this is still to be configured and verified.
 
 ### Operator PC on the same network
 

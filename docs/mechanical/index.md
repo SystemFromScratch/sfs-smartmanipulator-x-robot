@@ -14,7 +14,23 @@ The intended home for the project-owned ROS model is:
 ros2_ws/src/smartmanipulator_x/smartmanipulator_x_description/
 ```
 
-That package currently contains only empty placeholders. No Moveo URDF/Xacro, meshes, joint definitions, kinematic parameters, or ROS visualization configuration have been integrated or validated yet.
+The model in that package is generated from the BCN3D Moveo CAD: a STEP export of `BCN3D Moveo assembly.SLDASM` (upstream `CAD files/`, MIT license; the license text is in `meshes/LICENSE-BCN3D-Moveo`). The scripts in `tools/cad/` read the STEP, assign each part to a link, take the joint axes from the axles in the CAD, and write `urdf/smartmanipulator_x.urdf.xacro`, the decimated visual meshes, and convex-hull collision meshes. See `tools/cad/README.md` for the steps; `meshes/geometry.json` records the derived values.
+
+| Quantity | From the CAD |
+| --- | --- |
+| Base (table plate top) to J2 axis | 231.64 mm |
+| J2 to J3 | 221.12 mm |
+| J3 to J5, along the J4 roll axis | 223.00 mm (J4 joint frame at 96.09 mm, where the wrist part begins) |
+| Gripper | MG996R servo gear and idler gear with 40 mm arms, pivot arms of the same length: a parallelogram; 80 mm finger gap when open |
+
+Conventions of the model:
+
+- Zero pose: arm straight up, gripper fully open. The SmartFusion2 start pose (arm placed by hand before power-up) must match it, or the zero offsets must be set in the controller.
+- Positive J2, J3 and J5 bend the arm forward (+x, away from the electronics box of the original Moveo); positive J1 and J4 turn counter-clockwise seen from the tip of their axis.
+- `gripper` is the servo gear angle, 0 (open) to 1.45 rad (closed). The idler gear, pivot arms and fingers are mimic joints.
+- The original electronics box is available with the xacro argument `electronics_box:=true`; it is off by default because this build uses other electronics.
+
+Still to verify on the assembled arm: joint limits (the URDF values are placeholders), the direction of each motor against the conventions above, and any printed part changed for the NEMA 23 shoulder or the geared elbow motor.
 
 When integrating the model:
 

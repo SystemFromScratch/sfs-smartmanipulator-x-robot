@@ -40,7 +40,8 @@ echo "${result}" | grep -q "SUCCEEDED" || { echo "${result}" >&2; fail "trajecto
 echo "      OK"
 
 echo "[4/4] Joint positions after the trajectory:"
+# grep: drop Fast DDS "message was lost" notices printed while echo joins the stream.
 timeout "${TIMEOUT}" ros2 topic echo --once --field position /joint_states sensor_msgs/msg/JointState \
-  | sed 's/^/      /'
+  | grep -v -e 'message was lost' -e 'total count' | sed 's/^/      /'
 
 echo "PASS"

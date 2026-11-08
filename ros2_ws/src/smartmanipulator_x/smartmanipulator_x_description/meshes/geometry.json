@@ -1,0 +1,307 @@
+{
+ "origin_O_mm": [
+  -0.01,
+  -49.0,
+  242.5
+ ],
+ "pose_assembly_deg": {
+  "j2_shoulder": 42.49,
+  "j3_elbow": 26.78,
+  "j4_forearm_roll": 8.17,
+  "j5_wrist": 52.43
+ },
+ "lengths_mm": {
+  "j2_origin_z": [
+   0.0,
+   0.0,
+   231.64
+  ],
+  "j3_origin": [
+   -0.0,
+   -0.0,
+   221.12
+  ],
+  "j4_origin": [
+   0.0,
+   -0.0,
+   96.09
+  ],
+  "j5_origin": [
+   -0.0,
+   0.0,
+   126.91
+  ]
+ },
+ "axis_check": {
+  "a2.Y": 7.925781863768712e-17,
+  "a3.a2": 1.0000000000000002,
+  "u.a3": 0.00448425984599276,
+  "u.a5": 0.004438732326220209
+ },
+ "gear_axis_link5": [
+  -1.0,
+  0.001,
+  0.0034
+ ],
+ "gripper_points_link5_mm": {
+  "servo_gear": [
+   0.47,
+   -14.0,
+   65.0
+  ],
+  "idler_gear": [
+   0.43,
+   14.0,
+   65.0
+  ],
+  "pivot_right": [
+   0.54,
+   -7.0,
+   85.0
+  ],
+  "pivot_left": [
+   0.55,
+   7.01,
+   85.0
+  ]
+ },
+ "finger_offsets_mm": {
+  "right": [
+   -0.04,
+   -40.0,
+   -0.56
+  ],
+  "left": [
+   -0.03,
+   40.0,
+   0.0
+  ]
+ },
+ "tool_z_mm": 129.56,
+ "gap_assembly_mm": 80.0,
+ "gap_vs_theta": [
+  [
+   -90,
+   -0.6
+  ],
+  [
+   -80,
+   13.3
+  ],
+  [
+   -70,
+   26.8
+  ],
+  [
+   -60,
+   39.5
+  ],
+  [
+   -50,
+   51.0
+  ],
+  [
+   -40,
+   60.9
+  ],
+  [
+   -30,
+   69.0
+  ],
+  [
+   -20,
+   75.0
+  ],
+  [
+   -10,
+   78.7
+  ],
+  [
+   0,
+   80.0
+  ],
+  [
+   10,
+   78.9
+  ],
+  [
+   20,
+   75.4
+  ],
+  [
+   30,
+   69.6
+  ],
+  [
+   40,
+   61.6
+  ],
+  [
+   50,
+   51.9
+  ],
+  [
+   60,
+   40.5
+  ],
+  [
+   70,
+   27.9
+  ],
+  [
+   80,
+   14.4
+  ],
+  [
+   90,
+   0.6
+  ]
+ ],
+ "mesh_tris": {
+  "base_hardware": [
+   200794,
+   3018
+  ],
+  "base_printed": [
+   13756,
+   6033
+  ],
+  "ebox_hardware": [
+   40844,
+   4070
+  ],
+  "ebox_printed": [
+   25792,
+   9735
+  ],
+  "finger_left_hardware": [
+   5576,
+   855
+  ],
+  "finger_left_printed": [
+   6994,
+   3289
+  ],
+  "finger_right_hardware": [
+   5576,
+   884
+  ],
+  "finger_right_printed": [
+   6994,
+   3280
+  ],
+  "idler_gear_hardware": [
+   368,
+   160
+  ],
+  "idler_gear_printed": [
+   10538,
+   2286
+  ],
+  "link1_hardware": [
+   312546,
+   12888
+  ],
+  "link1_printed": [
+   26320,
+   16167
+  ],
+  "link2_hardware": [
+   146122,
+   6759
+  ],
+  "link2_printed": [
+   73156,
+   19501
+  ],
+  "link3_hardware": [
+   80538,
+   3476
+  ],
+  "link3_printed": [
+   12006,
+   7964
+  ],
+  "link4_hardware": [
+   192594,
+   5298
+  ],
+  "link4_printed": [
+   17252,
+   9590
+  ],
+  "link5_hardware": [
+   36268,
+   1627
+  ],
+  "link5_printed": [
+   20574,
+   9540
+  ],
+  "pivot_left_hardware": [
+   2908,
+   981
+  ],
+  "pivot_right_hardware": [
+   2908,
+   1015
+  ],
+  "servo_gear_printed": [
+   10050,
+   2456
+  ],
+  "base_collision": [
+   214550,
+   808
+  ],
+  "ebox_collision": [
+   66636,
+   1210
+  ],
+  "finger_left_collision": [
+   12570,
+   1896
+  ],
+  "finger_right_collision": [
+   12570,
+   1896
+  ],
+  "idler_gear_collision": [
+   10906,
+   1706
+  ],
+  "link1_collision": [
+   338866,
+   2420
+  ],
+  "link2_collision": [
+   219278,
+   2506
+  ],
+  "link3_collision": [
+   92544,
+   1582
+  ],
+  "link4_collision": [
+   209846,
+   2288
+  ],
+  "link5_collision": [
+   56842,
+   1824
+  ],
+  "pivot_left_collision": [
+   2908,
+   920
+  ],
+  "pivot_right_collision": [
+   2908,
+   920
+  ],
+  "servo_gear_collision": [
+   10050,
+   1632
+  ]
+ },
+ "dropped": 44
+}

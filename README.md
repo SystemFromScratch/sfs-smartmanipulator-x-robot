@@ -32,7 +32,7 @@ docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh   #
 
 The smoke test passes when it receives `/joint_states`, finds `joint_state_broadcaster`, `arm_controller`, and `gripper_controller` active, and `arm_controller` executes a short trajectory. `run --rm probe bash` opens a shell on that second host for your own `ros2` commands. The same steps are VS Code tasks (**Robot PC: …**). Stop with **Ctrl+C** or `docker compose -f docker/docker-compose.yml down`.
 
-The robot description is a **placeholder**: joint structure and names follow the Moveo axes, but lengths and limits are not measured yet (`TODO(CAD)` in `smartmanipulator_x_description/urdf/`). The details, including how the Operator PC joins `smx_net`, are in [Robot PC](docs/robot-pc/index.md).
+The robot description is generated from the BCN3D Moveo CAD (link lengths, joint axes, meshes, gripper linkage; see `tools/cad/` and [BCN3D Moveo mechanics](docs/mechanical/index.md)); joint limits are still placeholders until measured on the arm. The details, including how the Operator PC joins `smx_net`, are in [Robot PC](docs/robot-pc/index.md).
 
 ## Robot PC with the SmartFusion2 (Linux)
 
@@ -58,7 +58,7 @@ ros2 pkg list | grep -E '^(dynamixel_sdk|dynamixel_interfaces|dynamixel_hardware
 
 Type `exit` to stop the interactive shell; `--rm` removes that container. The image uses `ros:jazzy-ros-base` and contains ROS control, the DYNAMIXEL SDK/interface, Robot PC packages, USB diagnostics, and build tools. It deliberately excludes MoveIt 2, RViz2, Gazebo, and the upstream OpenMANIPULATOR GUI/bringup packages. The workspace is baked into the image, not bind-mounted, so rebuild after changing project sources or `ros2_robot.repos`.
 
-The real-hardware `ros2_control` path is not configured yet: `robot.launch.py` refuses `use_mock_hardware:=false`. Hardware operation is not yet validated: the Control Table, protocol behavior, timing, and final robot configuration remain to be verified in [`docs/dynamixel/compatibility-spec.md`](docs/dynamixel/compatibility-spec.md), and the robot description is a placeholder until it is measured against the Moveo CAD. Operator PC code and assets are maintained in a separate repository and are not included here.
+The real-hardware `ros2_control` path is not configured yet: `robot.launch.py` refuses `use_mock_hardware:=false`. Hardware operation is not yet validated: the Control Table, protocol behavior, timing, and final robot configuration remain to be verified in [`docs/dynamixel/compatibility-spec.md`](docs/dynamixel/compatibility-spec.md), and the joint limits of the robot description are placeholders until measured on the arm. Operator PC code and assets are maintained in a separate repository and are not included here.
 
 ## Development
 
