@@ -1,17 +1,64 @@
 name: smartmanipulator-x
 
+# Robot PC runtime on one computer.
+#
+# smx_net is a user-defined Docker bridge network that stands in for the
+# Ethernet link between the Robot PC and the Operator PC. Every container on
+# it (this Robot PC, the probe below, the Operator PC container from the
+# Operator PC repository) discovers the others through ROS 2 DDS exactly as
+# separate machines on one subnet would.
+#
+#   docker compose -f docker/docker-compose.yml up --build robot_pc   # mock hardware
+#   docker compose -f docker/docker-compose.yml run --rm probe         # second "host"
+#
+# Real hardware: add docker/docker-compose.hw.yml (USB device pass-through).
+
+x-ros-env: &ros-env
+  ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-42}
+  RMW_IMPLEMENTATION: rmw_fastrtps_cpp
+  ROS_AUTOMATIC_DISCOVERY_RANGE: SUBNET
+
 services:
-  smartmanipulator_x:
-    image: smartmanipulator-x-robot:jazzy
+  robot_pc:
+    image: ${SMX_ROBOT_IMAGE:-smartmanipulator-x-robot:jazzy}
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    hostname: robot-pc
     working_dir: /ws
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
-    group_add:
-      - dialout
-    environment:
-      ROS_DOMAIN_ID: "0"
+    init: true
+    stop_signal: SIGINT
+    environment: *ros-env
+    networks:
+      smx_net:
+        ipv4_address: ${SMX_ROBOT_IP:-10.77.0.10}
+    command:
+      - ros2
+      - launch
+      - smartmanipulator_x_bringup
+      - robot.launch.py
+      - use_mock_hardware:=true
+
+  # A second ROS 2 host on smx_net for checks without the Operator PC:
+  # it uses the same image but runs no robot nodes.
+  probe:
+    image: ${SMX_ROBOT_IMAGE:-smartmanipulator-x-robot:jazzy}
+    profiles: [tools]
+    hostname: probe
+    working_dir: /ws
+    init: true
+    environment: *ros-env
+    networks:
+      - smx_net
     stdin_open: true
     tty: true
+    command: ["bash"]
+
+networks:
+  smx_net:
+    # Fixed name, so the Operator PC compose file can join it as `external: true`.
+    name: smx_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SMX_SUBNET:-10.77.0.0/24}

@@ -1,4 +1,49 @@
-# Controller names, joint names, and update frequency must be derived from
-# the verified OpenMANIPULATOR-X ROS 2 configuration before enabling controllers.
+# ros2_control controllers of the SmartManipulator-X Robot PC.
+#
+# Joint names come from smartmanipulator_x_description. The update rate is
+# a starting value for mock hardware; the rate for the real DYNAMIXEL bus
+# must be confirmed against the SmartFusion2 / Doppelstep timing before
+# hardware use (docs/dynamixel/compatibility-spec.md).
+
 controller_manager:
-  ros__parameters: {}
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+arm_controller:
+  ros__parameters:
+    joints:
+      - j1_base
+      - j2_shoulder
+      - j3_elbow
+      - j4_forearm_roll
+      - j5_wrist
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: false
+    action_monitor_rate: 20.0
+    constraints:
+      stopped_velocity_tolerance: 0.01
+      goal_time: 0.5
+
+gripper_controller:
+  ros__parameters:
+    joints:
+      - gripper
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    action_monitor_rate: 20.0

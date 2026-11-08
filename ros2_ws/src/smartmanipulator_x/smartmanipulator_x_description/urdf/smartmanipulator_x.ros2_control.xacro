@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+  ros2_control block of SmartManipulator-X.
+
+  The joint contract (names, interfaces) is the same for every backend; only
+  the <hardware> element changes:
+
+    use_mock_hardware=true   mock_components/GenericSystem (now)
+    use_mock_hardware=false  dynamixel_hardware_interface/DynamixelHardware
+                             with SmartFusion2 or Doppelstep: not configured
+                             yet, see docs/dynamixel/compatibility-spec.md.
+                             The bringup launch file refuses to start it.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="smx_position_joint" params="name">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="smartmanipulator_x_ros2_control" params="use_mock_hardware">
+    <ros2_control name="SmartManipulatorX" type="system">
+      <hardware>
+        <xacro:if value="${use_mock_hardware}">
+          <plugin>mock_components/GenericSystem</plugin>
+          <!-- Commanded position is copied to the state; velocity is derived. -->
+          <param name="calculate_dynamics">false</param>
+        </xacro:if>
+        <xacro:unless value="${use_mock_hardware}">
+          <!-- Real hardware: deliberately empty until verified. -->
+          <plugin>smx_real_hardware_not_configured</plugin>
+        </xacro:unless>
+      </hardware>
+
+      <xacro:smx_position_joint name="j1_base"/>
+      <xacro:smx_position_joint name="j2_shoulder"/>
+      <xacro:smx_position_joint name="j3_elbow"/>
+      <xacro:smx_position_joint name="j4_forearm_roll"/>
+      <xacro:smx_position_joint name="j5_wrist"/>
+      <xacro:smx_position_joint name="gripper"/>
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

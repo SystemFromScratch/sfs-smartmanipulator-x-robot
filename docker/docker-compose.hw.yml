@@ -1,0 +1,16 @@
+# Hardware override: passes the controller's USB CDC device into the Robot PC
+# container. Linux host only (Docker Desktop on Windows does not expose
+# /dev/ttyACM*). Use it together with the base file:
+#
+#   docker compose -f docker/docker-compose.yml -f docker/docker-compose.hw.yml \
+#     run --rm robot_pc bash
+#
+# The real-hardware ros2_control path is not configured yet; until it is, use
+# this override for device diagnostics (picocom, DynamixelSDK tools) only.
+
+services:
+  robot_pc:
+    devices:
+      - ${SMX_SERIAL_DEVICE:-/dev/ttyACM0}:/dev/ttyACM0
+    group_add:
+      - dialout

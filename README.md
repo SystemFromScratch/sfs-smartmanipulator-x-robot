@@ -18,11 +18,23 @@ Use the repository-local `.venv` for MkDocs (`requirements-docs.txt`). The VS Co
 
 ## Prerequisites
 
-- Ubuntu 24.04 Linux Robot PC. The USB device mapping below targets Linux; Docker Desktop on Windows does not automatically expose a Linux `/dev/ttyACM0` device.
-- Docker Engine and Docker Compose.
-- For hardware use, a SmartFusion2 board enumerated as USB CDC, typically `/dev/ttyACM0`.
+- Simulation (mock hardware): any computer with Docker Engine or Docker Desktop (Windows with the WSL 2 backend works) and Docker Compose v2.
+- Real hardware: an Ubuntu 24.04 Linux Robot PC (arm64 or amd64) and the SmartFusion2 board enumerated as USB CDC, typically `/dev/ttyACM0`. Docker Desktop on Windows does not expose a Linux `/dev/ttyACM0` device.
 
-## Robot PC Docker image
+## Robot PC in simulation on one computer
+
+The Compose file creates the Docker network `smx_net` (`10.77.0.0/24`), which stands in for the Ethernet link between the Robot PC and the Operator PC. The Robot PC container (`10.77.0.10`) runs `robot_state_publisher`, `ros2_control` with mock hardware, and the controllers; any other container on `smx_net` with the same `ROS_DOMAIN_ID` (default 42; to change it, copy `docker/env.example` to `docker/.env`) sees it through ROS 2 DDS like a second machine on the LAN. From the repository root:
+
+```bash
+docker compose -f docker/docker-compose.yml up --build robot_pc      # terminal 1: the Robot PC
+docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh   # terminal 2: check from a second host
+```
+
+The smoke test passes when it receives `/joint_states`, finds `joint_state_broadcaster`, `arm_controller`, and `gripper_controller` active, and `arm_controller` executes a short trajectory. `run --rm probe bash` opens a shell on that second host for your own `ros2` commands. The same steps are VS Code tasks (**Robot PC: …**). Stop with **Ctrl+C** or `docker compose -f docker/docker-compose.yml down`.
+
+The robot description is a **placeholder**: joint structure and names follow the Moveo axes, but lengths and limits are not measured yet (`TODO(CAD)` in `smartmanipulator_x_description/urdf/`). The details, including how the Operator PC joins `smx_net`, are in [Robot PC](docs/robot-pc/index.md).
+
+## Robot PC with the SmartFusion2 (Linux)
 
 Connect the SmartFusion2 to the Robot PC and check that Linux sees the USB CDC device:
 
@@ -31,16 +43,10 @@ lsusb
 ls -l /dev/ttyACM0
 ```
 
-If the board appears under another `/dev/ttyACM*` path, update the device mapping in `docker/docker-compose.yml` to match before starting the container. Check `ros2_robot.repos`; its `jazzy` refs are branch names and can move. From the repository root, build the image:
+If the board appears under another `/dev/ttyACM*` path, set `SMX_SERIAL_DEVICE` in `docker/.env` (template: `docker/env.example`). Check `ros2_robot.repos`; its `jazzy` refs are branch names and can move. The hardware override `docker/docker-compose.hw.yml` passes the device into the container. Start an interactive Robot PC shell with it:
 
 ```bash
-docker compose -f docker/docker-compose.yml build
-```
-
-The Compose service builds the image tagged `smartmanipulator-x-robot:jazzy`. Start an interactive Robot PC container with the USB device passed through:
-
-```bash
-docker compose -f docker/docker-compose.yml run --rm smartmanipulator_x
+docker compose -f docker/docker-compose.yml -f docker/docker-compose.hw.yml run --rm robot_pc bash
 ```
 
 The container entrypoint sources ROS Jazzy and the built workspace automatically. Inside it, confirm the USB node and key ROS packages are visible:
@@ -52,7 +58,7 @@ ros2 pkg list | grep -E '^(dynamixel_sdk|dynamixel_interfaces|dynamixel_hardware
 
 Type `exit` to stop the interactive shell; `--rm` removes that container. The image uses `ros:jazzy-ros-base` and contains ROS control, the DYNAMIXEL SDK/interface, Robot PC packages, USB diagnostics, and build tools. It deliberately excludes MoveIt 2, RViz2, Gazebo, and the upstream OpenMANIPULATOR GUI/bringup packages. The workspace is baked into the image, not bind-mounted, so rebuild after changing project sources or `ros2_robot.repos`.
 
-The image build and package compilation have succeeded. Hardware operation is not yet validated: the Control Table, protocol behavior, timing, and final robot configuration remain to be verified in [`docs/dynamixel/compatibility-spec.md`](docs/dynamixel/compatibility-spec.md), and the current bringup/config packages are still scaffolds without a complete real-robot launch configuration. Operator PC code and assets are maintained in a separate repository and are not included here.
+The real-hardware `ros2_control` path is not configured yet: `robot.launch.py` refuses `use_mock_hardware:=false`. Hardware operation is not yet validated: the Control Table, protocol behavior, timing, and final robot configuration remain to be verified in [`docs/dynamixel/compatibility-spec.md`](docs/dynamixel/compatibility-spec.md), and the robot description is a placeholder until it is measured against the Moveo CAD. Operator PC code and assets are maintained in a separate repository and are not included here.
 
 ## Development
 
@@ -60,4 +66,4 @@ See the [development guide](docs/development/index.md) for prerequisites, `.venv
 
 Project-owned files are licensed under Apache License 2.0, matching the ROBOTIS OpenMANIPULATOR-X ROS 2 repository. Third-party dependencies retain their own licenses; see [`LICENSE`](LICENSE).
 
-No actuator addresses, operating modes, update frequencies, or compatibility claims are assumed by this scaffold.
+No actuator addresses, operating modes, or compatibility claims are assumed by this scaffold; the 100 Hz controller rate in `controllers.yaml` is a starting value for mock hardware only.

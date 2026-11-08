@@ -5,7 +5,11 @@ ENV TZ=Europe/Warsaw
 ENV ROS_DISTRO=jazzy
 ENV ROS_WS=/ws
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-ENV ROS_DOMAIN_ID=0
+ENV ROS_DOMAIN_ID=42
+# UDP-only Fast DDS profile (see docker/dds/fastdds_udp.xml). Jazzy reads the
+# FASTDDS_ name; the FASTRTPS_ name is kept for older tools.
+ENV FASTDDS_DEFAULT_PROFILES_FILE=/etc/smx/fastdds_udp.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/etc/smx/fastdds_udp.xml
 
 SHELL ["/bin/bash", "-c"]
 
@@ -29,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-ros2-controllers \
     ros-jazzy-controller-manager \
     ros-jazzy-robot-state-publisher \
+    ros-jazzy-ros2controlcli \
     ros-jazzy-xacro \
     && rm -rf /var/lib/apt/lists/*
 
@@ -66,11 +71,18 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
       --symlink-install \
       --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
+COPY docker/dds/fastdds_udp.xml /etc/smx/fastdds_udp.xml
+COPY tools/diagnostics /opt/smx/diagnostics
+# sed: tolerate CRLF checkouts on Windows hosts.
+RUN find /opt/smx/diagnostics -name '*.sh' -exec sed -i 's/\r$//' {} + -exec chmod +x {} +
+
 COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 RUN echo 'source /opt/ros/${ROS_DISTRO}/setup.bash' >> /root/.bashrc && \
-    echo 'source ${ROS_WS}/install/setup.bash' >> /root/.bashrc
+    echo 'source ${ROS_WS}/install/setup.bash' >> /root/.bashrc && \
+    echo 'export PATH=/opt/smx/diagnostics:${PATH}' >> /root/.bashrc
+ENV PATH=/opt/smx/diagnostics:${PATH}
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

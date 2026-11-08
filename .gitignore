@@ -13,3 +13,6 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local Compose overrides (template: docker/env.example)
+docker/.env
