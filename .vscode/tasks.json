@@ -51,6 +51,91 @@
             },
             "isBackground": true,
             "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Build image",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "build",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Start (mock hardware)",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "up",
+                "--build",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Robot PC: Stop",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "down"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Smoke test (probe)",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "run",
+                "--rm",
+                "probe",
+                "smx_smoke_test.sh"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Robot PC: Probe shell",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "run",
+                "--rm",
+                "probe",
+                "bash"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
         }
     ]
 }

@@ -9,6 +9,8 @@ on:
     paths:
       - docker/Dockerfile
       - docker/entrypoint.sh
+      - docker/dds/**
+      - tools/diagnostics/**
       - ros2_robot.repos
       - ros2_ws/src/smartmanipulator_x/**
   workflow_dispatch:
