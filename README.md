@@ -120,7 +120,7 @@ See [Development](docs/development.md) for the details.
 [GitHub](https://github.com/AntonVynohradov) ·
 [LinkedIn](https://www.linkedin.com/in/vynohradov) ·
 [ORCID 0009-0005-6965-0911](https://orcid.org/0009-0005-6965-0911) ·
-[avynohradov@systemfromscratch.com](mailto:avynohradov@systemfromscratch.com)
+[contact@systemfromscratch.com](mailto:contact@systemfromscratch.com)
 
 ## License
 
