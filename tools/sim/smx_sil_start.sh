@@ -11,12 +11,16 @@
 #   SMX_BAUD_RATE    passed to the hardware interface (default 9600). The virtual bus
 #                    ignores it, but DynamixelSDK derives its packet timeout from it
 #                    for the reads at start (activation, Fast Sync Read fallback).
-#   SMX_UPDATE_RATE  controller_manager rate in Hz (default 25). In the control loop
+#   SMX_UPDATE_RATE  controller_manager rate in Hz (default 10). In the control loop
 #                    dynamixel_hardware_interface sets the read timeout to one control
-#                    period (setPacketTimeout(period_ms)), whatever the baud rate. A
-#                    Sync Read of six simulated drives takes up to about 25 ms (10 ms
-#                    polling of each drive), so the period must be longer than that:
-#                    50 Hz (20 ms) gives a few timeouts per second, 25 Hz (40 ms) none.
+#                    period (setPacketTimeout(period_ms)), whatever the baud rate. The
+#                    drives answer a Sync Read one after the other, and Zephyr native_sim
+#                    looks at the serial port of a drive only every 10 ms (emulated UART
+#                    interrupt), so a Sync Read of six drives takes up to about 60 ms:
+#                    10 Hz (100 ms) gives no timeout, 25 Hz (40 ms) a few per second.
+#   SMX_SIL_BUS_ARGS more options of smx_dxl_bus.py (default none). For doppelstep
+#                    without the X430 emulator 1.1.0 (drives answer at once):
+#                    "--fast-read drop --read-order request", then 25 Hz works too.
 
 set -euo pipefail
 
@@ -25,8 +29,10 @@ IDS="${SMX_SIL_IDS:-1,2,3,4,5,6}"
 LINK=/dev/ttyDXL
 READY="$(mktemp -u)"
 
+# SMX_SIL_BUS_ARGS is split into words on purpose (several options)
+# shellcheck disable=SC2086
 python3 /opt/smx/sim/smx_dxl_bus.py --devices "${DEVICES}" --assign-ids "${IDS}" \
-  --link "${LINK}" --ready-file "${READY}" &
+  --link "${LINK}" --ready-file "${READY}" ${SMX_SIL_BUS_ARGS:-} &
 BUS_PID=$!
 trap 'kill "${BUS_PID}" 2>/dev/null || true' EXIT
 
@@ -41,7 +47,7 @@ done
 
 ros2 launch smartmanipulator_x_bringup robot.launch.py \
   hardware:=sil port_name:="${LINK}" baud_rate:="${SMX_BAUD_RATE:-9600}" \
-  update_rate:="${SMX_UPDATE_RATE:-25}" &
+  update_rate:="${SMX_UPDATE_RATE:-10}" &
 LAUNCH_PID=$!
 trap 'kill -INT "${LAUNCH_PID}" 2>/dev/null; wait "${LAUNCH_PID}" 2>/dev/null; kill "${BUS_PID}" 2>/dev/null || true' EXIT INT TERM
 wait -n "${LAUNCH_PID}" "${BUS_PID}"

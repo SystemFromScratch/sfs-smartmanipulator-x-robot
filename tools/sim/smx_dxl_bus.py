@@ -11,19 +11,18 @@ half-duplex Protocol 2.0 bus and exposes it to the Robot PC as a serial device:
 
 * Bytes the host writes to the pseudo-terminal go to every drive, like on a shared wire.
 * Bytes a drive sends go to the host *and to every other drive*, as on the real wire.
-  Fast Sync Read and Fast Bulk Read need this: the drives answer with one common
-  status packet, each drive appending its part after it has heard the part of the
-  drive before it.
-* Fast Sync Read and Fast Bulk Read are not passed to the drives by default
-  (``--fast-read drop``). Each doppelstep drive answers them only for its own ID and
-  does not append its part to the answer of the drive before it, so several drives
-  would send several packets where the host expects one. Without an answer, the ROBOTIS
-  hardware interface falls back to normal Sync Read after 10 attempts.
-  ``--fast-read forward`` passes them on (for a firmware that chains the answers).
-* Answers to Sync Read and Bulk Read are passed to the host in the order of the IDs in
-  the request (``--read-order request``). On a real bus each device waits for its
-  turn; the simulated drives answer at once, in random order, and DynamixelSDK drops
-  an answer that arrives before its turn. ``--read-order arrival`` disables this.
+  A drive needs this to take its turn in a Sync Read or Bulk Read (it answers after the
+  status packet of the ID before it), and Fast Sync/Bulk Read chaining would need it.
+* By default the bus behaves like the wire and leaves the protocol to the drives:
+  Fast Sync/Bulk Read are passed on (``--fast-read forward``) and answers reach the host
+  as they arrive (``--read-order arrival``). doppelstep with the X430 emulator 1.1.0 or
+  later takes turns in a Sync/Bulk Read and stays silent on a Fast Sync/Bulk Read of
+  several drives, so the ROBOTIS hardware interface falls back to Sync Read.
+* For older firmware, whose drives answer at once, two workarounds remain:
+  ``--fast-read drop`` keeps Fast Sync/Bulk Read from the drives (each would answer
+  with its own packet), and ``--read-order request`` passes Sync/Bulk Read answers to
+  the host in the order of the request (DynamixelSDK drops an answer that arrives
+  before its turn).
 * No echo: the host does not receive its own packets (the bus interface of the
   CM4-Duino suppresses the echo in hardware, see docs/hardware/wiring.md), and a
   drive does not receive its own bytes back.
@@ -287,8 +286,8 @@ class Bus:
                                 # the host's packet timeout, else late answers leak
                                 # into the next read)
 
-    def __init__(self, pty, endpoints, connect_timeout=2.0, fast_read="drop",
-                 read_order="request"):
+    def __init__(self, pty, endpoints, connect_timeout=2.0, fast_read="forward",
+                 read_order="arrival"):
         self.pty = pty
         self.fast_read = fast_read
         self.read_order = read_order
@@ -350,8 +349,8 @@ class Bus:
                 time.sleep(0.0005)
 
     def _start_read(self, frame):
-        """Remember the ID order of a Sync Read or Bulk Read request."""
-        if self.read_order != "request" or len(frame) < 10:
+        """Remember the IDs of a Sync Read or Bulk Read request (diagnostics, ordering)."""
+        if len(frame) < 10:
             return
         inst, params = frame[7], unstuff(frame[8:-2])
         if inst == INST_SYNC_READ:
@@ -362,8 +361,9 @@ class Bus:
             return
         now = time.monotonic()
         self._close_read(now)
-        self._order, self._held = ids, {}
-        self._order_deadline = now + self.READ_ORDER_TIMEOUT
+        if self.read_order == "request":
+            self._order, self._held = ids, {}
+            self._order_deadline = now + self.READ_ORDER_TIMEOUT
         self._read_t0, self._read_ids, self._read_seen = now, ids, {}
         self.stats["reads"] += 1
 
@@ -521,12 +521,14 @@ def main(argv=None):
                     help="path of the serial device for the host (default /dev/ttyDXL)")
     ap.add_argument("--connect-timeout", type=float, default=60.0,
                     help="seconds to wait for every drive at start (default 60)")
-    ap.add_argument("--fast-read", choices=("drop", "forward"), default="drop",
-                    help="Fast Sync/Bulk Read from the host: drop (default; the host falls "
-                         "back to Sync Read) or forward to the drives")
-    ap.add_argument("--read-order", choices=("request", "arrival"), default="request",
-                    help="answers to Sync/Bulk Read: in the ID order of the request "
-                         "(default, as on a real bus) or as they arrive")
+    ap.add_argument("--fast-read", choices=("forward", "drop"), default="forward",
+                    help="Fast Sync/Bulk Read from the host: forward to the drives (default, "
+                         "as on the wire) or drop (workaround for drives without the X430 "
+                         "emulator 1.1.0: the host falls back to Sync Read)")
+    ap.add_argument("--read-order", choices=("arrival", "request"), default="arrival",
+                    help="answers to Sync/Bulk Read: as they arrive (default, as on the "
+                         "wire; the drives take turns) or put in the ID order of the "
+                         "request (workaround for drives that answer at once)")
     ap.add_argument("--ready-file", default=None,
                     help="file created once the bus is up (for start scripts)")
     ap.add_argument("-v", "--verbose", action="store_true")

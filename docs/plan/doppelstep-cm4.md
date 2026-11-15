@@ -24,10 +24,10 @@ stays unchanged and connects over ROS 2 DDS.
 | D4 | Joint bus speaks **plain DYNAMIXEL Protocol 2.0**, with no second link layer: DXL is already a collision-free master/slave protocol, and a second MAC would break direct compatibility with DynamixelSDK, `dynamixel_hardware_interface` and DYNAMIXEL Wizard | Agreed |
 | D5 | Half-duplex single-wire UART driver is implemented **in doppelstep** (Zephyr, STM32G431 USART single-wire mode) | Agreed |
 | D6 | Bench link PC ↔ B-G431B-ESC1: **ST-LINK VCP** (keeps SWD/RTT debugging available). A separate USB-UART adapter only if needed later | Agreed |
-| D7 | Physical layer in the arm: TTL single-wire first; RS-485 (auto-direction transceiver) only if Stage 4 noise measurements require it. No real ROBOTIS servos share the bus, so the choice is free | Proposed |
-| D8 | Baud rate **1 Mbps** (OpenMANIPULATOR-X default); doppelstep factory setting 57600, up to 4.5 Mbps | Proposed, verify ST-LINK VCP limit in Stage 2 |
+| D7 | Physical layer in the arm: TTL single-wire first; RS-485 (auto-direction transceiver) only if Stage 4 noise measurements require it. No real ROBOTIS servos share the bus, so the choice is free | Agreed (2026-11-15) |
+| D8 | Baud rate **1 Mbps** (OpenMANIPULATOR-X default); doppelstep factory setting 57600, up to 4.5 Mbps; each drive is set once with `tools/diagnostics/smx_drive_setup.py` | Agreed (2026-11-15); the ST-LINK VCP limit is checked in Stage 2 for the bench only |
 | D9 | Gripper (MG996R, PWM): **virtual DYNAMIXEL on ID 7** (small MCU reusing the doppelstep X430 emulator, PWM output), so the joint contract and `gripper_controller` stay unchanged. Built as a **separate project after** the chain Operator PC → Robot PC → doppelstep works; until then the gripper stays on mock hardware | Agreed |
-| D10 | Motor supply **24 V** (doppelstep accepts 10–28 V and is tuned for 24 V; board TVS 26 V stand-off). First runs at 12 V on a laboratory supply with current limit | Proposed |
+| D10 | Motor supply **24 V** (doppelstep accepts 10–28 V and is tuned for 24 V; board TVS 26 V stand-off). First runs at 12 V on a laboratory supply with current limit | Agreed (2026-11-15) |
 
 ## Target architecture
 
@@ -54,14 +54,14 @@ only the device behind each ID changes.
 
 ## Stage 0: bus decisions and half-duplex driver (doppelstep)
 
-- [ ] Single-wire half-duplex USART driver in doppelstep (`single-wire;` on `&usart2`, PB3, open-drain; turnaround vs. Return Delay Time)
-- [ ] Confirm D7 and D8, write them into the [compatibility specification](../dynamixel/compatibility-spec.md)
-- [ ] **Fast Sync/Bulk Read with several drives** (found in SIL, [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-2-2026-11-15)): doppelstep either chains the answers like the X series or stays silent when the request lists other IDs, so the ROBOTIS interface falls back to Sync Read
-- [ ] **Sync Read / Bulk Read turn-taking** (found in SIL, [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)): each drive answers only after the status packet of the ID before it in the request; today all answer at once, which collides on a shared wire
-- [ ] Configure IDs 1–6 and the baud rate on each doppelstep (EEPROM area)
-- [ ] Check Secondary (Shadow) ID support in doppelstep for the mirrored J2 pair, otherwise use `transmission_to_joint_matrix`
+- [x] Single-wire half-duplex USART in doppelstep: `app/single-wire.overlay` (`single-wire;` on `&usart2`, PB3 open-drain, MCUboot unchanged), built and checked in doppelstep CI. The test on a board (turnaround vs. Return Delay Time) needs a half-duplex USB adapter and moves to Stage 2
+- [x] D7, D8 and D10 agreed (2026-11-15) and recorded in the [compatibility specification](../dynamixel/compatibility-spec.md)
+- [x] **Fast Sync/Bulk Read with several drives** (found in SIL, [run 2](../dynamixel/compatibility-spec.md#sil-run-2-2026-11-15)): a drive stays silent when the request lists other IDs, the ROBOTIS interface falls back to Sync Read (X430 emulator 1.1.0, [SIL run 10](../dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus))
+- [x] **Sync Read / Bulk Read turn-taking** (found in SIL, [run 3](../dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)): each drive answers after the status packet of the ID before it, and stays silent if it does not come within 100 ms (X430 emulator 1.1.0, SIL run 10)
+- [x] IDs 1–6 and 1 Mbps on each drive: `tools/diagnostics/smx_drive_setup.py` writes ID and Baud Rate over the bus, one drive at a time (checked on a `native_sim` drive; on the real drives in Stage 2 and 4)
+- [x] Secondary (Shadow) ID: supported by the X430 emulator, but `dynamixel_hardware_interface` addresses each ID itself; the mirrored J2 pair stays on `transmission_to_joint_matrix` (verified in SIL)
 
-**Exit:** the doppelstep driver passes its SIL tests in single-wire mode; D7 and D8 recorded.
+**Exit:** reached in SIL (run 10): six drives share the virtual bus without help from it; D7, D8 and D10 recorded. The single-wire wire itself is tested on the board in Stage 2.
 
 ## Stage 1: SIL on the PC, no hardware
 
@@ -69,10 +69,10 @@ only the device behind each ID changes.
 - [x] Compose override `docker/docker-compose.sil.yml`: `robot_pc` with the real hardware interface on the virtual bus, gripper as mock
 - [x] `dynamixel_hardware_interface` configuration in `smartmanipulator_x_description` (port, baud, IDs 1–6, J2 pair, elbow gearbox), selected by `hardware:=sil|real`
 - [x] `robot.launch.py`: `hardware:=mock|sil|real`; `real` stays refused until Stage 2
-- [x] Run end to end with doppelstep `native_sim` and record the findings in the compatibility specification (SIL runs 1–9, 2026-11-15)
-- [x] `smx_smoke_test.sh` against the SIL profile: **PASS** (2026-11-15); no read timeouts at 25 Hz since SIL run 8
+- [x] Run end to end with doppelstep `native_sim` and record the findings in the compatibility specification (SIL runs 1–10, 2026-11-15)
+- [x] `smx_smoke_test.sh` against the SIL profile: **PASS** (2026-11-15); since SIL run 10 at 10 Hz with the bus behaving like the wire, no read timeouts
 - [x] Operator PC (MoveIt 2) plans and executes against the SIL Robot PC (SIL run 9, 2026-11-15)
-- [ ] SIL in CI, if the doppelstep simulations can be built there
+- [x] SIL in CI: decided against (2026-11-15), the job would take 20–30 min; SIL stays a local check ([tutorial](../tutorial-simulation.md))
 
 **Exit:** the Operator PC plans and executes a trajectory; the doppelstep sims follow it; smoke test green.
 
@@ -80,9 +80,10 @@ only the device behind each ID changes.
 
 - [ ] `docker-compose.hw.yml` points at the ST-LINK VCP device (one joint, others mock)
 - [ ] Verify the maximum VCP baud rate and USB latency against D8
+- [ ] Give the drive its joint ID and 1 Mbps with `smx_drive_setup.py`
 - [ ] Bring up the drive with the doppelstep [bring-up checklist](https://systemfromscratch.com/sfs-doppelstep/hardware/#bring-up-checklist) (dead time first)
 - [ ] Verify Control Table accesses and timing used by `dynamixel_hardware_interface` (Sync/Bulk Read, Fast Sync Read) on real hardware; RTT logging in parallel
-- [ ] Note: the VCP is a full-duplex bridge, so this stage tests the protocol and timing, not the single-wire physical layer; test single-wire separately with a USB-UART and a half-duplex wiring
+- [ ] Note: the VCP is a full-duplex bridge, so this stage tests the protocol and timing, not the single-wire physical layer; test the `single-wire.overlay` build separately with a half-duplex USB adapter (U2D2, or a 3.3 V USB-UART with a half-duplex hookup) and a logic analyzer for the turnaround
 
 **Exit:** one real joint follows trajectories from the Operator PC; compatibility spec rows set to *Verified*.
 

@@ -71,7 +71,8 @@ In short (details on the [project status](status.md) page):
   description generated from the Moveo CAD; **SIL**: the Robot PC drives six
   simulated doppelstep drives over a virtual DYNAMIXEL bus with the real
   hardware interface, and MoveIt on the Operator PC plans and executes against
-  it ([tutorial](tutorial-simulation.md)).
+  it ([tutorial](tutorial-simulation.md)); doppelstep v0.3.0 checked on a
+  B-G431B-ESC1 with a real motor at 12 V and 24 V.
 - **Next:** doppelstep changes for a shared bus (Fast Sync Read, Sync Read
   turn-taking, single-wire driver), then one drive on the bench, then the Robot
   PC on the CM4-Duino and the full arm.

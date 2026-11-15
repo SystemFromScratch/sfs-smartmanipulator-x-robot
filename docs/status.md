@@ -30,18 +30,19 @@ drive. The gripper follows afterwards as a separate project.
 | Robot description from the BCN3D Moveo CAD | **Done** | Joint limits are placeholders |
 | Real-hardware `ros2_control` path | **In progress** | `hardware:=sil` uses it on the virtual bus; `hardware:=real` refused until Stage 2 |
 | `dynamixel_hardware_interface` configuration (ports, IDs, shoulder transmission) | **Done**, verified in SIL | Gear and pulley ratios still placeholders until measured |
-| doppelstep multi-drive bus behaviour (Fast Sync Read, Sync Read turn-taking) | Open | Found in SIL; needed before the real bus ([compatibility specification](dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)) |
+| doppelstep multi-drive bus behaviour (Fast Sync Read, Sync Read turn-taking) | **Done** in SIL | X430 emulator 1.1.0; six drives share the virtual bus without help from it ([SIL run 10](dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus)) |
 | Per-target hardware configuration (`sim`, `sil`, `hw-pc`, `hw-cm4`) | Planned | [Robot PC on the CM4-Duino](robot-pc/cm4-duino.md#hardware-configuration-per-target) |
 | Deployment files `deploy/cm4-duino/` | Planned | Stage 3 |
 | CM4-Duino documentation and vendor archive | **Done** | [CM4-Duino](hardware/cm4-duino/index.md) |
 | CM4-Duino bring-up (OS, UART, Wi-Fi) | Planned | Stage 3 |
 | Wiring of the drives, the bus and the supplies | **Done** (documented, not built) | [Wiring](hardware/wiring.md); motor wiring and supply follow the doppelstep hardware documentation |
 | Bus interface CM4 ↔ single-wire bus | Planned | Circuit proposed in [Wiring](hardware/wiring.md#robot-pc-cm4-duino-to-the-bus-interface); build and measure in Stage 3 |
-| doppelstep firmware | **Done** in simulation (v0.1.0) | Not yet verified with a real motor; [doppelstep documentation](https://systemfromscratch.com/sfs-doppelstep/) |
-| doppelstep single-wire half-duplex driver | Planned | Stage 0, in the doppelstep repository |
+| doppelstep firmware | **Done** (v0.3.0) | Verified in simulation and on a B-G431B-ESC1 with a real motor (17HS19-2004S1, 12 V and 24 V); not yet with the arm's motors or with the Robot PC ([doppelstep documentation](https://systemfromscratch.com/sfs-doppelstep/)) |
+| doppelstep single-wire half-duplex driver | **Built**, not tested on a board | `single-wire.overlay` in doppelstep, checked in its CI; board test in Stage 2 |
+| Drive ID and baud rate setup | **Done** (tool) | `tools/diagnostics/smx_drive_setup.py`, checked on a simulated drive |
 | Control Table and timing verified against the Jazzy host sources | Open | [Compatibility specification](dynamixel/compatibility-spec.md) |
 | Gripper (MG996R) | Open | Separate project after the chain above works; virtual DYNAMIXEL on ID 7; [wiring and requirements](hardware/gripper-servo.md) documented |
-| Motor supply voltage | Proposed | 24 V (D10), to be confirmed |
+| Motor supply voltage | **Agreed** | 24 V (D10); first runs at 12 V with current limit |
 | Joint limits, motor directions, gear ratios on the real arm | Open | Stage 4 |
 | Emergency stop and safe power-up | Open | Needed before the full arm moves |
 

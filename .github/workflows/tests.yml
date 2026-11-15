@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - tools/sim/**
+      - tools/diagnostics/smx_drive_setup.py
       - .github/workflows/tests.yml
   pull_request:
     paths:
       - tools/sim/**
+      - tools/diagnostics/smx_drive_setup.py
       - .github/workflows/tests.yml
   workflow_dispatch:
 
@@ -23,5 +25,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Virtual DYNAMIXEL bus (tools/sim)
+      - name: Virtual DYNAMIXEL bus and drive setup tool (tools/sim, tools/diagnostics)
         run: python -m unittest discover -s tools/sim/tests -v

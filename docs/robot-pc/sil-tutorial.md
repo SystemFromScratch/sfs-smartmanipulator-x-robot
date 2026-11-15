@@ -6,8 +6,9 @@ Robot PC: the real ROS 2 control path (`ros2_control`, the ROBOTIS
 drives** instead of motors. You need no electronics, only a PC.
 
 > **Status (2026-11-15):** SIL works end to end and `smx_smoke_test.sh` passes. Since
-> SIL run 8 the controllers run at 25 Hz in SIL, and after the start there are no
-> failed reads and no overruns (see [known limitations](#known-limitations)). New to all
+> SIL run 10 the drives share the bus like on the wire (they take turns themselves), the
+> controllers run at 10 Hz, and after the start there are no failed reads and no
+> overruns (see [known limitations](#known-limitations)). New to all
 > this? Start with the [beginner tutorial](../tutorial-simulation.md). Stage 1 of the
 > [integration plan](../plan/doppelstep-cm4.md#stage-1-sil-on-the-pc-no-hardware).
 
@@ -172,9 +173,11 @@ lines, in this order. Tick them off:
 - [ ] `Ping succeeded. Dynamixel model number : 1020` for IDs 1–6.
 - [ ] `item_name: Drive Mode data: 1` for **ID 3** only (the mirrored shoulder drive).
 - [ ] Ten lines `FastSyncRead TxRx failed (attempt n/10)`, then
-      `switching to normal SyncRead permanently`. **This is expected**: the bus drops
-      Fast Sync Read, because doppelstep does not yet answer it on a shared bus, and
-      the interface falls back to normal Sync Read.
+      `switching to normal SyncRead permanently`. **This is expected**: a doppelstep
+      drive does not answer a Fast Sync Read that lists other drives too (it cannot
+      build their part of the answer), and the interface falls back to normal Sync Read.
+- [ ] `Loaded hardware 'SmartManipulatorXArm' from plugin 'dynamixel_hardware_interface/DynamixelHardware'`:
+      the arm runs on the drives, not on mock hardware.
 - [ ] `Torque ON` for IDs 1–6, then `Dynamixel Hardware Start!`.
 - [ ] `Configured and activated joint_state_broadcaster`, `arm_controller` and
       `gripper_controller`.
@@ -252,7 +255,7 @@ Count the messages that matter:
 ```bash
 grep -c "FastSyncRead TxRx failed" sil_run.log   # expected: 10 (the fallback at start)
 grep -c "\] SyncRead Rx Fail" sil_run.log         # failed normal Sync Reads, expected: 0
-grep -c "Overrun detected" sil_run.log            # control cycles longer than 40 ms, expected: 0
+grep -c "Overrun detected" sil_run.log            # control cycles longer than 100 ms, expected: 0
 grep "read incomplete" sil_run.log | head         # which drive did not answer in time
 grep "\[smx_dxl_bus\] INFO reads:" sil_run.log    # bus summary every 10 s
 ```
@@ -262,10 +265,10 @@ How to read them:
 | Message | Meaning | Acceptable now? |
 |---|---|---|
 | `FastSyncRead TxRx failed`, 10 times | fallback to Sync Read at start | yes, expected |
-| `SyncRead Rx Fail` / `Dynamixel Read Fail (Duration: … ms/5000ms)` | a read timed out (after one control period); the interface keeps the last values and retries in the next cycle | should not appear at 25 Hz; if it does, check that `SMX_UPDATE_RATE` is not set higher in `docker/.env`. The run fails only if the duration reaches 5000 ms |
-| `Overrun detected … 25 Hz` | one cycle took more than 40 ms | single ones at start are harmless; regular ones are not expected |
+| `SyncRead Rx Fail` / `Dynamixel Read Fail (Duration: … ms/5000ms)` | a read timed out (after one control period); the interface keeps the last values and retries in the next cycle | should not appear at 10 Hz; if it does, check that `SMX_UPDATE_RATE` is not set higher in `docker/.env`. The run fails only if the duration reaches 5000 ms |
+| `Overrun detected … 10 Hz` | one cycle took more than 100 ms | single ones at start are harmless; regular ones are not expected |
 | `read incomplete: missing ID n after x ms` | the bus line for the same event: which ID was missing, and after how long the host gave up | for diagnosis |
-| `reads: … last answer after p50 / p95 / max` | how long the drives take to answer | for diagnosis |
+| `reads: … last answer after p50 / p95 / max` | how long the drives take to answer, one after the other | for diagnosis; about 45 / 60 / 65 ms with six simulated drives |
 
 The log stays in your repository folder; it is not committed (delete it when you are
 done, or attach it to an issue).
@@ -296,21 +299,24 @@ again, and in SIL it switches off torque that an earlier run left on.
 | the smoke test fails at `[1/4]` | the Robot PC is not up yet, or different `ROS_DOMAIN_ID` | wait for `gripper_controller`; use the same `docker/.env` for both |
 | `docker` not found in WSL | WSL integration of Docker Desktop is off | step 0 |
 | `The container name "/dxl1" is already in use` | the drives still run from an earlier session | keep them (a new Robot PC finds them again) or `docker stop dxl1 … dxl6` and start them again |
-| `SyncRead Rx Fail` several times per second | the control period is shorter than a Sync Read of the simulated drives | keep `SMX_UPDATE_RATE` at 25 or lower (step 10) |
+| `SyncRead Rx Fail` several times per second | the control period is shorter than a Sync Read of the simulated drives | keep `SMX_UPDATE_RATE` at 10 or lower (step 10) |
+| `SyncRead Rx Fail` in every cycle, `read incomplete` for every read | doppelstep without the X430 emulator 1.1.0: the drives answer at once instead of in turn | update doppelstep and rebuild the drive (step 3), or set `SMX_SIL_BUS_ARGS=--fast-read drop --read-order request` in `docker/.env` |
+| `Loaded hardware 'SmartManipulatorXArm' from plugin 'mock_components/GenericSystem'` | an older Robot PC image, whose controller manager took the robot description of another host | rebuild the image (`up --build`) |
 
 ## Known limitations
 
-- **Timing of the simulated drives.** A `native_sim` drive polls its serial port every
-  10 ms, so a Sync Read of six drives takes up to about 25 ms instead of well under 1 ms
+- **Timing of the simulated drives.** Zephyr `native_sim` emulates the UART interrupt of
+  a drive with a thread that wakes every 10 ms. The drives answer a Sync Read one after
+  the other, so a read of six drives takes up to about 65 ms instead of well under 1 ms
   on the real bus. In the control loop the hardware interface waits for the answers for
   one control period only, whatever the baud rate, so SIL runs the controllers at
-  **25 Hz** (40 ms). At 50 Hz (20 ms) about 3 Sync Reads per second time out
-  ([SIL run 8](../dynamixel/compatibility-spec.md#sil-run-8-2026-11-15-pass-no-read-timeouts)).
+  **10 Hz** (100 ms). At 25 Hz (40 ms) a few Sync Reads per second time out
+  ([SIL run 10](../dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus)).
   You can try another rate with `SMX_UPDATE_RATE` in `docker/.env`.
-- **Fast Sync Read is not used.** doppelstep answers Fast Sync/Bulk Read only for its
-  own ID; on a shared bus that has to be fixed in the firmware (Stage 0 of the
-  [integration plan](../plan/doppelstep-cm4.md)). Until then the bus drops it and the
-  interface uses normal Sync Read.
+- **Fast Sync Read is not used** with several drives: one drive cannot build the chained
+  answer of all, so it stays silent and the interface uses normal Sync Read. On the real
+  bus at 1 Mbps a Sync Read of six drives takes about 1.5 ms (calculated: six status
+  packets of 21 bytes plus the request), so this costs little.
 - **The gripper** stays on mock hardware; it is a separate project (virtual DYNAMIXEL
   on ID 7).
 - SIL checks the protocol and the control path, **not the mechanics**: there is no

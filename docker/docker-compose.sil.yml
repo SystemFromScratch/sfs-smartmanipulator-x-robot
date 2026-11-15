@@ -20,7 +20,8 @@ services:
       SMX_SIL_DEVICES: ${SMX_SIL_DEVICES:-host.docker.internal:5555,host.docker.internal:5556,host.docker.internal:5557,host.docker.internal:5558,host.docker.internal:5559,host.docker.internal:5560}
       SMX_SIL_IDS: ${SMX_SIL_IDS:-1,2,3,4,5,6}
       SMX_BAUD_RATE: ${SMX_BAUD_RATE:-9600}
-      SMX_UPDATE_RATE: ${SMX_UPDATE_RATE:-25}
+      SMX_UPDATE_RATE: ${SMX_UPDATE_RATE:-10}
+      SMX_SIL_BUS_ARGS: ${SMX_SIL_BUS_ARGS:-}
     extra_hosts:
       - host.docker.internal:host-gateway
     command: ["smx_sil_start.sh"]

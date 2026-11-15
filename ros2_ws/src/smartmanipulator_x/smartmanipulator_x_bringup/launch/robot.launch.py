@@ -20,6 +20,8 @@ from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 HARDWARE = ("mock", "sil", "real")
+# Robot description of the controller manager: published by this launch file only.
+CONTROL_DESCRIPTION_TOPIC = "/smx/robot_pc/control_description"
 
 
 def _check_hardware(context, *args, **kwargs):
@@ -71,6 +73,27 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description}],
     )
 
+    # The controller manager takes its robot description, and with it the hardware
+    # (mock, sil, real), only from this launch file. /robot_description is shared by
+    # every host of the DDS domain: MoveIt on the Operator PC may publish it too, and
+    # the controller manager would load whichever description arrives first (for
+    # example mock hardware from an Operator PC started before the Robot PC). A second
+    # robot_state_publisher therefore publishes the description on a topic of the Robot
+    # PC alone; its TF and joint state topics are unused.
+    control_description = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        name="control_description_publisher",
+        output="log",
+        parameters=[{"robot_description": robot_description}],
+        remappings=[
+            ("robot_description", CONTROL_DESCRIPTION_TOPIC),
+            ("/tf", "/smx/robot_pc/unused/tf"),
+            ("/tf_static", "/smx/robot_pc/unused/tf_static"),
+            ("joint_states", "/smx/robot_pc/unused/joint_states"),
+        ],
+    )
+
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
@@ -79,7 +102,8 @@ def generate_launch_description():
             controllers_file,
             {"update_rate": ParameterValue(LaunchConfiguration("update_rate"), value_type=int)},
         ],
-        remappings=[("~/robot_description", "/robot_description")],
+        # ros2_control 4.x subscribes to "robot_description" (not "~/robot_description")
+        remappings=[("robot_description", CONTROL_DESCRIPTION_TOPIC)],
     )
 
     spawner = Node(
@@ -120,6 +144,7 @@ def generate_launch_description():
         ),
         OpaqueFunction(function=_check_hardware),
         robot_state_publisher,
+        control_description,
         control_node,
         spawner,
     ])

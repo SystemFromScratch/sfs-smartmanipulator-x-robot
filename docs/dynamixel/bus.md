@@ -7,9 +7,10 @@ packets, so it is built for the ROBOTIS host software, DYNAMIXEL Wizard and a
 USB-to-DYNAMIXEL adapter without changes; the
 [compatibility specification](compatibility-spec.md) records what is verified.
 
-> **Status (2026-11-15):** planned. Decisions D4–D8 of the
-> [integration plan](../plan/doppelstep-cm4.md#decisions); the parameters
-> marked *proposed* are confirmed in Stage 0 and Stage 2.
+> **Status (2026-11-15):** decisions D4–D8 of the
+> [integration plan](../plan/doppelstep-cm4.md#decisions) are agreed. The drives
+> share one bus in SIL ([SIL run 10](compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus));
+> the wire itself is built and measured in Stages 2 and 3.
 
 ## Topology
 
@@ -34,10 +35,10 @@ arbitration, so no second protocol layer is used on this bus (decision D4).
 | Parameter | Value | Status |
 | --- | --- | --- |
 | Protocol | DYNAMIXEL Protocol 2.0 | Fixed |
-| Physical layer | Single-wire half-duplex, open-drain, 3.3 V, one 470 Ω pull-up at the master; RS-485 with an auto-direction transceiver if Stage 4 noise measurements require it | Proposed (D7) |
-| Baud rate | **1 Mbps** (OpenMANIPULATOR-X default); doppelstep ships with 57600 bps and supports up to 4.5 Mbps ([DYNAMIXEL emulation](https://systemfromscratch.com/sfs-doppelstep/dynamixel/)) | Proposed (D8) |
+| Physical layer | Single-wire half-duplex, open-drain, 3.3 V, one 470 Ω pull-up at the master; RS-485 with an auto-direction transceiver if Stage 4 noise measurements require it | Agreed (D7) |
+| Baud rate | **1 Mbps** (OpenMANIPULATOR-X default); doppelstep ships with 57600 bps and supports up to 4.5 Mbps ([DYNAMIXEL emulation](https://systemfromscratch.com/sfs-doppelstep/dynamixel/)); `tools/diagnostics/smx_drive_setup.py` sets each drive once | Agreed (D8) |
 | Master UART | CM4 PL011 UART0 on GPIO14/GPIO15, `/dev/ttyAMA0` with Bluetooth disabled, stable name `/dev/ttyDXL` from a udev rule | Planned |
-| Device side | STM32G431 USART2 in single-wire half-duplex mode on PB3 (B-G431B-ESC1 pad J3-2), open-drain; planned in doppelstep as `single-wire;` on `&usart2` ([hardware](https://systemfromscratch.com/sfs-doppelstep/hardware/#dynamixel-bus)) | Not implemented (Stage 0) |
+| Device side | STM32G431 USART2 in single-wire half-duplex mode on PB3 (B-G431B-ESC1 pad J3-2), open-drain: doppelstep build with `single-wire.overlay` ([hardware](https://systemfromscratch.com/sfs-doppelstep/hardware/#the-dynamixel-bus)). Several drives take turns in Sync/Bulk Read (X430 emulator 1.1.0) | Built and checked in SIL and CI; on a board in Stage 2 |
 
 ### ID map
 
@@ -54,8 +55,9 @@ arbitration, so no second protocol layer is used on this bus (decision D4).
 The map is the [joint contract](../robot-pc/index.md#joint-contract) of the
 Robot PC. The two shoulder motors are mapped onto one joint with the
 `transmission_to_joint_matrix` / `joint_to_transmission_matrix` parameters of
-`dynamixel_hardware_interface`; whether doppelstep also supports the
-Secondary (Shadow) ID of the XM430 is checked in Stage 0.
+`dynamixel_hardware_interface`. doppelstep supports the Secondary (Shadow) ID of
+the XM430, but the hardware interface addresses every ID itself, so the
+transmission matrices stay (verified in SIL).
 
 ## Direction control on the master
 

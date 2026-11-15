@@ -36,6 +36,7 @@ class FakeDrive:
 
     def __init__(self, dxl_id=bus.FACTORY_ID, model=1020, read_delay=0.0):
         self.id, self.model, self.read_delay = dxl_id, model, read_delay
+        self.regs = {8: 1, 64: 0}    # one-byte registers: Baud Rate 57600, torque off
         self.srv = socket.socket()
         self.srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.srv.bind(("127.0.0.1", 0))
@@ -88,11 +89,25 @@ class FakeDrive:
             return self._status(bytes([self.model & 0xFF, self.model >> 8, 52]))
         if inst == bus.INST_READ and p[0] == bus.ADDR_ID:
             return self._status(bytes([self.id]))
+        if inst == bus.INST_READ and p[0] in self.regs:
+            return self._status(bytes([self.regs[p[0]]]))
         if inst == bus.INST_WRITE and p[0] == bus.ADDR_ID:
             reply = self._status()
             self.id = p[2]
             return reply
+        if inst == bus.INST_WRITE and len(p) == 3:
+            if p[0] < 64 and self.regs[64]:
+                return self._status_error(0x07)   # EEPROM locked while the torque is on
+            self.regs[p[0]] = p[2]
+            return self._status()
         return None
+
+    def _status_error(self, error):
+        body = bytes([bus.INST_STATUS, error])
+        length = len(body) + 2
+        frame = bus.HEADER + bytes([self.id, length & 0xFF, length >> 8]) + body
+        crc = bus.crc16(frame)
+        return frame + bytes([crc & 0xFF, crc >> 8])
 
     def close(self):
         self._stop = True
@@ -170,8 +185,24 @@ def _read_status(fd, timeout=1.0):
     return None, buf
 
 
-@unittest.skipUnless(HAVE_PTY, "needs a POSIX pseudo-terminal (Linux, WSL 2)")
-class BusEndToEndTest(unittest.TestCase):
+def _read_ids(fd, count, timeout=1.0):
+    """IDs of the status packets the host receives, in order."""
+    order, buf, deadline = [], b"", time.monotonic() + timeout
+    while len(order) < count and time.monotonic() < deadline:
+        buf += os.read(fd, 256)
+        while True:
+            pkt, buf = bus.parse_packet(buf)
+            if not pkt:
+                break
+            order.append(pkt["id"])
+    return order
+
+
+class _BusCase:
+    """End-to-end tests of the bus between a pty and three fake drives (both modes)."""
+
+    BUS_ARGS = []
+
     def setUp(self):
         # the later the ID, the sooner it answers: the worst order for the host
         self.drives = [FakeDrive(read_delay=d) for d in (0.03, 0.015, 0.0)]
@@ -181,7 +212,8 @@ class BusEndToEndTest(unittest.TestCase):
         devices = ",".join(f"127.0.0.1:{d.port}" for d in self.drives)
         self.proc = subprocess.Popen(
             [sys.executable, TOOL, "--devices", devices, "--assign-ids", "1,2,3",
-             "--link", self.link, "--ready-file", ready, "--connect-timeout", "5"],
+             "--link", self.link, "--ready-file", ready, "--connect-timeout", "5"]
+            + self.BUS_ARGS,
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         deadline = time.monotonic() + 10
         while not os.path.exists(ready):
@@ -223,19 +255,6 @@ class BusEndToEndTest(unittest.TestCase):
         own = [p for p in self.drives[0].received if p["instruction"] == bus.INST_STATUS]
         self.assertEqual(own, [], "a drive must not receive its own bytes back")
 
-    def test_sync_read_answers_come_in_request_order(self):
-        params = bytes([132, 0, 4, 0, 1, 2, 3])
-        os.write(self.fd, bus.packet(0xFE, bus.INST_SYNC_READ, params))
-        order, buf, deadline = [], b"", time.monotonic() + 1.0
-        while len(order) < 3 and time.monotonic() < deadline:
-            buf += os.read(self.fd, 256)
-            while True:
-                pkt, buf = bus.parse_packet(buf)
-                if not pkt:
-                    break
-                order.append(pkt["id"])
-        self.assertEqual(order, [1, 2, 3])
-
     def test_incomplete_read_is_reported(self):
         # ID 9 does not exist: the read stays incomplete until the host asks again
         os.write(self.fd, bus.packet(0xFE, bus.INST_SYNC_READ, bytes([132, 0, 4, 0, 1, 9])))
@@ -246,19 +265,6 @@ class BusEndToEndTest(unittest.TestCase):
         out = self.proc.communicate(timeout=5)[0].decode()
         self.assertIn("read incomplete: missing ID 9", out)
         self.assertIn("1 of 2 reads incomplete", out)
-
-    def test_fast_sync_read_is_not_passed_on(self):
-        # Fast Sync Read of IDs 1-3, Present Position (address 132, 4 bytes)
-        params = bytes([132, 0, 4, 0, 1, 2, 3])
-        os.write(self.fd, bus.packet(0xFE, bus.INST_FAST_SYNC_READ, params))
-        st, _ = _read_status(self.fd, timeout=0.3)
-        self.assertIsNone(st, "the host must get no answer, so it falls back to Sync Read")
-        for d in self.drives:
-            self.assertFalse(any(p["instruction"] == bus.INST_FAST_SYNC_READ for p in d.received))
-        # the bus still works afterwards
-        os.write(self.fd, bus.packet(3, bus.INST_PING))
-        st, _ = _read_status(self.fd)
-        self.assertEqual(st["id"], 3)
 
     def test_unknown_id_stays_silent(self):
         os.write(self.fd, bus.packet(9, bus.INST_PING))
@@ -271,6 +277,48 @@ class BusEndToEndTest(unittest.TestCase):
         os.write(self.fd, bus.packet(2, bus.INST_PING))
         st, _ = _read_status(self.fd)
         self.assertEqual(st["id"], 2)
+
+
+# Sync Read of IDs 1-3, Present Position (address 132, 4 bytes)
+READ_1_2_3 = bytes([132, 0, 4, 0, 1, 2, 3])
+
+
+@unittest.skipUnless(HAVE_PTY, "needs a POSIX pseudo-terminal (Linux, WSL 2)")
+class WireBusTest(_BusCase, unittest.TestCase):
+    """Default: the bus behaves like the wire and leaves the protocol to the drives."""
+
+    def test_sync_read_answers_pass_as_they_arrive(self):
+        # the fake drives answer at once; the bus does not reorder them
+        os.write(self.fd, bus.packet(0xFE, bus.INST_SYNC_READ, READ_1_2_3))
+        self.assertEqual(_read_ids(self.fd, 3), [3, 2, 1])
+
+    def test_fast_sync_read_reaches_the_drives(self):
+        os.write(self.fd, bus.packet(0xFE, bus.INST_FAST_SYNC_READ, READ_1_2_3))
+        time.sleep(0.2)
+        for d in self.drives:
+            self.assertTrue(any(p["instruction"] == bus.INST_FAST_SYNC_READ for p in d.received))
+
+
+@unittest.skipUnless(HAVE_PTY, "needs a POSIX pseudo-terminal (Linux, WSL 2)")
+class WorkaroundBusTest(_BusCase, unittest.TestCase):
+    """--fast-read drop --read-order request: for drives that answer at once."""
+
+    BUS_ARGS = ["--fast-read", "drop", "--read-order", "request"]
+
+    def test_sync_read_answers_come_in_request_order(self):
+        os.write(self.fd, bus.packet(0xFE, bus.INST_SYNC_READ, READ_1_2_3))
+        self.assertEqual(_read_ids(self.fd, 3), [1, 2, 3])
+
+    def test_fast_sync_read_is_not_passed_on(self):
+        os.write(self.fd, bus.packet(0xFE, bus.INST_FAST_SYNC_READ, READ_1_2_3))
+        st, _ = _read_status(self.fd, timeout=0.3)
+        self.assertIsNone(st, "the host must get no answer, so it falls back to Sync Read")
+        for d in self.drives:
+            self.assertFalse(any(p["instruction"] == bus.INST_FAST_SYNC_READ for p in d.received))
+        # the bus still works afterwards
+        os.write(self.fd, bus.packet(3, bus.INST_PING))
+        st, _ = _read_status(self.fd)
+        self.assertEqual(st["id"], 3)
 
 
 if __name__ == "__main__":

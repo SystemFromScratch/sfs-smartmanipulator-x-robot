@@ -193,8 +193,9 @@ Configured and activated gripper_controller
 ```
 
 Leave the terminal open. On the way you see ten lines `FastSyncRead TxRx failed
-(attempt n/10)`: that is **expected** (the Robot PC tries a faster read mode once, the
-simulated drives do not offer it yet, so it switches to the normal one).
+(attempt n/10)`: that is **expected** (the Robot PC tries a faster read mode first; with
+several drives on one bus they do not answer it, so it switches to the normal one, in
+which the drives answer one after the other).
 
 ### B3. Terminal 4: check that the Robot PC works
 

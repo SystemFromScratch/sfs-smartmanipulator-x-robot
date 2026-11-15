@@ -8,10 +8,14 @@ XM430-W350, so the unchanged ROBOTIS `dynamixel_hardware_interface` and
 DynamixelSDK are meant to drive it (to be verified, see the
 [compatibility specification](../dynamixel/compatibility-spec.md)).
 
-> **Status (2026-11-15):** doppelstep v0.1.0 is verified on a PC with a
-> simulated motor (`native_sim`), not yet with a real motor. One
-> B-G431B-ESC1 board is ready on the bench. The single-wire bus interface is
-> not implemented yet. The [doppelstep documentation](https://systemfromscratch.com/sfs-doppelstep/) is authoritative
+> **Status (2026-11-15):** doppelstep v0.3.0 (2026-11-14) is verified on a PC with a
+> simulated motor (`native_sim`) and on a B-G431B-ESC1 with a real motor
+> (17HS19-2004S1 at 12 V and 24 V: the test scenarios of the bench GUI, the protection
+> comparators, two minutes of moves at 1.5 A, the wiring self-test, the measured dead
+> time; DYNAMIXEL Wizard 2.0 over the ST-LINK virtual COM port). Not yet with the motors
+> and loads of the arm, and not yet on a shared bus with the Robot PC (Stage 2). The single-wire bus is built
+> (`single-wire.overlay`) and several drives share a bus in SIL; on a board it is
+> tested in Stage 2. The [doppelstep documentation](https://systemfromscratch.com/sfs-doppelstep/) is authoritative
 > for the drive; this page records only what SmartManipulator-X relies on and
 > links to the details.
 
@@ -52,7 +56,7 @@ actually reads and writes is checked in the
 | --- | --- | --- |
 | Simulation (SIL) | Firmware as `native_sim` on the PC, serial port over TCP (`tools/sim/run_native.py run --tcp 5555`) | Works; six instances drive the Robot PC over a virtual DYNAMIXEL bus ([SIL](../robot-pc/index.md#sil-simulated-doppelstep-drives), [tutorial](../tutorial-simulation.md)) |
 | Bench | PC ↔ ST-LINK **virtual COM port** of the board; SWD and RTT logging stay available at the same time | Planned (decision D6) |
-| Arm | Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND) | Planned, see [DYNAMIXEL bus](../dynamixel/bus.md) and [Wiring](wiring.md#joint-drives-b-g431b-esc1) |
+| Arm | Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND); doppelstep built with `single-wire.overlay` | Built, checked in SIL and CI; on the board in Stage 2, see [DYNAMIXEL bus](../dynamixel/bus.md) and [Wiring](wiring.md#joint-drives-b-g431b-esc1) |
 
 The ST-LINK virtual COM port is a full-duplex UART bridge on the same USART2.
 It tests the protocol and timing, not the single-wire physical layer. Because

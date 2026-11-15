@@ -76,8 +76,9 @@ Lengths, joint axes, and meshes come from the BCN3D Moveo CAD ([BCN3D Moveo mech
 ### SIL: simulated doppelstep drives
 
 > **Status (2026-11-15):** works end to end with six doppelstep `native_sim` drives;
-> `smx_smoke_test.sh` passes, without read timeouts since SIL run 8. Findings of all runs
-> are in the [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-8-2026-11-15-pass-no-read-timeouts). Stage 1 of the [integration plan](../plan/doppelstep-cm4.md#stage-1-sil-on-the-pc-no-hardware).
+> `smx_smoke_test.sh` passes, and since SIL run 10 the drives handle the shared bus
+> themselves, without help from the virtual bus. Findings of all runs are in the
+> [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus). Stage 1 of the [integration plan](../plan/doppelstep-cm4.md#stage-1-sil-on-the-pc-no-hardware).
 
 New to SIL? Follow the [step-by-step tutorial](sil-tutorial.md).
 
@@ -94,29 +95,29 @@ virtual DYNAMIXEL bus:
                                                   ...         ──> ... (ID 6)
 ```
 
-- Every byte the host sends goes to all drives; only the addressed drive answers,
-  as on the shared wire. What a drive sends also reaches the other drives: Fast
-  Sync Read, which the hardware interface uses, needs it, because the drives build
-  one common answer packet in turn. The host does not receive an echo of its own
-  packets, like with the bus interface of the CM4-Duino.
-- Fast Sync Read and Fast Bulk Read are dropped by default: doppelstep answers them
-  only for its own ID, so six drives would send six packets where the host expects
-  one. Without an answer the ROBOTIS interface falls back to normal Sync Read after
-  10 attempts (expect ten `FastSyncRead TxRx failed` lines at start). See the
-  [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-2-2026-11-15).
-- Answers to Sync Read and Bulk Read reach the host in the order of the request, as on
-  a real bus where each device waits for its turn; the simulated drives answer at once
-  ([SIL run 3](../dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)).
+- The virtual bus behaves like the wire. Every byte the host sends goes to all
+  drives; only the addressed drive answers. What a drive sends reaches the host and
+  the other drives, so a drive hears the status packet of the drive before it. The
+  host does not receive an echo of its own packets, like with the bus interface of
+  the CM4-Duino.
+- The drives take turns: in a Sync Read or Bulk Read each one answers after the
+  status packet of the ID before it. A Fast Sync/Bulk Read of several drives stays
+  unanswered (one drive cannot build the chained answer of all), and the ROBOTIS
+  interface falls back to normal Sync Read after 10 attempts: expect ten
+  `FastSyncRead TxRx failed` lines at start. Both need doppelstep with the X430
+  emulator 1.1.0 ([SIL run 10](../dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus)).
+  For older firmware the bus can do it instead: `SMX_SIL_BUS_ARGS=--fast-read drop
+  --read-order request` in `docker/.env` (runs 2 and 3).
 - `smx_bus_timing.py` measures PING and Sync Read answer times on the bus, for
   diagnosing timeouts.
-- Timing: a simulated drive polls its serial port every 10 ms, so a Sync Read of six
-  drives takes up to about 25 ms instead of well under 1 ms. In the control loop the
-  hardware interface waits for an answer for one control period only
-  (`setPacketTimeout(period_ms)`), so SIL runs the controllers at **25 Hz**
-  (`SMX_UPDATE_RATE`, period 40 ms); at 50 Hz a few Sync Reads per second timed out
-  ([SIL run 8](../dynamixel/compatibility-spec.md#sil-run-8-2026-11-15-pass-no-read-timeouts)).
-  `baud_rate` 9600 (`SMX_BAUD_RATE`) only lengthens the DynamixelSDK timeout of the
-  reads at start; the virtual bus ignores the baud rate. The bus reports each
+- Timing: Zephyr `native_sim` emulates the UART interrupt of a drive with a thread
+  that wakes every 10 ms, so with six drives taking turns a Sync Read takes up to
+  about 65 ms instead of well under 1 ms. In the control loop the hardware interface
+  waits for an answer for one control period only (`setPacketTimeout(period_ms)`),
+  so SIL runs the controllers at **10 Hz** (`SMX_UPDATE_RATE`, period 100 ms); at
+  25 Hz a few Sync Reads per second time out ([SIL run 8](../dynamixel/compatibility-spec.md#sil-run-8-2026-11-15-pass-no-read-timeouts),
+  run 10). `baud_rate` 9600 (`SMX_BAUD_RATE`) only lengthens the DynamixelSDK timeout
+  of the reads at start; the virtual bus ignores the baud rate. The bus reports each
   incomplete read (`read incomplete: missing ID …`) and a timing summary every 10 s.
   The communication error timeout of the interface is 5 s in SIL (500 ms otherwise),
   long enough for the 10 Fast Sync Read attempts before the fallback. The real bus
@@ -128,12 +129,26 @@ virtual DYNAMIXEL bus:
 - A freshly started drive answers on the factory ID 1; the tool first moves each
   drive to its joint ID (`--assign-ids`), over that drive's own connection.
 - The gripper stays on mock hardware (separate project).
+- The controller manager takes its robot description, and with it the hardware, from
+  `/smx/robot_pc/control_description`, which only `robot.launch.py` publishes. On the
+  shared `/robot_description` another host (MoveIt on the Operator PC) could otherwise
+  make it load mock hardware ([SIL run 10](../dynamixel/compatibility-spec.md#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus)).
+  Check with `ros2 control list_hardware_components`.
+
+On the real bus every drive needs its joint ID and the bus baud rate once (decision D8,
+1 Mbps); a new drive answers on ID 1 at 57600 bps. Connect one drive at a time and run
+`smx_drive_setup.py --port /dev/ttyDXL --id <joint ID>` (in the Robot PC image, or
+`tools/diagnostics/` of this repository). With `--tcp localhost:5555` it does the same
+for one simulated drive.
 
 Start the six simulated drives from the doppelstep repository
 ([getting started](https://systemfromscratch.com/sfs-doppelstep/getting-started/)), one per terminal or in the background:
 
 ```bash
-# in the sfs-doppelstep repository (WSL 2 or Linux, Docker); build once:
+# in the sfs-doppelstep repository (WSL 2 or Linux, Docker); the first time:
+docker compose build
+docker compose run --rm zephyr bash scripts/west-init.sh
+# build the drive (again after a firmware change):
 docker compose run --rm zephyr west build -b native_sim/native/64 -s app -d build-native
 # six drives, each in its own container with its own flash file and bus link:
 for i in 0 1 2 3 4 5; do
