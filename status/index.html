@@ -1550,8 +1550,8 @@ drive. The gripper follows afterwards as a separate project.</p>
 </tr>
 <tr>
 <td>doppelstep multi-drive bus behaviour (Fast Sync Read, Sync Read turn-taking)</td>
-<td>Open</td>
-<td>Found in SIL; needed before the real bus (<a href="../dynamixel/compatibility-spec/#sil-run-3-2026-11-15">compatibility specification</a>)</td>
+<td><strong>Done</strong> in SIL</td>
+<td>X430 emulator 1.1.0; six drives share the virtual bus without help from it (<a href="../dynamixel/compatibility-spec/#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus">SIL run 10</a>)</td>
 </tr>
 <tr>
 <td>Per-target hardware configuration (<code>sim</code>, <code>sil</code>, <code>hw-pc</code>, <code>hw-cm4</code>)</td>
@@ -1585,13 +1585,18 @@ drive. The gripper follows afterwards as a separate project.</p>
 </tr>
 <tr>
 <td>doppelstep firmware</td>
-<td><strong>Done</strong> in simulation (v0.1.0)</td>
-<td>Not yet verified with a real motor; <a href="https://systemfromscratch.com/sfs-doppelstep/">doppelstep documentation</a></td>
+<td><strong>Done</strong> (v0.3.0)</td>
+<td>Verified in simulation and on a B-G431B-ESC1 with a real motor (17HS19-2004S1, 12 V and 24 V); not yet with the arm's motors or with the Robot PC (<a href="https://systemfromscratch.com/sfs-doppelstep/">doppelstep documentation</a>)</td>
 </tr>
 <tr>
 <td>doppelstep single-wire half-duplex driver</td>
-<td>Planned</td>
-<td>Stage 0, in the doppelstep repository</td>
+<td><strong>Built</strong>, not tested on a board</td>
+<td><code>single-wire.overlay</code> in doppelstep, checked in its CI; board test in Stage 2</td>
+</tr>
+<tr>
+<td>Drive ID and baud rate setup</td>
+<td><strong>Done</strong> (tool)</td>
+<td><code>tools/diagnostics/smx_drive_setup.py</code>, checked on a simulated drive</td>
 </tr>
 <tr>
 <td>Control Table and timing verified against the Jazzy host sources</td>
@@ -1605,8 +1610,8 @@ drive. The gripper follows afterwards as a separate project.</p>
 </tr>
 <tr>
 <td>Motor supply voltage</td>
-<td>Proposed</td>
-<td>24 V (D10), to be confirmed</td>
+<td><strong>Agreed</strong></td>
+<td>24 V (D10); first runs at 12 V with current limit</td>
 </tr>
 <tr>
 <td>Joint limits, motor directions, gear ratios on the real arm</td>

@@ -1146,6 +1146,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 10 (2026-11-15): pass, the drives handle the shared bus
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1629,6 +1640,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 10 (2026-11-15): pass, the drives handle the shared bus
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1688,26 +1710,26 @@
 <tr>
 <td>Device model and protocol</td>
 <td>XM430-W350, model number 1020, Protocol 2.0</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: PING of IDs 1–6 returns 1020, the host loads <code>xm430_w350.model</code>. Physical drive: Unverified</td>
+<td>SIL runs 1–10, 2026-11-15</td>
 </tr>
 <tr>
 <td>Device IDs and discovery</td>
 <td>IDs 1–6 per the <a href="../bus/#id-map">ID map</a>, PING</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: the virtual bus moves each drive from the factory ID 1; on the arm <code>smx_drive_setup.py</code> writes ID and Baud Rate once per drive (checked on a <code>native_sim</code> drive). Physical drive: Unverified</td>
+<td>SIL run 10, 2026-11-15</td>
 </tr>
 <tr>
 <td>Physical layer, baud rate, response timing</td>
-<td>Single-wire half-duplex, 1 Mbps proposed, Return Delay Time default</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>Single-wire half-duplex (D7, approved), 1 Mbps (D8, approved), Return Delay Time 0 (written by the host)</td>
+<td>doppelstep <code>single-wire.overlay</code> builds (USART2 single-wire, PB3 open-drain). On a board and at 1 Mbps: Unverified (Stage 2)</td>
+<td>doppelstep CI build checks, 2026-11-15</td>
 </tr>
 <tr>
 <td>Protocol instructions actually used</td>
 <td>Read, Write, Sync/Bulk Read and Write, Fast Sync/Bulk Read (to be confirmed in the host source)</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: PING, READ and WRITE at start (items, Indirect Address), 10 × Fast Sync Read, then Sync Read of the Indirect Data block every cycle, Sync Write of the goal. No Bulk Read with this configuration</td>
+<td>SIL runs 1–10, <code>dynamixel_hardware_interface</code> <code>5613760</code></td>
 </tr>
 <tr>
 <td>Control Table addresses, widths, signedness, access rules</td>
@@ -1718,20 +1740,20 @@
 <tr>
 <td>Initialization and configuration sequence</td>
 <td>From the hardware-interface source</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: PING per ID, Torque Enable read (switched off in SIL, <code>disable_torque_at_init</code>), Operating Mode 4, Return Delay Time 0, Drive Mode 0 / 1 (ID 3), Indirect Address blocks for read (634, 10 B) and write (224, 4 B), Fast Sync Read × 10 and fallback, Torque Enable 1</td>
+<td>SIL runs 1–10</td>
 </tr>
 <tr>
 <td>Command interfaces and operating modes</td>
 <td>Position / extended position</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: Operating Mode 4 (extended position); Goal Position through Indirect Data 224 with Sync Write; position command interface of <code>arm_controller</code>. Physical drive: Unverified</td>
+<td>SIL runs 1–10</td>
 </tr>
 <tr>
 <td>State interfaces and measurement source</td>
 <td>Position from the drive's step counter (open loop), velocity, current</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>SIL: Present Position, Velocity and Current (10 B) through Indirect Data 634 with Sync Read; joints settle 5–6 encoder steps from the goal (run 9). Physical drive: Unverified</td>
+<td>SIL runs 4–10</td>
 </tr>
 <tr>
 <td>Torque enable and fault behavior</td>
@@ -1742,8 +1764,8 @@
 <tr>
 <td>Update rate, latency, retries, timeouts</td>
 <td>Controller rate 100 Hz (<code>controllers.yaml</code>); the read timeout of the host is one control period</td>
-<td>SIL only: 25 Hz, no read timeouts; the simulated drives answer a Sync Read of six IDs within about 25 ms. Real bus: Unverified</td>
-<td>SIL run 8, 2026-11-15</td>
+<td>SIL only: 10 Hz, no read timeouts; six simulated drives taking turns answer a Sync Read within 65 ms (10 ms emulated UART interrupt per drive). Real bus: Unverified</td>
+<td>SIL runs 8 and 10, 2026-11-15</td>
 </tr>
 <tr>
 <td>Moveo joint-to-drive mapping, shoulder pair</td>
@@ -1754,8 +1776,8 @@
 <tr>
 <td>Unmodified stock hardware-interface compatibility</td>
 <td>Expected</td>
-<td><strong>Works in SIL</strong> with Sync Read and answers in request order; needs the two doppelstep changes of Stage 0 for a real bus</td>
-<td>SIL runs 1–8, 2026-11-15</td>
+<td><strong>Works in SIL with the virtual bus behaving like the wire</strong>: the drives take turns in Sync Read and stay silent on Fast Sync Read (X430 emulator 1.1.0)</td>
+<td>SIL runs 1–10, 2026-11-15</td>
 </tr>
 <tr>
 <td>Host configuration (<code>smartmanipulator_x.ros2_control.xacro</code>)</td>
@@ -1846,8 +1868,9 @@ chains Fast Sync/Bulk Read answers like the X series (listens to the drive befor
 or (b) doppelstep stays silent on a Fast Sync/Bulk Read that lists other IDs too, so
 the host falls back to Sync Read. Tracked in Stage 0 of the
 <a href="../../plan/doppelstep-cm4/#stage-0-bus-decisions-and-half-duplex-driver-doppelstep">integration plan</a>.</p>
-<p>SIL workaround: the virtual bus drops Fast Sync/Bulk Read (<code>--fast-read drop</code>, the
-default), which is the behaviour of option (b).</p>
+<p>SIL workaround until run 10: the virtual bus dropped Fast Sync/Bulk Read (<code>--fast-read
+drop</code>), which is the behaviour of option (b). Since run 10 the drives implement option (b)
+themselves.</p>
 <h3 id="sil-run-3-2026-11-15">SIL run 3 (2026-11-15)<a class="headerlink" href="#sil-run-3-2026-11-15" title="Permanent link">&para;</a></h3>
 <p>With Fast Sync Read dropped by the bus, the interface fell back to Sync Read as
 designed, but every Sync Read of IDs 1–6 ended in <code>COMM_RX_TIMEOUT</code> (−3001) and the
@@ -1862,8 +1885,8 @@ Read) at once instead of waiting for its turn, so on one wire the answers of six
 would collide. The X series answers in the order of the request (a device sends after
 the status packet of the ID before it). Tracked in Stage 0 of the
 <a href="../../plan/doppelstep-cm4/#stage-0-bus-decisions-and-half-duplex-driver-doppelstep">integration plan</a>.</p>
-<p>SIL workaround: the virtual bus passes Sync/Bulk Read answers to the host in request
-order (<code>--read-order request</code>, the default), which is the behaviour of a real bus.</p>
+<p>SIL workaround until run 10: the virtual bus passed Sync/Bulk Read answers to the host in
+request order (<code>--read-order request</code>). Since run 10 the drives take turns themselves.</p>
 <h3 id="sil-run-4-2026-11-15-pass">SIL run 4 (2026-11-15): pass<a class="headerlink" href="#sil-run-4-2026-11-15-pass" title="Permanent link">&para;</a></h3>
 <p>Virtual bus with Fast Sync Read dropped and Sync Read answers in request order.
 Fast Sync Read fails 10 times, the interface switches to Sync Read, reads plausible
@@ -1910,6 +1933,51 @@ the bus. This meets the exit of Stage 1.</p>
 the goal, for example <code>j2_shoulder</code> 0.492 instead of 0.5. Within the 0.01 rad tolerance
 of the goal; not investigated yet whether the cause is the simulated drive (position
 loop, step resolution) or the trajectory controller.</p>
+<h3 id="sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus">SIL run 10 (2026-11-15): pass, the drives handle the shared bus<a class="headerlink" href="#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus" title="Permanent link">&para;</a></h3>
+<p>Stage 0 in the firmware: X430 emulator 1.1.0 in doppelstep. A drive answers a Sync Read or
+Bulk Read only after it has received the status packet of the ID listed before it, and
+stays silent on a Fast Sync/Bulk Read that lists other IDs too (options of runs 2 and 3).
+The virtual bus now behaves like the wire: it passes Fast Sync Read on and the answers in
+the order they arrive (<code>--fast-read forward --read-order arrival</code>, its new default).</p>
+<table>
+<thead>
+<tr>
+<th>Observed (about 12 min, Operator PC with MoveIt on <code>smx_net</code>)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fast Sync Read at start</td>
+<td>Reaches the drives; they stay silent, 10 failed attempts, then Sync Read</td>
+</tr>
+<tr>
+<td>Sync Read of IDs 1–6</td>
+<td>7,364 reads, 0 incomplete, 0 <code>SyncRead Rx Fail</code>, 0 overruns at 10 Hz</td>
+</tr>
+<tr>
+<td>Time to the last answer of a read</td>
+<td>p50 44 / p95 61 / max 65 ms: six drives one after the other</td>
+</tr>
+<tr>
+<td><code>smx_smoke_test.sh</code>, two MoveIt goals (<code>ready</code>, <code>home</code>)</td>
+<td>PASS, <code>SUCCEEDED</code></td>
+</tr>
+</tbody>
+</table>
+<p>At 25 Hz the same setup gave 85 <code>SyncRead Rx Fail</code> in about 30 s: Zephyr <code>native_sim</code>
+emulates the UART interrupt of a drive with a thread that wakes every 10 ms (fixed in
+<code>uart_native_pty.c</code>), so each turn costs up to 10 ms. SIL therefore runs at 10 Hz. On the
+board the UART interrupt is immediate.</p>
+<p><strong>Robot description of the controller manager.</strong> In this run the Robot PC first loaded
+mock hardware for <code>hardware:=sil</code>: the Operator PC was started first, and MoveIt published
+its own <code>/robot_description</code> (with mock hardware) on the shared DDS domain. The controller
+manager takes the first description it receives, and the remapping of
+<code>~/robot_description</code> in <code>robot.launch.py</code> had no effect (ros2_control 4.48 subscribes to
+<code>robot_description</code>). Fixed on both sides: the controller manager reads a topic that only
+the Robot PC publishes (<code>/smx/robot_pc/control_description</code>), and MoveIt no longer
+publishes <code>/robot_description</code>. Check with <code>ros2 control list_hardware_components</code>: in SIL
+the arm is <code>dynamixel_hardware_interface/DynamixelHardware</code>.</p>
 <p>How to repeat the check: <a href="../../robot-pc/sil-tutorial/">SIL tutorial</a>.</p>
 <p>Do not claim full XM430 emulation or production readiness based only on successful packet exchange. Register behavior, mechanical mapping, and physical motion all require separate evidence.</p>
 

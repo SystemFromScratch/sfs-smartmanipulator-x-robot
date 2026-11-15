@@ -1538,10 +1538,14 @@ XM430-W350, so the unchanged ROBOTIS <code>dynamixel_hardware_interface</code> a
 DynamixelSDK are meant to drive it (to be verified, see the
 <a href="../../dynamixel/compatibility-spec/">compatibility specification</a>).</p>
 <blockquote>
-<p><strong>Status (2026-11-15):</strong> doppelstep v0.1.0 is verified on a PC with a
-simulated motor (<code>native_sim</code>), not yet with a real motor. One
-B-G431B-ESC1 board is ready on the bench. The single-wire bus interface is
-not implemented yet. The <a href="https://systemfromscratch.com/sfs-doppelstep/">doppelstep documentation</a> is authoritative
+<p><strong>Status (2026-11-15):</strong> doppelstep v0.3.0 (2026-11-14) is verified on a PC with a
+simulated motor (<code>native_sim</code>) and on a B-G431B-ESC1 with a real motor
+(17HS19-2004S1 at 12 V and 24 V: the test scenarios of the bench GUI, the protection
+comparators, two minutes of moves at 1.5 A, the wiring self-test, the measured dead
+time; DYNAMIXEL Wizard 2.0 over the ST-LINK virtual COM port). Not yet with the motors
+and loads of the arm, and not yet on a shared bus with the Robot PC (Stage 2). The single-wire bus is built
+(<code>single-wire.overlay</code>) and several drives share a bus in SIL; on a board it is
+tested in Stage 2. The <a href="https://systemfromscratch.com/sfs-doppelstep/">doppelstep documentation</a> is authoritative
 for the drive; this page records only what SmartManipulator-X relies on and
 links to the details.</p>
 </blockquote>
@@ -1648,7 +1652,7 @@ actually reads and writes is checked in the
 <tr>
 <td>Simulation (SIL)</td>
 <td>Firmware as <code>native_sim</code> on the PC, serial port over TCP (<code>tools/sim/run_native.py run --tcp 5555</code>)</td>
-<td>Works in the doppelstep repository; integration with the Robot PC is <a href="../../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">planned</a></td>
+<td>Works; six instances drive the Robot PC over a virtual DYNAMIXEL bus (<a href="../../robot-pc/#sil-simulated-doppelstep-drives">SIL</a>, <a href="../../tutorial-simulation/">tutorial</a>)</td>
 </tr>
 <tr>
 <td>Bench</td>
@@ -1657,8 +1661,8 @@ actually reads and writes is checked in the
 </tr>
 <tr>
 <td>Arm</td>
-<td>Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND)</td>
-<td>Planned, see <a href="../../dynamixel/bus/">DYNAMIXEL bus</a> and <a href="../wiring/#joint-drives-b-g431b-esc1">Wiring</a></td>
+<td>Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND); doppelstep built with <code>single-wire.overlay</code></td>
+<td>Built, checked in SIL and CI; on the board in Stage 2, see <a href="../../dynamixel/bus/">DYNAMIXEL bus</a> and <a href="../wiring/#joint-drives-b-g431b-esc1">Wiring</a></td>
 </tr>
 </tbody>
 </table>

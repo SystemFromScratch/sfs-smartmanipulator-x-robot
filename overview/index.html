@@ -1639,10 +1639,14 @@ button in the header of the website).</p>
 <li><strong>Done:</strong> Robot PC image (amd64) with the ROBOTIS packages; simulation with
   mock hardware on a Docker network, checked by a smoke test and by the
   Operator PC container, whose commands arrive and are executed; robot
-  description generated from the Moveo CAD; doppelstep firmware verified in
-  simulation.</li>
-<li><strong>Next:</strong> connect the Robot PC to doppelstep, first in simulation (SIL), then
-  one drive on the bench, then the Robot PC on the CM4-Duino and the full arm.</li>
+  description generated from the Moveo CAD; <strong>SIL</strong>: the Robot PC drives six
+  simulated doppelstep drives over a virtual DYNAMIXEL bus with the real
+  hardware interface, and MoveIt on the Operator PC plans and executes against
+  it (<a href="../tutorial-simulation/">tutorial</a>); doppelstep v0.3.0 checked on a
+  B-G431B-ESC1 with a real motor at 12 V and 24 V.</li>
+<li><strong>Next:</strong> doppelstep changes for a shared bus (Fast Sync Read, Sync Read
+  turn-taking, single-wire driver), then one drive on the bench, then the Robot
+  PC on the CM4-Duino and the full arm.</li>
 <li><strong>Open:</strong> single-wire bus interface, bus parameters, joint limits and
   directions on the real arm, emergency stop, gripper project.</li>
 </ul>

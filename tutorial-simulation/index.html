@@ -2049,8 +2049,9 @@ this line:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Configured and activated gripper_controller
 </code></pre></div>
 <p>Leave the terminal open. On the way you see ten lines <code>FastSyncRead TxRx failed
-(attempt n/10)</code>: that is <strong>expected</strong> (the Robot PC tries a faster read mode once, the
-simulated drives do not offer it yet, so it switches to the normal one).</p>
+(attempt n/10)</code>: that is <strong>expected</strong> (the Robot PC tries a faster read mode first; with
+several drives on one bus they do not answer it, so it switches to the normal one, in
+which the drives answer one after the other).</p>
 <h3 id="b3-terminal-4-check-that-the-robot-pc-works">B3. Terminal 4: check that the Robot PC works<a class="headerlink" href="#b3-terminal-4-check-that-the-robot-pc-works" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>~/smx/SmartManipulator-X-Robot-PC
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>smx_smoke_test.sh

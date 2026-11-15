@@ -1764,8 +1764,9 @@
 <h3 id="sil-simulated-doppelstep-drives">SIL: simulated doppelstep drives<a class="headerlink" href="#sil-simulated-doppelstep-drives" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p><strong>Status (2026-11-15):</strong> works end to end with six doppelstep <code>native_sim</code> drives;
-<code>smx_smoke_test.sh</code> passes, without read timeouts since SIL run 8. Findings of all runs
-are in the <a href="../dynamixel/compatibility-spec/#sil-run-8-2026-11-15-pass-no-read-timeouts">compatibility specification</a>. Stage 1 of the <a href="../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">integration plan</a>.</p>
+<code>smx_smoke_test.sh</code> passes, and since SIL run 10 the drives handle the shared bus
+themselves, without help from the virtual bus. Findings of all runs are in the
+<a href="../dynamixel/compatibility-spec/#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus">compatibility specification</a>. Stage 1 of the <a href="../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">integration plan</a>.</p>
 </blockquote>
 <p>New to SIL? Follow the <a href="sil-tutorial/">step-by-step tutorial</a>.</p>
 <p>In the SIL setup (software in the loop) the Robot PC uses its real hardware path,
@@ -1779,29 +1780,29 @@ virtual DYNAMIXEL bus:</p>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                                                  ...         ──&gt; ... (ID 6)
 </code></pre></div>
 <ul>
-<li>Every byte the host sends goes to all drives; only the addressed drive answers,
-  as on the shared wire. What a drive sends also reaches the other drives: Fast
-  Sync Read, which the hardware interface uses, needs it, because the drives build
-  one common answer packet in turn. The host does not receive an echo of its own
-  packets, like with the bus interface of the CM4-Duino.</li>
-<li>Fast Sync Read and Fast Bulk Read are dropped by default: doppelstep answers them
-  only for its own ID, so six drives would send six packets where the host expects
-  one. Without an answer the ROBOTIS interface falls back to normal Sync Read after
-  10 attempts (expect ten <code>FastSyncRead TxRx failed</code> lines at start). See the
-  <a href="../dynamixel/compatibility-spec/#sil-run-2-2026-11-15">compatibility specification</a>.</li>
-<li>Answers to Sync Read and Bulk Read reach the host in the order of the request, as on
-  a real bus where each device waits for its turn; the simulated drives answer at once
-  (<a href="../dynamixel/compatibility-spec/#sil-run-3-2026-11-15">SIL run 3</a>).</li>
+<li>The virtual bus behaves like the wire. Every byte the host sends goes to all
+  drives; only the addressed drive answers. What a drive sends reaches the host and
+  the other drives, so a drive hears the status packet of the drive before it. The
+  host does not receive an echo of its own packets, like with the bus interface of
+  the CM4-Duino.</li>
+<li>The drives take turns: in a Sync Read or Bulk Read each one answers after the
+  status packet of the ID before it. A Fast Sync/Bulk Read of several drives stays
+  unanswered (one drive cannot build the chained answer of all), and the ROBOTIS
+  interface falls back to normal Sync Read after 10 attempts: expect ten
+  <code>FastSyncRead TxRx failed</code> lines at start. Both need doppelstep with the X430
+  emulator 1.1.0 (<a href="../dynamixel/compatibility-spec/#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus">SIL run 10</a>).
+  For older firmware the bus can do it instead: <code>SMX_SIL_BUS_ARGS=--fast-read drop
+  --read-order request</code> in <code>docker/.env</code> (runs 2 and 3).</li>
 <li><code>smx_bus_timing.py</code> measures PING and Sync Read answer times on the bus, for
   diagnosing timeouts.</li>
-<li>Timing: a simulated drive polls its serial port every 10 ms, so a Sync Read of six
-  drives takes up to about 25 ms instead of well under 1 ms. In the control loop the
-  hardware interface waits for an answer for one control period only
-  (<code>setPacketTimeout(period_ms)</code>), so SIL runs the controllers at <strong>25 Hz</strong>
-  (<code>SMX_UPDATE_RATE</code>, period 40 ms); at 50 Hz a few Sync Reads per second timed out
-  (<a href="../dynamixel/compatibility-spec/#sil-run-8-2026-11-15-pass-no-read-timeouts">SIL run 8</a>).
-  <code>baud_rate</code> 9600 (<code>SMX_BAUD_RATE</code>) only lengthens the DynamixelSDK timeout of the
-  reads at start; the virtual bus ignores the baud rate. The bus reports each
+<li>Timing: Zephyr <code>native_sim</code> emulates the UART interrupt of a drive with a thread
+  that wakes every 10 ms, so with six drives taking turns a Sync Read takes up to
+  about 65 ms instead of well under 1 ms. In the control loop the hardware interface
+  waits for an answer for one control period only (<code>setPacketTimeout(period_ms)</code>),
+  so SIL runs the controllers at <strong>10 Hz</strong> (<code>SMX_UPDATE_RATE</code>, period 100 ms); at
+  25 Hz a few Sync Reads per second time out (<a href="../dynamixel/compatibility-spec/#sil-run-8-2026-11-15-pass-no-read-timeouts">SIL run 8</a>,
+  run 10). <code>baud_rate</code> 9600 (<code>SMX_BAUD_RATE</code>) only lengthens the DynamixelSDK timeout
+  of the reads at start; the virtual bus ignores the baud rate. The bus reports each
   incomplete read (<code>read incomplete: missing ID …</code>) and a timing summary every 10 s.
   The communication error timeout of the interface is 5 s in SIL (500 ms otherwise),
   long enough for the 10 Fast Sync Read attempts before the fallback. The real bus
@@ -1813,17 +1814,30 @@ virtual DYNAMIXEL bus:</p>
 <li>A freshly started drive answers on the factory ID 1; the tool first moves each
   drive to its joint ID (<code>--assign-ids</code>), over that drive's own connection.</li>
 <li>The gripper stays on mock hardware (separate project).</li>
+<li>The controller manager takes its robot description, and with it the hardware, from
+  <code>/smx/robot_pc/control_description</code>, which only <code>robot.launch.py</code> publishes. On the
+  shared <code>/robot_description</code> another host (MoveIt on the Operator PC) could otherwise
+  make it load mock hardware (<a href="../dynamixel/compatibility-spec/#sil-run-10-2026-11-15-pass-the-drives-handle-the-shared-bus">SIL run 10</a>).
+  Check with <code>ros2 control list_hardware_components</code>.</li>
 </ul>
+<p>On the real bus every drive needs its joint ID and the bus baud rate once (decision D8,
+1 Mbps); a new drive answers on ID 1 at 57600 bps. Connect one drive at a time and run
+<code>smx_drive_setup.py --port /dev/ttyDXL --id &lt;joint ID&gt;</code> (in the Robot PC image, or
+<code>tools/diagnostics/</code> of this repository). With <code>--tcp localhost:5555</code> it does the same
+for one simulated drive.</p>
 <p>Start the six simulated drives from the doppelstep repository
 (<a href="https://systemfromscratch.com/sfs-doppelstep/getting-started/">getting started</a>), one per terminal or in the background:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># in the sfs-doppelstep repository (WSL 2 or Linux, Docker); build once:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>app<span class="w"> </span>-d<span class="w"> </span>build-native
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># six drives, each in its own container with its own flash file and bus link:</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl<span class="k">$((</span><span class="nv">i</span><span class="o">+</span><span class="m">1</span><span class="k">))</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$((</span><span class="m">5555</span><span class="o">+</span><span class="nv">i</span><span class="k">))</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">done</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># stop them: docker stop dxl1 dxl2 dxl3 dxl4 dxl5 dxl6</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># in the sfs-doppelstep repository (WSL 2 or Linux, Docker); the first time:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>build
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>bash<span class="w"> </span>scripts/west-init.sh
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># build the drive (again after a firmware change):</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>app<span class="w"> </span>-d<span class="w"> </span>build-native
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># six drives, each in its own container with its own flash file and bus link:</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl<span class="k">$((</span><span class="nv">i</span><span class="o">+</span><span class="m">1</span><span class="k">))</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$((</span><span class="m">5555</span><span class="o">+</span><span class="nv">i</span><span class="k">))</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">done</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># stop them: docker stop dxl1 dxl2 dxl3 dxl4 dxl5 dxl6</span>
 </code></pre></div>
 <p><code>--link</code> and <code>--flash</code> keep the instances apart: by default all of them would use the
 same bus link and flash file in the shared build directory, and an ID written to one
