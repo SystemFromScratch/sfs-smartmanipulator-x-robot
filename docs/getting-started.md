@@ -93,6 +93,8 @@ documentation preview under **Tasks: Run Task**.
 
 ## Next steps
 
+- [Tutorial: checking SIL step by step](robot-pc/sil-tutorial.md): the Robot PC
+  with six simulated doppelstep drives instead of mock joints.
 - [Robot PC](robot-pc/index.md): the joint contract, how the Operator PC joins
   `smx_net`, and the hardware shell with a serial device.
 - [Development](development.md): repository layout, the robot description

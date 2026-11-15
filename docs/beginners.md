@@ -47,6 +47,10 @@ Start with [Getting started](getting-started.md). The interface your algorithms
 use — joint names, topics, controllers — is the
 [joint contract](robot-pc/index.md#joint-contract) of the Robot PC.
 
+One step further, still without hardware: in the
+[SIL tutorial](robot-pc/sil-tutorial.md) the Robot PC drives six simulated doppelstep
+drives over a virtual DYNAMIXEL bus, with the same software it will use on the arm.
+
 ## Level 2: one joint on the desk
 
 ![Level 2: the computer connects to one drive with a USB cable; the motor has four wires to U, V and W; a lab supply powers the drive](hardware/images/pictorial-level2-bench.svg)

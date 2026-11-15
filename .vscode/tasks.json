@@ -29,6 +29,45 @@
             }
         },
         {
+            "label": "Robot PC: Start (SIL, simulated doppelstep drives)",
+            "detail": "Start the doppelstep native_sim drives first (ports 5555-5560); then the Robot PC drives them over the virtual DYNAMIXEL bus.",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "-f",
+                "docker/docker-compose.yml",
+                "-f",
+                "docker/docker-compose.sil.yml",
+                "up",
+                "--build",
+                "robot_pc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "always",
+                "clear": true
+            }
+        },
+        {
+            "label": "Tests: Virtual DYNAMIXEL bus",
+            "detail": "Unit tests of tools/sim/smx_dxl_bus.py (Python standard library, Linux or WSL).",
+            "type": "process",
+            "command": "python3",
+            "args": ["-m", "unittest", "discover", "-s", "tools/sim/tests", "-v"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
             "label": "Robot PC: Stop",
             "detail": "Stop and remove the Robot PC containers and the smx_net network.",
             "type": "process",

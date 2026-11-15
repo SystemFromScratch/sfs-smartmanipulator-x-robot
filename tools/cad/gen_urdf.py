@@ -140,13 +140,17 @@ header = f"""<?xml version="1.0"?>
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="smartmanipulator_x">
 
-  <xacro:arg name="use_mock_hardware" default="true"/>
+  <!-- Arm joint hardware: mock, sil or real (smartmanipulator_x.ros2_control.xacro). -->
+  <xacro:arg name="hardware" default="mock"/>
+  <xacro:arg name="port_name" default="/dev/ttyDXL"/>
+  <xacro:arg name="baud_rate" default="1000000"/>
   <!-- The electronics box of the original Moveo; off for this build. -->
   <xacro:arg name="electronics_box" default="false"/>
 """
 footer = """
   <xacro:include filename="$(find smartmanipulator_x_description)/urdf/smartmanipulator_x.ros2_control.xacro"/>
-  <xacro:smartmanipulator_x_ros2_control use_mock_hardware="$(arg use_mock_hardware)"/>
+  <xacro:smartmanipulator_x_ros2_control hardware="$(arg hardware)"
+    port_name="$(arg port_name)" baud_rate="$(arg baud_rate)"/>
 
 </robot>
 """
@@ -154,8 +158,13 @@ xacro = header + body.replace("@EBOX@", '\n  <xacro:if value="$(arg electronics_
                               ebox.replace("\n  ", "\n    ") + "  </xacro:if>\n") + footer
 open(out_xacro, "w").write(xacro)
 
+ARGS_BLOCK = '''  <!-- Arm joint hardware: mock, sil or real (smartmanipulator_x.ros2_control.xacro). -->
+  <xacro:arg name="hardware" default="mock"/>
+  <xacro:arg name="port_name" default="/dev/ttyDXL"/>
+  <xacro:arg name="baud_rate" default="1000000"/>
+'''
 test = ('<?xml version="1.0"?>\n<robot name="smx_test">\n' + header.split("<robot", 1)[1].split(">", 1)[1]
-        .replace('<xacro:arg name="use_mock_hardware" default="true"/>', "")
+        .replace(ARGS_BLOCK, "")
         .replace('<xacro:arg name="electronics_box" default="false"/>', "")
         + body.replace("@EBOX@", ebox) + "\n</robot>\n")
 test = test.replace("${-pi/2}", "-1.5708").replace("${pi/2}", "1.5708").replace("${-pi}", "-3.14159").replace("${pi}", "3.14159")

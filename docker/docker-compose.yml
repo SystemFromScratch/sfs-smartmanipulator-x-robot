@@ -11,7 +11,8 @@ name: smartmanipulator-x
 #   docker compose -f docker/docker-compose.yml up --build robot_pc   # mock hardware
 #   docker compose -f docker/docker-compose.yml run --rm probe         # second "host"
 #
-# Real hardware: add docker/docker-compose.hw.yml (USB device pass-through).
+# Simulated doppelstep drives: add docker/docker-compose.sil.yml.
+# Serial device for diagnostics: add docker/docker-compose.hw.yml.
 
 x-ros-env: &ros-env
   ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-42}
@@ -37,7 +38,7 @@ services:
       - launch
       - smartmanipulator_x_bringup
       - robot.launch.py
-      - use_mock_hardware:=true
+      - hardware:=mock
 
   # A second ROS 2 host on smx_net for checks without the Operator PC:
   # it uses the same image but runs no robot nodes.

@@ -42,6 +42,7 @@ nav:
       - "Integration plan: doppelstep + CM4-Duino": plan/doppelstep-cm4.md
   - Robot PC:
       - Robot PC: robot-pc/index.md
+      - "Tutorial: checking SIL step by step": robot-pc/sil-tutorial.md
       - Robot PC on the CM4-Duino: robot-pc/cm4-duino.md
       - BCN3D Moveo mechanics: mechanical/index.md
   - System:

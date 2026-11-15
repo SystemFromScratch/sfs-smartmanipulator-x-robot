@@ -28,6 +28,7 @@ CAD, the documentation and the CI workflows. The drive firmware lives in the
 ├── tools/
 │   ├── cad/                          STEP → URDF pipeline for the robot description
 │   ├── diagnostics/smx_smoke_test.sh end-to-end check over DDS
+│   ├── sim/                          SIL: virtual DYNAMIXEL bus, start script, tests
 │   └── docs/                         PDF manual builder, diagrams, MkDocs hook
 ├── docs/, overrides/, mkdocs.yml     this documentation
 ├── requirements-docs.txt             documentation tools (.venv)
@@ -65,6 +66,8 @@ the default, so the picker always appears.
 | Task | Group | Command |
 | --- | --- | --- |
 | Robot PC: Start (mock hardware) | build | `docker compose -f docker/docker-compose.yml up --build robot_pc` |
+| Robot PC: Start (SIL, simulated doppelstep drives) | build | `up --build robot_pc` with `docker/docker-compose.sil.yml` |
+| Tests: Virtual DYNAMIXEL bus | test | `python3 -m unittest discover -s tools/sim/tests -v` |
 | Robot PC: Stop | build | `docker compose -f docker/docker-compose.yml down` |
 | Robot PC: Rebuild and restart | build | Stop, then `up --build --force-recreate robot_pc` |
 | Robot PC: Build image | build | `build robot_pc` |
@@ -153,6 +156,7 @@ Writing rules that keep the website and the PDF correct:
 | --- | --- | --- |
 | `docker-publish.yml` | Push to `main` or a `v*` tag touching the image sources; manual | Builds the Robot PC image and publishes it to `ghcr.io/systemfromscratch/sfs-smartmanipulator-x-robot` |
 | `documentation.yml` | Push to `main`; manual | Builds the PDF manual into `docs/downloads/`, then `mkdocs gh-deploy` publishes the website with the PDF to GitHub Pages |
+| `tests.yml` | Push to `main` or a pull request touching `tools/sim/`; manual | Unit tests of the virtual DYNAMIXEL bus |
 
 ## Engineering rules for agents
 

@@ -15,7 +15,10 @@
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="smartmanipulator_x">
 
-  <xacro:arg name="use_mock_hardware" default="true"/>
+  <!-- Arm joint hardware: mock, sil or real (smartmanipulator_x.ros2_control.xacro). -->
+  <xacro:arg name="hardware" default="mock"/>
+  <xacro:arg name="port_name" default="/dev/ttyDXL"/>
+  <xacro:arg name="baud_rate" default="1000000"/>
   <!-- The electronics box of the original Moveo; off for this build. -->
   <xacro:arg name="electronics_box" default="false"/>
 
@@ -372,6 +375,7 @@
   <link name="tool_link"/>
 
   <xacro:include filename="$(find smartmanipulator_x_description)/urdf/smartmanipulator_x.ros2_control.xacro"/>
-  <xacro:smartmanipulator_x_ros2_control use_mock_hardware="$(arg use_mock_hardware)"/>
+  <xacro:smartmanipulator_x_ros2_control hardware="$(arg hardware)"
+    port_name="$(arg port_name)" baud_rate="$(arg baud_rate)"/>
 
 </robot>

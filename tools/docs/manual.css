@@ -76,6 +76,24 @@ p, li, dd {
   widows: 3;
 }
 
+/* Task lists (pymdownx.tasklist): the checkbox replaces the bullet and stays on the
+   line of its text; WeasyPrint would otherwise draw the input as a block of its own. */
+ul.task-list {
+  padding-left: 1.6em;
+}
+
+li.task-list-item {
+  list-style: none;
+}
+
+li.task-list-item > input[type="checkbox"] {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin: 0 0.5em 0 -1.3em;
+  vertical-align: -0.05em;
+}
+
 a {
   color: #1e5aa8;
   text-decoration: none;

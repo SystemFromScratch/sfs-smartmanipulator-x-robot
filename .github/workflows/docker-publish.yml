@@ -11,6 +11,7 @@ on:
       - docker/entrypoint.sh
       - docker/dds/**
       - tools/diagnostics/**
+      - tools/sim/**
       - ros2_robot.repos
       - ros2_ws/src/smartmanipulator_x/**
   workflow_dispatch:

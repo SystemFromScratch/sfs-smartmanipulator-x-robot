@@ -20,3 +20,6 @@ docker/.env
 # Documentation build output (PDF manual; CI writes docs/downloads/ before deploying)
 /build/
 /docs/downloads/
+
+# SIL run logs (docs/robot-pc/sil-tutorial.md, step 10)
+sil_run*.log

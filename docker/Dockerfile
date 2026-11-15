@@ -73,16 +73,18 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
 
 COPY docker/dds/fastdds_udp.xml /etc/smx/fastdds_udp.xml
 COPY tools/diagnostics /opt/smx/diagnostics
+COPY tools/sim/smx_dxl_bus.py tools/sim/smx_sil_start.sh tools/sim/smx_bus_timing.py /opt/smx/sim/
 # sed: tolerate CRLF checkouts on Windows hosts.
-RUN find /opt/smx/diagnostics -name '*.sh' -exec sed -i 's/\r$//' {} + -exec chmod +x {} +
+RUN find /opt/smx/diagnostics /opt/smx/sim -name '*.sh' -exec sed -i 's/\r$//' {} + && \
+    chmod +x /opt/smx/diagnostics/*.sh /opt/smx/sim/*
 
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 RUN echo 'source /opt/ros/${ROS_DISTRO}/setup.bash' >> /root/.bashrc && \
     echo 'source ${ROS_WS}/install/setup.bash' >> /root/.bashrc && \
-    echo 'export PATH=/opt/smx/diagnostics:${PATH}' >> /root/.bashrc
-ENV PATH=/opt/smx/diagnostics:${PATH}
+    echo 'export PATH=/opt/smx/diagnostics:/opt/smx/sim:${PATH}' >> /root/.bashrc
+ENV PATH=/opt/smx/diagnostics:/opt/smx/sim:${PATH}
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

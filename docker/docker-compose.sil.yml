@@ -1,0 +1,26 @@
+# SIL override: the Robot PC drives simulated doppelstep drives through the real
+# hardware path (dynamixel_hardware_interface, DynamixelSDK) on a virtual DYNAMIXEL
+# bus. Start the simulated drives first (doppelstep repository, one per ID):
+#
+#   tools/sim/run_native.py run --tcp 5555      # ID 1
+#   ...                                         # up to 5560 for ID 6
+#
+# then the Robot PC:
+#
+#   docker compose -f docker/docker-compose.yml -f docker/docker-compose.sil.yml \
+#     up --build robot_pc
+#
+# The drives are reached on the Docker host (host.docker.internal). Set
+# SMX_SIL_DEVICES in docker/.env for other addresses or fewer drives, together with
+# SMX_SIL_IDS (one ID per drive). See docs/robot-pc/index.md#sil-simulated-doppelstep-drives.
+
+services:
+  robot_pc:
+    environment:
+      SMX_SIL_DEVICES: ${SMX_SIL_DEVICES:-host.docker.internal:5555,host.docker.internal:5556,host.docker.internal:5557,host.docker.internal:5558,host.docker.internal:5559,host.docker.internal:5560}
+      SMX_SIL_IDS: ${SMX_SIL_IDS:-1,2,3,4,5,6}
+      SMX_BAUD_RATE: ${SMX_BAUD_RATE:-9600}
+      SMX_UPDATE_RATE: ${SMX_UPDATE_RATE:-25}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    command: ["smx_sil_start.sh"]

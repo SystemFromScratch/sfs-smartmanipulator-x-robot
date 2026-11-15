@@ -16,7 +16,7 @@ drive. The gripper follows afterwards as a separate project.
 | --- | --- | --- |
 | Operator PC → Robot PC (DDS) in Docker on one computer | **Done** | Operator PC container on `smx_net`; commands arrive and the mock-hardware simulation follows them |
 | Operator PC → Robot PC over Wi-Fi, two computers | Planned | Stage 4 |
-| Robot PC → doppelstep in simulation (SIL) | Planned | Stage 1: virtual bus of `native_sim` instances |
+| Robot PC → doppelstep in simulation (SIL) | **Done** (2026-11-15) | Six `native_sim` drives, smoke test PASS ([SIL](robot-pc/index.md#sil-simulated-doppelstep-drives)); MoveIt from the Operator PC still to try |
 | Robot PC → one doppelstep on the bench (ST-LINK VCP) | Planned | Stage 2; the B-G431B-ESC1 is ready |
 | Robot PC on the CM4-Duino → DYNAMIXEL bus | Planned | Stage 3 |
 | Full arm (six drives) | Planned | Stage 4 |
@@ -28,8 +28,9 @@ drive. The gripper follows afterwards as a separate project.
 | Robot PC image (ROS 2 Jazzy, DynamixelSDK, `dynamixel_hardware_interface`) | **Done** (amd64) | arm64 build planned for the CM4 |
 | Simulation with mock hardware, smoke test over DDS | **Done** | [Getting started](getting-started.md) |
 | Robot description from the BCN3D Moveo CAD | **Done** | Joint limits are placeholders |
-| Real-hardware `ros2_control` path | Planned | `robot.launch.py` refuses `use_mock_hardware:=false` until Stage 1 passes |
-| `dynamixel_hardware_interface` configuration (ports, IDs, shoulder transmission) | Planned | Stage 1 |
+| Real-hardware `ros2_control` path | **In progress** | `hardware:=sil` uses it on the virtual bus; `hardware:=real` refused until Stage 2 |
+| `dynamixel_hardware_interface` configuration (ports, IDs, shoulder transmission) | **Done**, verified in SIL | Gear and pulley ratios still placeholders until measured |
+| doppelstep multi-drive bus behaviour (Fast Sync Read, Sync Read turn-taking) | Open | Found in SIL; needed before the real bus ([compatibility specification](dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)) |
 | Per-target hardware configuration (`sim`, `sil`, `hw-pc`, `hw-cm4`) | Planned | [Robot PC on the CM4-Duino](robot-pc/cm4-duino.md#hardware-configuration-per-target) |
 | Deployment files `deploy/cm4-duino/` | Planned | Stage 3 |
 | CM4-Duino documentation and vendor archive | **Done** | [CM4-Duino](hardware/cm4-duino/index.md) |

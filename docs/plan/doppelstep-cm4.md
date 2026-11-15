@@ -56,6 +56,8 @@ only the device behind each ID changes.
 
 - [ ] Single-wire half-duplex USART driver in doppelstep (`single-wire;` on `&usart2`, PB3, open-drain; turnaround vs. Return Delay Time)
 - [ ] Confirm D7 and D8, write them into the [compatibility specification](../dynamixel/compatibility-spec.md)
+- [ ] **Fast Sync/Bulk Read with several drives** (found in SIL, [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-2-2026-11-15)): doppelstep either chains the answers like the X series or stays silent when the request lists other IDs, so the ROBOTIS interface falls back to Sync Read
+- [ ] **Sync Read / Bulk Read turn-taking** (found in SIL, [compatibility specification](../dynamixel/compatibility-spec.md#sil-run-3-2026-11-15)): each drive answers only after the status packet of the ID before it in the request; today all answer at once, which collides on a shared wire
 - [ ] Configure IDs 1–6 and the baud rate on each doppelstep (EEPROM area)
 - [ ] Check Secondary (Shadow) ID support in doppelstep for the mirrored J2 pair, otherwise use `transmission_to_joint_matrix`
 
@@ -63,11 +65,14 @@ only the device behind each ID changes.
 
 ## Stage 1: SIL on the PC, no hardware
 
-- [ ] Virtual DXL bus: small Python tool that connects N doppelstep `native_sim` instances (`tools/sim/run_native.py run --tcp <port>`) into one shared half-duplex bus and exposes it as a pty (`socat` / pty bridge) at `/dev/ttyDXL`
-- [ ] New Compose profile `sil`: `robot_pc` with the real hardware interface on the virtual bus, gripper as mock (or virtual DXL)
-- [ ] `dynamixel_hardware_interface` configuration in `smartmanipulator_x_description` (ports, IDs, J2 transmission)
-- [ ] Remove the `use_mock_hardware:=false` guard in `robot.launch.py` once SIL passes
-- [ ] Extend `smx_smoke_test.sh` for the SIL profile; run it in CI if the sims fit into the runner
+- [x] Virtual DXL bus `tools/sim/smx_dxl_bus.py`: connects N doppelstep `native_sim` instances over TCP into one half-duplex bus at `/dev/ttyDXL` (pty), assigns the joint IDs; unit tests with fake drives
+- [x] Compose override `docker/docker-compose.sil.yml`: `robot_pc` with the real hardware interface on the virtual bus, gripper as mock
+- [x] `dynamixel_hardware_interface` configuration in `smartmanipulator_x_description` (port, baud, IDs 1–6, J2 pair, elbow gearbox), selected by `hardware:=sil|real`
+- [x] `robot.launch.py`: `hardware:=mock|sil|real`; `real` stays refused until Stage 2
+- [x] Run end to end with doppelstep `native_sim` and record the findings in the compatibility specification (SIL runs 1–8, 2026-11-15)
+- [x] `smx_smoke_test.sh` against the SIL profile: **PASS** (2026-11-15); no read timeouts at 25 Hz since SIL run 8
+- [ ] Operator PC (MoveIt 2) plans and executes against the SIL Robot PC
+- [ ] SIL in CI, if the doppelstep simulations can be built there
 
 **Exit:** the Operator PC plans and executes a trajectory; the doppelstep sims follow it; smoke test green.
 
