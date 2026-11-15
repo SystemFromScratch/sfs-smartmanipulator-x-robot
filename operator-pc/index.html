@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -18,7 +18,7 @@
         <link rel="prev" href="../dynamixel/compatibility-spec/">
       
       
-        <link rel="next" href="../firmware/getting-started/">
+        <link rel="next" href="../hardware/cm4-duino/">
       
       
         
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -768,7 +860,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -966,7 +1086,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -982,7 +1102,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -995,14 +1115,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1023,14 +1143,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1051,14 +1171,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1079,14 +1199,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1137,7 +1257,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1150,149 +1270,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1453,6 +1430,10 @@
 
 
 <h1 id="operator-pc">Operator PC<a class="headerlink" href="#operator-pc" title="Permanent link">&para;</a></h1>
+<p>The Operator PC is the computer the operator works on: it plans and
+visualizes motions and talks to the Robot PC over ROS 2 DDS. Its software
+lives in a separate repository; this page describes its role and what it must
+agree on with the Robot PC.</p>
 <h2 id="responsibility">Responsibility<a class="headerlink" href="#responsibility" title="Permanent link">&para;</a></h2>
 <p>The Operator PC owns motion planning, operator visualization, and simulation workflows:</p>
 <ul>
@@ -1461,18 +1442,18 @@
 <li>Gazebo simulation and simulation-specific <code>ros2_control</code> integration.</li>
 <li>ROS 2 DDS communication with the Robot PC over the configured network.</li>
 </ul>
-<p>It does not own the SmartFusion2 USB connection, motor hardware, or physical <code>ros2_control</code> hardware interface. Do not pass <code>/dev/ttyACM0</code> through to the Operator PC.</p>
+<p>It does not own the DYNAMIXEL bus, the doppelstep drives, or the physical <code>ros2_control</code> hardware interface. Do not pass any serial device through to the Operator PC.</p>
 <h2 id="separate-repository">Separate repository<a class="headerlink" href="#separate-repository" title="Permanent link">&para;</a></h2>
 <p>Operator PC implementation is maintained in the separate <a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator">sfs-smartmanipulator-x-operator</a> repository; this documentation contains its architecture guidance only. Keep Operator-specific launch files, MoveIt configuration, RViz setup, Gazebo assets, and runtime/container configuration in that repository. The Robot PC Docker image must remain free of Operator PC GUI and simulation dependencies.</p>
 <p>Consume the canonical robot description from <code>smartmanipulator_x_description</code> (in the Robot PC repository) or a future shared-description repository. The package is generated from the BCN3D Moveo CAD (see <a href="../mechanical/">BCN3D Moveo mechanics</a>); its joint limits are placeholders until measured on the arm, so planning limits must be revisited then. Do not duplicate an independent URDF/Xacro or substitute the OpenMANIPULATOR-X model for Moveo.</p>
 <h2 id="real-robot-and-simulation">Real robot and simulation<a class="headerlink" href="#real-robot-and-simulation" title="Permanent link">&para;</a></h2>
 <p>The intended MoveIt application should work with either the physical Robot PC or simulation. The robot model, joint names, limits, planning groups, and controller-facing joint semantics must agree in both modes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Real robot: MoveIt -&gt; DDS -&gt; Robot PC ros2_control -&gt; verified DYNAMIXEL path -&gt; SmartFusion2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Real robot: MoveIt -&gt; DDS -&gt; Robot PC ros2_control -&gt; DYNAMIXEL bus -&gt; doppelstep drives
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Simulation: MoveIt -&gt; Gazebo ros2_control integration -&gt; simulated Moveo joints
 </code></pre></div>
-<p>Use the physical path only after SmartFusion2 compatibility and robot bringup are verified. Gazebo integration and MoveIt configuration belong to the Operator PC repository.</p>
+<p>Use the physical path only after doppelstep compatibility and robot bring-up are verified. Gazebo integration and MoveIt configuration belong to the Operator PC repository.</p>
 <h2 id="dds-checklist">DDS checklist<a class="headerlink" href="#dds-checklist" title="Permanent link">&para;</a></h2>
-<p>For two-host operation, configure matching ROS 2 domain IDs and verify that both hosts use reachable network interfaces. Check DDS discovery, routing/multicast support, and firewall rules in the deployment network. SSH can be used for administration, but it is not a substitute for DDS connectivity. Simulation-only runs can be local to the Operator PC and do not require physical hardware.</p>
+<p>On the robot the Robot PC is reached over <strong>Wi-Fi</strong> (the CM4-Duino has no Ethernet connector). For two-host operation, configure matching ROS 2 domain IDs and verify that both hosts use reachable network interfaces. Check DDS discovery, routing/multicast support, and firewall rules in the deployment network. SSH can be used for administration, but it is not a substitute for DDS connectivity. Simulation-only runs can be local to the Operator PC and do not require physical hardware.</p>
 
 
 
@@ -1525,13 +1506,13 @@
         
         
           
-          <a href="../firmware/getting-started/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started">
+          <a href="../hardware/cm4-duino/" class="md-footer__link md-footer__link--next" aria-label="Next: CM4-Duino board">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Getting Started
+                CM4-Duino board
               </div>
             </div>
             <div class="md-footer__button md-icon">

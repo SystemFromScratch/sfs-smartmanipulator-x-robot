@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/mechanical/">
       
       
-        <link rel="prev" href="../robot-pc/">
+        <link rel="prev" href="../robot-pc/cm4-duino/">
       
       
         <link rel="next" href="../architecture/">
@@ -29,7 +29,7 @@
     
     
       
-        <title>BCN3D Moveo Mechanics - SmartManipulator-X</title>
+        <title>BCN3D Moveo mechanics - SmartManipulator-X</title>
       
     
     
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              BCN3D Moveo Mechanics
+              BCN3D Moveo mechanics
             
           </span>
         </div>
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -671,6 +735,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -690,7 +782,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -708,7 +800,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -848,7 +940,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -955,7 +1075,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -971,7 +1091,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -984,14 +1104,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1012,14 +1132,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1040,14 +1160,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1068,14 +1188,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1126,7 +1246,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1139,149 +1259,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1430,12 +1407,15 @@
 
 
 
-<h1 id="bcn3d-moveo-mechanics">BCN3D Moveo Mechanics<a class="headerlink" href="#bcn3d-moveo-mechanics" title="Permanent link">&para;</a></h1>
+<h1 id="bcn3d-moveo-mechanics">BCN3D Moveo mechanics<a class="headerlink" href="#bcn3d-moveo-mechanics" title="Permanent link">&para;</a></h1>
+<p>The arm is a BCN3D Moveo. This page says where the mechanical design comes
+from, how the ROS model is generated from its CAD, which conventions the model
+uses, and what is still to be measured on the assembled arm.</p>
 <h2 id="mechanical-source">Mechanical source<a class="headerlink" href="#mechanical-source" title="Permanent link">&para;</a></h2>
 <p>The target arm mechanics are based on the <a href="https://github.com/BCN3D/BCN3D-Moveo">BCN3D Moveo project</a>, not on the OpenMANIPULATOR-X geometry. The upstream repository provides CAD files, STL files, assembly/user documentation, a bill of materials, and original firmware. Its README describes an educational, additively manufactured arm controlled by Arduino-based electronics.</p>
-<p>This project replaces/adapts the control electronics; it does not claim that the original Moveo firmware or electronics are part of the SmartFusion2 control path. Refer to the upstream repository and its license for the authoritative mechanical files, assembly details, and attribution requirements.</p>
+<p>This project replaces/adapts the control electronics; it does not claim that the original Moveo firmware or electronics are part of the SmartManipulator-X control path. Refer to the upstream repository and its license for the authoritative mechanical files, assembly details, and attribution requirements.</p>
 <h2 id="ros-model-integration">ROS model integration<a class="headerlink" href="#ros-model-integration" title="Permanent link">&para;</a></h2>
-<p>The intended home for the project-owned ROS model is:</p>
+<p>The project-owned ROS model is in:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ros2_ws/src/smartmanipulator_x/smartmanipulator_x_description/
 </code></pre></div>
 <p>The model in that package is generated from the BCN3D Moveo CAD: a STEP export of <code>BCN3D Moveo assembly.SLDASM</code> (upstream <code>CAD files/</code>, MIT license; the license text is in <code>meshes/LICENSE-BCN3D-Moveo</code>). The scripts in <code>tools/cad/</code> read the STEP, assign each part to a link, take the joint axes from the axles in the CAD, and write <code>urdf/smartmanipulator_x.urdf.xacro</code>, the decimated visual meshes, and convex-hull collision meshes. See <code>tools/cad/README.md</code> for the steps; <code>meshes/geometry.json</code> records the derived values.</p>
@@ -1467,7 +1447,7 @@
 </table>
 <p>Conventions of the model:</p>
 <ul>
-<li>Zero pose: arm straight up, gripper fully open. The SmartFusion2 start pose (arm placed by hand before power-up) must match it, or the zero offsets must be set in the controller.</li>
+<li>Zero pose: arm straight up, gripper fully open. The start pose (arm placed by hand before power-up) must match it, or the zero offsets must be set in the drives (Homing Offset).</li>
 <li>Positive J2, J3 and J5 bend the arm forward (+x, away from the electronics box of the original Moveo); positive J1 and J4 turn counter-clockwise seen from the tip of their axis.</li>
 <li><code>gripper</code> is the servo gear angle, 0 (open) to 1.45 rad (closed). The idler gear, pivot arms and fingers are mimic joints.</li>
 <li>The original electronics box is available with the xacro argument <code>electronics_box:=true</code>; it is off by default because this build uses other electronics.</li>
@@ -1479,11 +1459,11 @@
 <li>Record the source revision and any project-specific changes to CAD/STL-derived geometry.</li>
 <li>Establish the base frame, link frames, joint axes, zero positions, and units from the source design and assembled robot.</li>
 <li>Verify joint ranges and collision geometry against the physical arm; do not inherit OpenMANIPULATOR-X limits or joint names.</li>
-<li>Define and document each Moveo joint-to-stepper mapping, transmission, microstepping, homing/reference method, and position scaling only after the hardware is selected and measured.</li>
+<li>Define and document each Moveo joint-to-stepper mapping, transmission, microstepping, homing/reference method, and position scaling once they are measured on the assembled arm (the motors are listed in <a href="../hardware/wiring/#joint-motors">Joint motors</a>).</li>
 <li>Keep MoveIt planning groups, <code>ros2_control</code> joints, Gazebo joints, and physical motor mapping consistent.</li>
 <li>Preserve upstream license and attribution notices for imported or adapted assets. Do not assume that the project repository's license changes third-party asset licensing.</li>
 </ul>
-<p>The electronics are selected in the controller project: six BTT TMC5160T Pro drivers and the stepper motors per joint listed in <a href="../hardware/wiring/#axes-and-motors">Axes and motors</a> (J1 base, J2 shoulder with two motors, J3 elbow, J4 forearm roll, J5 wrist), plus an MG996R gripper servo; the joint-to-motor assignment is in <code>include/motor/motor_axes.h</code> of the controller firmware. Joint naming in the ROS model, dimensions, limits, gear ratios and the sensing approach remain to be verified for the selected mechanical build. They are deliberately not inferred here from the project name.</p>
+<p>The electronics are described in <a href="../hardware/wiring/">Wiring</a>: one doppelstep drive per stepper motor, with the motor of each joint listed in <a href="../hardware/wiring/#joint-motors">Joint motors</a> (J1 base, J2 shoulder with two motors, J3 elbow, J4 forearm roll, J5 wrist), plus an MG996R <a href="../hardware/gripper-servo/">gripper servo</a>. Joint limits, motor directions and gear ratios are still to be measured on the assembled arm; there are no encoders or limit switches yet, so the start pose is set by hand.</p>
 <h2 id="acceptance-checks">Acceptance checks<a class="headerlink" href="#acceptance-checks" title="Permanent link">&para;</a></h2>
 <p>Before a model is treated as the canonical robot description, validate that it parses in URDF/Xacro tooling, has a connected link tree and correct joint types/axes, and produces a useful RViz visualization. Compare each joint range and frame placement with the assembled Moveo. Then check that the same joint contract can be loaded by both the physical <code>ros2_control</code> configuration and the selected Gazebo integration.</p>
 
@@ -1521,7 +1501,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../robot-pc/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Robot PC">
+          <a href="../robot-pc/cm4-duino/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Robot PC on the CM4-Duino">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1531,20 +1511,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Robot PC
+                Robot PC on the CM4-Duino
               </div>
             </div>
           </a>
         
         
           
-          <a href="../architecture/" class="md-footer__link md-footer__link--next" aria-label="Next: System Architecture">
+          <a href="../architecture/" class="md-footer__link md-footer__link--next" aria-label="Next: System architecture">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                System Architecture
+                System architecture
               </div>
             </div>
             <div class="md-footer__button md-icon">

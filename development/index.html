@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/development/">
       
       
-        <link rel="prev" href="../getting-started/">
+        <link rel="prev" href="../beginners/">
       
       
-        <link rel="next" href="../robot-pc/">
+        <link rel="next" href="../status/">
       
       
         
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -538,7 +518,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -704,6 +712,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -798,6 +862,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mechanical/" class="md-nav__link">
         
   
@@ -805,7 +897,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -892,7 +984,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -999,7 +1119,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -1015,7 +1135,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -1028,14 +1148,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1056,14 +1176,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1084,14 +1204,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1112,14 +1232,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1170,7 +1290,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1183,149 +1303,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1521,14 +1498,14 @@
 <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
 <p>This page describes how the Robot PC repository is organized and built: the
 Docker image, the ROS 2 workspace, the robot description generated from the
-CAD, the documentation and the CI workflows. The controller firmware has its
-own <a href="../firmware/development/">development environment</a>.</p>
+CAD, the documentation and the CI workflows. The drive firmware lives in the
+<a href="https://github.com/SystemFromScratch/sfs-doppelstep">doppelstep</a> repository.</p>
 <h2 id="repository-layout">Repository layout<a class="headerlink" href="#repository-layout" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>.
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── docker/
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── Dockerfile                    Robot PC image (ros:jazzy-ros-base + ROBOTIS packages + workspace)
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── docker-compose.yml            robot_pc and probe services, network smx_net
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── docker-compose.hw.yml         USB device pass-through (Linux hosts)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── docker-compose.hw.yml         serial device pass-through (Linux hosts)
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── entrypoint.sh                 sources ROS 2 and the built workspace
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── env.example                   template for docker/.env
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   └── dds/fastdds_udp.xml           Fast DDS profile: UDPv4 only
@@ -1540,13 +1517,14 @@ own <a href="../firmware/development/">development environment</a>.</p>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── ros2_ws/src/robotis/              checkout target of ros2_robot.repos (in the image)
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── ros2_robot.repos                  upstream sources built into the Robot PC image
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>├── ros2.repos                        broader workspace manifest
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>├── tools/
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   ├── cad/                          STEP → URDF pipeline for the robot description
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   ├── diagnostics/smx_smoke_test.sh end-to-end check over DDS
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   └── docs/                         PDF manual builder, diagrams, MkDocs hook
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>├── docs/, overrides/, mkdocs.yml     this documentation
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>├── requirements-docs.txt             documentation tools (.venv)
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>└── .vscode/tasks.json                Robot PC and documentation tasks
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>├── deploy/cm4-duino/                 CM4-Duino deployment files (planned)
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── tools/
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   ├── cad/                          STEP → URDF pipeline for the robot description
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── diagnostics/smx_smoke_test.sh end-to-end check over DDS
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   └── docs/                         PDF manual builder, diagrams, MkDocs hook
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>├── docs/, overrides/, mkdocs.yml     this documentation
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>├── requirements-docs.txt             documentation tools (.venv)
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>└── .vscode/tasks.json                Robot PC and documentation tasks
 </code></pre></div>
 <p>Generated directories (<code>ros2_ws/build/</code>, <code>ros2_ws/install/</code>, <code>ros2_ws/log/</code>,
 <code>site/</code>, <code>build/</code>, <code>docs/downloads/</code>, <code>.venv/</code>) are ignored.</p>
@@ -1681,8 +1659,16 @@ builder finds <code>C:\msys64\mingw64\bin</code> by itself), on Ubuntu
 <td>Regenerates the hero illustration <code>docs/assets/images/hero-3d.svg</code>; the arm is drawn from the robot description meshes and URDF by <code>tools/docs/hero_robot.py</code>, so run it again after the description changes</td>
 </tr>
 <tr>
+<td><code>python tools/docs/pictorial_diagrams.py</code></td>
+<td>Regenerates the pictorial connection views <code>docs/hardware/images/pictorial-*.svg</code> of the <a href="../beginners/">beginners' guide</a></td>
+</tr>
+<tr>
+<td><code>python tools/docs/wiring_diagrams.py</code></td>
+<td>Regenerates the wiring diagrams <code>docs/hardware/images/wiring-*.svg</code>; pin names must match the <a href="../hardware/wiring/">Wiring</a> page</td>
+</tr>
+<tr>
 <td><code>python tools/docs/render_mermaid.py</code></td>
-<td>Renders <code>docs/**/diagrams/*.mmd</code> to <code>docs/**/images/*.svg</code> (needs Playwright and a network connection)</td>
+<td>Renders <code>docs/**/diagrams/*.mmd</code> to <code>docs/**/images/*.svg</code> (needs Playwright and a network connection; no Mermaid sources at the moment)</td>
 </tr>
 </tbody>
 </table>
@@ -1696,9 +1682,16 @@ builder finds <code>C:\msys64\mingw64\bin</code> by itself), on Ubuntu
   figure with its alt text as the caption (<code>tools/docs/hooks.py</code>).</li>
 <li>Link to other pages with relative <code>.md</code> paths; strict mode checks them, and
   the PDF turns them into page references.</li>
-<li>Diagrams are SVG files. Mermaid sources live in <code>diagrams/*.mmd</code> next to the
-  page and are rendered with <code>render_mermaid.py</code>, because the PDF renderer
-  runs no JavaScript.</li>
+<li>Third-party documents (datasheets, vendor schematics, photos, 3D models,
+  example code) are not ours to redistribute. Keep a backup copy in the
+  repository (<code>docs/hardware/datasheets/</code>, <code>docs/hardware/cm4-duino/vendor/</code>),
+  exclude that folder from the website with <code>exclude_docs</code> in <code>mkdocs.yml</code>,
+  and link to the original on the publisher's website, with the date the link
+  was checked and the backup path as plain text for when the link breaks.</li>
+<li>Diagrams are SVG files generated by the scripts above; never edit them by
+  hand. The PDF renderer runs no JavaScript, so a Mermaid diagram needs its
+  source in <code>diagrams/*.mmd</code> next to the page, rendered with
+  <code>render_mermaid.py</code> (no page uses Mermaid at the moment).</li>
 </ul>
 <h2 id="ci">CI<a class="headerlink" href="#ci" title="Permanent link">&para;</a></h2>
 <table>
@@ -1723,7 +1716,7 @@ builder finds <code>C:\msys64\mingw64\bin</code> by itself), on Ubuntu
 </tbody>
 </table>
 <h2 id="engineering-rules-for-agents">Engineering rules for agents<a class="headerlink" href="#engineering-rules-for-agents" title="Permanent link">&para;</a></h2>
-<p>The architecture and the Robot PC, Operator PC and SmartFusion2 rules for
+<p>The architecture and the Robot PC and Operator PC rules for
 coding agents are skills in the shared
 <a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-skills">sfs-smartmanipulator-x-skills</a>
 repository, used by every repository of the project.</p>
@@ -1762,7 +1755,7 @@ repository, used by every repository of the project.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+          <a href="../beginners/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Connection guide for beginners">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1772,20 +1765,20 @@ repository, used by every repository of the project.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Getting Started
+                Connection guide for beginners
               </div>
             </div>
           </a>
         
         
           
-          <a href="../robot-pc/" class="md-footer__link md-footer__link--next" aria-label="Next: Robot PC">
+          <a href="../status/" class="md-footer__link md-footer__link--next" aria-label="Next: Project status">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Robot PC
+                Project status
               </div>
             </div>
             <div class="md-footer__button md-icon">

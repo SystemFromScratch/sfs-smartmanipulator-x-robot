@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/dynamixel/compatibility-spec/">
       
       
-        <link rel="prev" href="../../architecture/">
+        <link rel="prev" href="../bus/">
       
       
         <link rel="next" href="../../operator-pc/">
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#smartfusion2-dynamixel-compatibility-specification" class="md-skip">
+        <a href="#dynamixel-compatibility-specification" class="md-skip">
           Skip to content
         </a>
       
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../hardware/wiring/" class="md-tabs__link">
+        <a href="../../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -768,7 +860,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -966,7 +1086,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -982,7 +1102,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -995,14 +1115,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../firmware/getting-started/" class="md-nav__link">
+      <a href="../../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1023,14 +1143,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../firmware/development/" class="md-nav__link">
+      <a href="../../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1051,14 +1171,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../firmware/" class="md-nav__link">
+      <a href="../../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1079,14 +1199,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gui/" class="md-nav__link">
+      <a href="../../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1137,7 +1257,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1150,149 +1270,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1452,11 +1429,11 @@
 
 
 
-<h1 id="smartfusion2-dynamixel-compatibility-specification">SmartFusion2 DYNAMIXEL Compatibility Specification<a class="headerlink" href="#smartfusion2-dynamixel-compatibility-specification" title="Permanent link">&para;</a></h1>
-<p><strong>Status: unverified.</strong> This is the shared contract for the Robot PC and the separate SmartFusion2 firmware. No register values, actuator identity, or drop-in compatibility claim is currently established. Keep unknowns explicit; do not infer XM430 behavior from the OpenMANIPULATOR-X product description.</p>
+<h1 id="dynamixel-compatibility-specification">DYNAMIXEL compatibility specification<a class="headerlink" href="#dynamixel-compatibility-specification" title="Permanent link">&para;</a></h1>
+<p><strong>Status: unverified.</strong> This is the shared contract between the Robot PC (ROBOTIS host software) and the <a href="../../hardware/doppelstep/">doppelstep</a> drives on the <a href="../bus/">DYNAMIXEL bus</a>. doppelstep is designed to behave like an XM430-W350, but no row below is verified against the Jazzy host sources or on hardware yet. Keep unknowns explicit.</p>
 <h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
-<p>The target firmware is a virtual DYNAMIXEL device over USB CDC that controls stepper motors on the BCN3D Moveo mechanism. The preferred ROS path reuses ROBOTIS <code>dynamixel_hardware_interface</code> and DynamixelSDK if source analysis confirms compatibility. The SmartFusion2 is not intended to transparently forward USB packets to physical DYNAMIXEL actuators.</p>
-<p>The ROBOTIS OpenMANIPULATOR-X source is a software-stack reference, not evidence that its stock actuator model, joint names, motion ranges, or register set fit the Moveo build.</p>
+<p>Each doppelstep drive is a DYNAMIXEL Protocol 2.0 device that controls one stepper motor of the BCN3D Moveo. The Robot PC drives all of them through the stock ROBOTIS <code>dynamixel_hardware_interface</code> and DynamixelSDK. The gripper (ID 7) is a separate project and gets its own rows when it starts.</p>
+<p>The ROBOTIS OpenMANIPULATOR-X source is a software-stack reference, not evidence that its stock actuator model, joint names, motion ranges, or register usage fit the Moveo build.</p>
 <h2 id="sources-to-pin-and-inspect">Sources to pin and inspect<a class="headerlink" href="#sources-to-pin-and-inspect" title="Permanent link">&para;</a></h2>
 <p>For every finding, record the immutable commit or release, file path, and relevant symbol/line or documented section. Branch names such as <code>jazzy</code> can move and are not sufficient as reproducible evidence.</p>
 <ul>
@@ -1464,15 +1441,17 @@
 <li><a href="https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface">dynamixel_hardware_interface</a></li>
 <li><a href="https://github.com/ROBOTIS-GIT/dynamixel_interfaces">dynamixel_interfaces</a></li>
 <li><a href="https://github.com/ROBOTIS-GIT/open_manipulator">OpenMANIPULATOR ROS 2</a></li>
-<li>Selected DYNAMIXEL model documentation and the actual SmartFusion2 USB/firmware implementation.</li>
+<li><a href="https://github.com/SystemFromScratch/sfs-doppelstep">doppelstep</a> firmware release and its Control Table implementation (<a href="https://systemfromscratch.com/sfs-doppelstep/dynamixel/">DYNAMIXEL emulation</a>)</li>
+<li>ROBOTIS XM430-W350 e-Manual (the reference doppelstep follows)</li>
 </ul>
-<p>Inspect the host implementation rather than guessing from a model control-table PDF: identify the actual startup reads/writes, register widths and signedness, command/state interfaces, operating modes, packet instructions, status/error handling, retries, timeout behavior, and update loop. Confirm what behavior is meaningful for a stepper-driven Moveo joint.</p>
+<p>Inspect the host implementation rather than guessing from the Control Table PDF: identify the actual startup reads/writes, register widths and signedness, command/state interfaces, operating modes, packet instructions, status/error handling, retries, timeout behavior, and update loop. Confirm what behavior is meaningful for a stepper-driven Moveo joint.</p>
 <h2 id="evidence-backed-device-contract">Evidence-backed device contract<a class="headerlink" href="#evidence-backed-device-contract" title="Permanent link">&para;</a></h2>
-<p>Replace <code>Unverified</code> only when source or hardware evidence is recorded. If a requirement does not apply to the virtual stepper device, document why and how the host path handles it.</p>
+<p>Replace <code>Unverified</code> only when source or hardware evidence is recorded. If a requirement does not apply to the stepper drive, document why and how the host path handles it.</p>
 <table>
 <thead>
 <tr>
 <th>Requirement</th>
+<th>Expected (design)</th>
 <th>Verified value</th>
 <th>Source revision and evidence</th>
 </tr>
@@ -1480,82 +1459,96 @@
 <tbody>
 <tr>
 <td>Host package versions/commits</td>
+<td>Jazzy branches of the ROBOTIS packages in <code>ros2_robot.repos</code></td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Host-requested actuator model and protocol</td>
+<td>Device model and protocol</td>
+<td>XM430-W350, model number 1020, Protocol 2.0</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Device ID and discovery behavior</td>
+<td>Device IDs and discovery</td>
+<td>IDs 1–6 per the <a href="../bus/#id-map">ID map</a>, PING</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>USB CDC framing, baud/line settings, and response timing</td>
+<td>Physical layer, baud rate, response timing</td>
+<td>Single-wire half-duplex, 1 Mbps proposed, Return Delay Time default</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
 <td>Protocol instructions actually used</td>
+<td>Read, Write, Sync/Bulk Read and Write, Fast Sync/Bulk Read (to be confirmed in the host source)</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Control Table addresses, widths, signedness, and access rules</td>
+<td>Control Table addresses, widths, signedness, access rules</td>
+<td>XM430-W350 table</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
 <td>Initialization and configuration sequence</td>
+<td>From the hardware-interface source</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Command interfaces and supported operating modes</td>
+<td>Command interfaces and operating modes</td>
+<td>Position / extended position</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
 <td>State interfaces and measurement source</td>
+<td>Position from the drive's step counter (open loop), velocity, current</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Torque/enable and fault behavior</td>
+<td>Torque enable and fault behavior</td>
+<td>Hardware Error Status, Torque Enable, Bus Watchdog</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Update rate, latency, retries, and timeouts</td>
+<td>Update rate, latency, retries, timeouts</td>
+<td>Controller rate 100 Hz (<code>controllers.yaml</code>)</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
-<td>Moveo joint-to-device/motor mapping</td>
+<td>Moveo joint-to-drive mapping, shoulder pair</td>
+<td><a href="../../robot-pc/#joint-contract">Joint contract</a>, transmission matrices</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 <tr>
 <td>Unmodified stock hardware-interface compatibility</td>
+<td>Expected</td>
 <td>Unverified</td>
 <td>Unverified</td>
 </tr>
 </tbody>
 </table>
 <h2 id="verification-record">Verification record<a class="headerlink" href="#verification-record" title="Permanent link">&para;</a></h2>
-<p>For each test, record hardware and firmware revisions, host OS/ROS distribution, exact source commits, configuration, command, expected result, and observed result. Distinguish protocol-level simulation from a physical stepper-axis test.</p>
+<p>For each test, record hardware and firmware revisions, host OS/ROS distribution, exact source commits, configuration, command, expected result, and observed result. Distinguish the simulated drive (<code>native_sim</code>) from a physical stepper axis.</p>
 <p>Minimum staged evidence:</p>
 <ol>
-<li>Confirm the board enumerates as USB CDC and the Robot PC can open the device.</li>
-<li>Verify Protocol 2.0 packet framing and status/error responses against the selected DynamixelSDK transport.</li>
-<li>Test required device discovery and the precise read/write transactions observed in the hardware-interface source.</li>
-<li>Verify initialization, state reporting, command updates, and timeout/failure behavior for one virtual actuator.</li>
-<li>Validate one real stepper axis with its selected driver, scaling, limits, reference method, and stop behavior.</li>
+<li>SIL: the Robot PC opens the virtual bus and pings every simulated drive (Stage 1).</li>
+<li>Verify Protocol 2.0 framing and status/error responses against the selected DynamixelSDK transport.</li>
+<li>Record the read/write transactions of the hardware-interface start-up and update loop and check each against doppelstep.</li>
+<li>Bench: one B-G431B-ESC1 over the ST-LINK virtual COM port follows trajectories from the Operator PC (Stage 2).</li>
+<li>Single-wire physical layer: the same tests through the half-duplex interface at the chosen baud rate.</li>
+<li>One physical joint on the arm with its scaling, limits, reference method and stop behavior (Stage 4).</li>
 </ol>
-<p>Do not claim full XM430 emulation or production readiness based only on successful packet exchange. A device model identifier, register behavior, mechanical mapping, and physical motion all require separate evidence.</p>
+<p>Do not claim full XM430 emulation or production readiness based only on successful packet exchange. Register behavior, mechanical mapping, and physical motion all require separate evidence.</p>
 
 
 
@@ -1591,7 +1584,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../architecture/" class="md-footer__link md-footer__link--prev" aria-label="Previous: System Architecture">
+          <a href="../bus/" class="md-footer__link md-footer__link--prev" aria-label="Previous: DYNAMIXEL Bus">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1601,7 +1594,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                System Architecture
+                DYNAMIXEL Bus
               </div>
             </div>
           </a>

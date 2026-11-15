@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/firmware/getting-started/">
+        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/robot-pc/cm4-duino/">
       
       
-        <link rel="prev" href="../../operator-pc/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../development/">
+        <link rel="next" href="../../mechanical/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Getting Started - SmartManipulator-X</title>
+        <title>Robot PC on the CM4-Duino - SmartManipulator-X</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#firmware-getting-started" class="md-skip">
+        <a href="#robot-pc-on-the-cm4-duino" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              Robot PC on the CM4-Duino
             
           </span>
         </div>
@@ -270,11 +270,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../robot-pc/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -310,33 +312,11 @@
   
   
   
-    
-  
-  
-    
-    
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
   
     
     
       <li class="md-tabs__item">
-        <a href="../../hardware/wiring/" class="md-tabs__link">
+        <a href="../../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -575,6 +583,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -586,26 +650,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -623,7 +692,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -641,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../robot-pc/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -666,6 +735,136 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-runs-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What runs where
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build artifact
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-configuration-per-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware configuration per target
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bring-up-checklist-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bring-up checklist (planned)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
@@ -676,7 +875,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -763,7 +962,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -844,38 +1071,33 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -886,12 +1108,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -901,169 +1123,17 @@
                 
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#clone" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clone
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#open-the-dev-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Open the Dev Container
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fetch-zephyr-and-build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fetch Zephyr and build
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#program-the-board" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Program the board
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-the-axes-with-the-gui-on-the-host" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test the axes with the GUI (on the host)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../development/" class="md-nav__link">
+      <a href="../../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    CM4-Duino board
   
 
     
@@ -1084,14 +1154,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    doppelstep drives
   
 
     
@@ -1112,14 +1182,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gui/" class="md-nav__link">
+      <a href="../../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Wiring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/gripper-servo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper Servo (MG996R)
   
 
     
@@ -1170,7 +1268,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1183,149 +1281,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1425,10 +1380,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#what-runs-where" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        What runs where
       
     </span>
   </a>
@@ -1436,10 +1391,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#clone" class="md-nav__link">
+  <a href="#build-artifact" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clone
+        Build artifact
       
     </span>
   </a>
@@ -1447,10 +1402,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#open-the-dev-container" class="md-nav__link">
+  <a href="#hardware-configuration-per-target" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Open the Dev Container
+        Hardware configuration per target
       
     </span>
   </a>
@@ -1458,10 +1413,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fetch-zephyr-and-build" class="md-nav__link">
+  <a href="#network" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Fetch Zephyr and build
+        Network
       
     </span>
   </a>
@@ -1469,32 +1424,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#program-the-board" class="md-nav__link">
+  <a href="#bring-up-checklist-planned" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Program the board
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-the-axes-with-the-gui-on-the-host" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test the axes with the GUI (on the host)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next steps
+        Bring-up checklist (planned)
       
     </span>
   </a>
@@ -1518,128 +1451,160 @@
 
 
 
-<h1 id="firmware-getting-started">Firmware: getting started<a class="headerlink" href="#firmware-getting-started" title="Permanent link">&para;</a></h1>
-<p>This guide takes you from a fresh clone of the controller firmware repository
-(SmartManipulator-X-Controller, separate from the Robot PC repository) to a
-built firmware image and a running motor tester. The <a href="../development/">development environment</a> page
-has details and troubleshooting.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h1 id="robot-pc-on-the-cm4-duino">Robot PC on the CM4-Duino<a class="headerlink" href="#robot-pc-on-the-cm4-duino" title="Permanent link">&para;</a></h1>
+<p>On the robot, the Robot PC will be a Raspberry Pi Compute Module 4 on a
+<a href="../../hardware/cm4-duino/">CM4-Duino</a> carrier board. It will run the
+same Robot PC image as the development PC, built for arm64, and reach the
+Operator PC over Wi-Fi.</p>
+<blockquote>
+<p><strong>Status (2026-11-15):</strong> planned (Stage 3 of the
+<a href="../../plan/doppelstep-cm4/#stage-3-robot-pc-on-the-cm4-duino">integration plan</a>).
+Nothing on this page is implemented yet; it is the target the work is
+measured against.</p>
+</blockquote>
+<h2 id="what-runs-where">What runs where<a class="headerlink" href="#what-runs-where" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> CM4-Duino + CM4 (Wi-Fi, eMMC)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> ├── Raspberry Pi OS Bookworm (64-bit) + Docker Engine + Compose v2
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a> ├── systemd unit smx-robot.service  -&gt; docker compose up robot_pc
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a> └── robot_pc container (ghcr.io/systemfromscratch/sfs-smartmanipulator-x-robot, arm64)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       ros2_control -&gt; dynamixel_hardware_interface -&gt; DynamixelSDK -&gt; /dev/ttyDXL
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                                     -&gt; DYNAMIXEL bus -&gt; doppelstep × 6
+</code></pre></div>
+<p>ROS 2 lives only in the container, so the host OS can stay Raspberry Pi OS
+(best hardware support for the CM4 and the board) even though ROS 2 Jazzy
+targets Ubuntu 24.04.</p>
+<h2 id="build-artifact">Build artifact<a class="headerlink" href="#build-artifact" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Where</th>
-<th>What</th>
+<th>Artifact</th>
+<th>Produced by</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Host (Windows or Linux)</td>
-<td>Git, Docker Desktop / Docker Engine with BuildKit, VS Code with the <strong>Dev Containers</strong> extension</td>
+<td>Robot PC image for <code>linux/amd64</code> and <code>linux/arm64</code></td>
+<td><code>docker-publish.yml</code> with <code>docker buildx</code>, published to GHCR</td>
+<td>Planned (today: amd64 only)</td>
 </tr>
 <tr>
-<td>Host, for the GUI</td>
-<td>Python 3.9+ with Tkinter (the python.org installer on Windows; <code>python3-tk python3-venv</code> on Ubuntu)</td>
+<td><code>deploy/cm4-duino/</code></td>
+<td>This repository</td>
+<td>Planned</td>
 </tr>
 <tr>
-<td>Host, for the FPGA design</td>
-<td>Microchip Libero SoC with its license, outside Docker</td>
-</tr>
-<tr>
-<td>Hardware</td>
-<td>M2S Hello FPGA Kit, USB Mini-B cable, and for motion: six TMC5160 modules, motors, and a 24 V supply (<a href="../../hardware/wiring/">wiring</a>)</td>
+<td>SD/eMMC image with everything preinstalled</td>
+<td>–</td>
+<td>Not planned now; only if provisioning by script becomes too slow</td>
 </tr>
 </tbody>
 </table>
-<p>The firmware toolchain (Zephyr SDK, west, CMake, Ninja, ccache) comes from
-the repository <code>Dockerfile</code>. Do not install it on the host.</p>
-<h2 id="clone">Clone<a class="headerlink" href="#clone" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;<span class="w"> </span>SmartManipulator-X-Controller
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>SmartManipulator-X-Controller
-</code></pre></div>
-<p>The repository has a <code>.gitattributes</code> file, so shell scripts keep LF line
-endings on Windows too. If you cloned before it was added, see
-<a href="../development/#line-endings">Line endings</a>.</p>
-<h2 id="open-the-dev-container">Open the Dev Container<a class="headerlink" href="#open-the-dev-container" title="Permanent link">&para;</a></h2>
+<p>Planned content of <code>deploy/cm4-duino/</code>:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>config.txt.fragment</code></td>
+<td><code>enable_uart=1</code>, <code>dtoverlay=disable-bt</code>, USB if needed</td>
+</tr>
+<tr>
+<td><code>99-smx-dxl.rules</code></td>
+<td>udev rule: <code>/dev/ttyAMA0</code> → <code>/dev/ttyDXL</code></td>
+</tr>
+<tr>
+<td><code>smx-robot.service</code></td>
+<td>systemd unit that starts the Robot PC with Compose after Docker and the network are up</td>
+</tr>
+<tr>
+<td><code>docker-compose.cm4.yml</code></td>
+<td>Compose override: host networking, <code>/dev/ttyDXL</code>, image from GHCR instead of a local build</td>
+</tr>
+<tr>
+<td><code>provision.sh</code></td>
+<td>Installs Docker, copies the files above, disables the serial console, enables the service</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hardware-configuration-per-target">Hardware configuration per target<a class="headerlink" href="#hardware-configuration-per-target" title="Permanent link">&para;</a></h2>
+<p>Port, baud rate and IDs must not be hard-coded in the launch files. Each
+target gets its own hardware configuration, selected by a launch argument or
+a Compose profile:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Hardware</th>
+<th>Bus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sim</code></td>
+<td><code>mock_components/GenericSystem</code></td>
+<td>–</td>
+</tr>
+<tr>
+<td><code>sil</code></td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td>Virtual bus of doppelstep <code>native_sim</code> instances</td>
+</tr>
+<tr>
+<td><code>hw-pc</code></td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td>ST-LINK virtual COM port or USB-UART on a development PC</td>
+</tr>
+<tr>
+<td><code>hw-cm4</code></td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td><code>/dev/ttyDXL</code> on the CM4-Duino</td>
+</tr>
+</tbody>
+</table>
+<h2 id="network">Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Link to the Operator PC</td>
+<td>CM4 Wi-Fi (the CM4-Duino has no Ethernet connector)</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>Fixed IP or DHCP reservation for the CM4</td>
+</tr>
+<tr>
+<td>Container network</td>
+<td><code>network_mode: host</code> (no <code>smx_net</code> on the robot)</td>
+</tr>
+<tr>
+<td>DDS</td>
+<td>Same <code>ROS_DOMAIN_ID</code> (42) and Fast DDS UDPv4 profile; switch to a unicast peer list if multicast discovery over Wi-Fi is unreliable</td>
+</tr>
+<tr>
+<td>Administration</td>
+<td>SSH; never the ROS data path</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bring-up-checklist-planned">Bring-up checklist (planned)<a class="headerlink" href="#bring-up-checklist-planned" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Open the folder in VS Code.</li>
-<li>Press <strong>F1</strong> and run <strong>Dev Containers: Reopen in Container</strong>.</li>
+<li>Flash Raspberry Pi OS to the eMMC (<a href="../../hardware/cm4-duino/#flashing-the-emmc">CM4-Duino</a>), set host name, user, Wi-Fi and SSH.</li>
+<li>Run <code>deploy/cm4-duino/provision.sh</code>, reboot.</li>
+<li>Check <code>/dev/ttyDXL</code> exists and the serial console is off.</li>
+<li>Connect one doppelstep drive through the bus interface; ping it with DynamixelSDK or DYNAMIXEL Wizard.</li>
+<li>Start <code>smx-robot.service</code>; run the smoke test from the Operator PC.</li>
 </ol>
-<p>The first start builds the image <code>Dockerfile</code>, which takes several minutes. The
-repository is mounted at <code>/workspace</code> and the compiler cache at <code>/ccache</code>.</p>
-<h2 id="fetch-zephyr-and-build">Fetch Zephyr and build<a class="headerlink" href="#fetch-zephyr-and-build" title="Permanent link">&para;</a></h2>
-<p>Press <strong>Ctrl+Shift+B</strong> to open the <strong>Zephyr: Workspace Menu</strong>:</p>
-<ol>
-<li><strong>Initialize + update</strong> runs <code>west init -l .</code> and <code>west update</code>. Do this
-   once; it downloads Zephyr <code>v4.5.0-rc1</code>.</li>
-<li>Pick the firmware variant:</li>
-<li><strong>Build simulation firmware</strong> builds into <code>build-sim/</code>. It needs no
-     motors or drivers, and every axis is simulated in the firmware. <strong>Start
-     with this one</strong> to check the board, the USB/UART link, and the protocol.</li>
-<li><strong>Build firmware</strong> builds the target firmware into <code>build/</code>. It drives the
-     six TMC5160 modules over SPI.</li>
-</ol>
-<p>The same steps from the container terminal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>west<span class="w"> </span>init<span class="w"> </span>-l<span class="w"> </span>.<span class="w">        </span><span class="c1"># first time only</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>west<span class="w"> </span>update
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>m2s_hello_fpga_kit/m2s010<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build-sim<span class="w"> </span>--<span class="w"> </span>-DFILE_SUFFIX<span class="o">=</span>sim
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>m2s_hello_fpga_kit/m2s010<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build
-</code></pre></div>
-<p>The images are written to <code>build-sim/zephyr/</code> and <code>build/zephyr/</code>
-(<code>zephyr.elf</code>, <code>zephyr.hex</code>, <code>zephyr.bin</code>). The
-<a href="../#firmware-variants">firmware variants</a> table compares the two.</p>
-<h2 id="program-the-board">Program the board<a class="headerlink" href="#program-the-board" title="Permanent link">&para;</a></h2>
-<p>The SmartFusion2 hardware design (MSS, clocks, fabric, pins) comes from the
-Libero project, and the Libero tools program it on the host. Load the Zephyr
-image into the configured design with your Microchip programming or debug
-setup. Use <code>zephyr.elf</code> for debugging. This repository does not yet define a
-scripted programming workflow.</p>
-<h2 id="test-the-axes-with-the-gui-on-the-host">Test the axes with the GUI (on the host)<a class="headerlink" href="#test-the-axes-with-the-gui-on-the-host" title="Permanent link">&para;</a></h2>
-<p>On <strong>Windows</strong> in VS Code, outside the container, press <strong>Ctrl+Shift+B</strong> and
-choose:</p>
-<ul>
-<li><strong>Create .venv</strong>: creates <code>.venv</code> and installs <code>requirements.txt</code>. Do this
-  once.</li>
-<li><strong>Run motor tester GUI</strong>: starts the GUI with the board.</li>
-<li><strong>Run motor tester GUI (simulator)</strong>: starts it without hardware.</li>
-</ul>
-<p>From a terminal instead:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">py</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">tools</span><span class="p">\</span><span class="n">dxl_test_gui</span><span class="p">\</span><span class="n">dxl_gui</span><span class="p">.</span><span class="n">py</span>          <span class="c"># add --sim without hardware</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>.venv/bin/python<span class="w"> </span>tools/dxl_test_gui/dxl_gui.py
-</code></pre></div>
-<p>Select the kit's COM port (<code>/dev/ttyACM0</code> on Linux), keep 460800 bps (or choose
-<strong>Auto</strong>) and <strong>PIC32 bridge (&amp;)</strong> ticked (the kit's PIC32 forwards data only
-after <code>&amp;</code>, see <a href="../../hardware/wiring/#host-link-usb-pic32-smartfusion2">Host link</a>), and click
-<strong>Connect</strong>. The tool pings IDs 1-6, the controller and the gripper servo (ID 7). With the simulation firmware, the device
-list shows <strong>SIM · <motor></strong> for every axis (for example <code>SIM · 17HS19-2504S</code>),
-the axes move in the simulation, and the telemetry (velocity, current,
-voltage, temperature) is filled in. See the
-<a href="../../gui/">GUI guide</a> for a complete per-axis test.</p>
-<p>To run the automated protocol check (49 checks with the simulation firmware;
-protocol-only on the target firmware):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">tools</span><span class="p">\</span><span class="n">dxl_test_gui</span><span class="p">\</span><span class="n">firmware_check</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-port</span> <span class="n">COM5</span>
-</code></pre></div>
-<blockquote>
-<p><strong>Safety:</strong> the motor currents and ramps come from the motor profiles
-(<code>include/motor/motor_profiles.h</code>), the motor of each axis from
-<code>include/motor/motor_axes.h</code>. Before you drive a motor, check that the
-profile on its axis matches the motor that is actually connected (see
-<a href="../../hardware/tmc5160/#motor-profiles-and-axis-assignment">Motor profiles and axis assignment</a>),
-and wire the motor with VM off as shown in
-<a href="../../hardware/tmc5160/#motor-connection-17hs19-2504s">Motor connection</a>.</p>
-</blockquote>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Read the <a href="../">firmware architecture</a> before changing code.</li>
-<li>Run the protocol unit tests after codec changes. The commands are in
-  <a href="../development/#tests">Tests</a>.</li>
-<li>Agent and engineering rules for the firmware workspace are in the
-  <code>zephyr-smartfusion2</code> skill of the shared <code>sfs-smartmanipulator-x-skills</code>
-  repository.</li>
-</ul>
 
 
 
@@ -1675,7 +1640,7 @@ and wire the motor with VM off as shown in
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../operator-pc/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Operator PC">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Robot PC">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1685,20 +1650,20 @@ and wire the motor with VM off as shown in
                 Previous
               </span>
               <div class="md-ellipsis">
-                Operator PC
+                Robot PC
               </div>
             </div>
           </a>
         
         
           
-          <a href="../development/" class="md-footer__link md-footer__link--next" aria-label="Next: Development Environment">
+          <a href="../../mechanical/" class="md-footer__link md-footer__link--next" aria-label="Next: BCN3D Moveo mechanics">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Development Environment
+                BCN3D Moveo mechanics
               </div>
             </div>
             <div class="md-footer__button md-icon">

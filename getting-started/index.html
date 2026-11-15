@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -18,7 +18,7 @@
         <link rel="prev" href="../overview/">
       
       
-        <link rel="next" href="../development/">
+        <link rel="next" href="../beginners/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Getting Started - SmartManipulator-X</title>
+        <title>Getting started - SmartManipulator-X</title>
       
     
     
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              Getting started
             
           </span>
         </div>
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -547,7 +527,7 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
   
 
     
@@ -565,7 +545,7 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
   
 
     
@@ -683,6 +663,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../development/" class="md-nav__link">
         
   
@@ -691,6 +699,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -798,6 +862,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mechanical/" class="md-nav__link">
         
   
@@ -805,7 +897,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -892,7 +984,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -999,7 +1119,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -1015,7 +1135,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -1028,14 +1148,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1056,14 +1176,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1084,14 +1204,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1112,14 +1232,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1170,7 +1290,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1183,149 +1303,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1521,7 +1498,7 @@
 <h1 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
 <p>This guide takes you from a fresh clone of the Robot PC repository to a
 running Robot PC in simulation, checked from a second ROS 2 host. No
-SmartFusion2 board and no arm are needed: <code>ros2_control</code> runs with mock
+drive and no arm are needed: <code>ros2_control</code> runs with mock
 hardware, where every commanded joint position becomes the joint state at
 once.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
@@ -1539,7 +1516,7 @@ once.</p>
 </tr>
 <tr>
 <td>Real hardware</td>
-<td>An Ubuntu 24.04 Robot PC (amd64 or arm64) and the controller board enumerated as USB CDC, typically <code>/dev/ttyACM0</code>. Docker Desktop on Windows does not expose a Linux <code>/dev/ttyACM0</code></td>
+<td>Not usable yet: the real-hardware path is planned, see the <a href="../status/">project status</a>. It will need a Linux Docker host with a doppelstep drive on a serial port, or the CM4-Duino</td>
 </tr>
 <tr>
 <td>Optional</td>
@@ -1559,7 +1536,7 @@ once.</p>
 </code></pre></div>
 <p>The first run builds the image, which takes several minutes. The Compose file
 creates the Docker network <code>smx_net</code> (<code>10.77.0.0/24</code>), which stands in for the
-Ethernet link between the Robot PC and the Operator PC, and starts the Robot
+network link (Wi-Fi on the robot) between the Robot PC and the Operator PC, and starts the Robot
 PC container at <code>10.77.0.10</code>. It runs <code>robot_state_publisher</code>,
 <code>ros2_control_node</code> with mock hardware, <code>joint_state_broadcaster</code>,
 <code>arm_controller</code> and <code>gripper_controller</code>. The logs stay in the terminal.</p>
@@ -1627,11 +1604,13 @@ documentation preview under <strong>Tasks: Run Task</strong>.</p>
 <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../robot-pc/">Robot PC</a>: the joint contract, how the Operator PC joins
-  <code>smx_net</code>, and the hardware shell with the USB device.</li>
+  <code>smx_net</code>, and the hardware shell with a serial device.</li>
 <li><a href="../development/">Development</a>: repository layout, the robot description
   generated from the CAD, documentation and CI.</li>
-<li><a href="../architecture/">System architecture</a>: how the Robot PC, the
-  controller firmware and the Operator PC fit together.</li>
+<li><a href="../architecture/">System architecture</a>: how the Operator PC, the
+  Robot PC and the doppelstep drives fit together.</li>
+<li><a href="../status/">Project status</a> and <a href="../plan/doppelstep-cm4/">integration plan</a>:
+  what works today and what comes next.</li>
 </ul>
 
 
@@ -1685,13 +1664,13 @@ documentation preview under <strong>Tasks: Run Task</strong>.</p>
         
         
           
-          <a href="../development/" class="md-footer__link md-footer__link--next" aria-label="Next: Development">
+          <a href="../beginners/" class="md-footer__link md-footer__link--next" aria-label="Next: Connection guide for beginners">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Development
+                Connection guide for beginners
               </div>
             </div>
             <div class="md-footer__button md-icon">

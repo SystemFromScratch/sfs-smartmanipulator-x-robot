@@ -6,37 +6,37 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/gui/">
+        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/hardware/gripper-servo/">
       
       
-        <link rel="prev" href="../firmware/">
+        <link rel="prev" href="../wiring/">
       
       
-        <link rel="next" href="../hardware/wiring/">
+        <link rel="next" href="../../about/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/brand/systemfromscratch-logo.png">
+      <link rel="icon" href="../../assets/images/brand/systemfromscratch-logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
-        <title>Motor Tester GUI - SmartManipulator-X</title>
+        <title>Gripper Servo (MG996R) - SmartManipulator-X</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -55,9 +55,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#motor-tester-gui" class="md-skip">
+        <a href="#gripper-servo-mg996r" class="md-skip">
           Skip to content
         </a>
       
@@ -96,9 +96,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="SmartManipulator-X" class="md-header__button md-logo" aria-label="SmartManipulator-X" data-md-component="logo">
+    <a href="../.." title="SmartManipulator-X" class="md-header__button md-logo" aria-label="SmartManipulator-X" data-md-component="logo">
       
-  <img src="../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Motor Tester GUI
+              Gripper Servo (MG996R)
             
           </span>
         </div>
@@ -152,7 +152,7 @@
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
-      <a href="../downloads/SmartManipulator-X_User_Manual.pdf" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
+      <a href="../../downloads/SmartManipulator-X_User_Manual.pdf" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9.5 8.5c0 .8-.7 1.5-1.5 1.5H7v2H5.5V9H8c.8 0 1.5.7 1.5 1.5zm5 2c0 .8-.7 1.5-1.5 1.5h-2.5V9H13c.8 0 1.5.7 1.5 1.5zm4-3H17v1h1.5V13H17v2h-1.5V9h3zm-6.5 0h1v3h-1zm-5 0h1v1H7z"/></svg>
       </a>
     
@@ -233,7 +233,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -254,7 +254,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../overview/" class="md-tabs__link">
+        <a href="../../overview/" class="md-tabs__link">
           
   
   
@@ -274,7 +274,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../robot-pc/" class="md-tabs__link">
+        <a href="../../robot-pc/" class="md-tabs__link">
           
   
   
@@ -294,7 +294,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../architecture/" class="md-tabs__link">
+        <a href="../../architecture/" class="md-tabs__link">
           
   
   
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../cm4-duino/" class="md-tabs__link">
           
   
   
@@ -356,7 +336,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../about/" class="md-tabs__link">
+        <a href="../../about/" class="md-tabs__link">
           
   
   
@@ -390,9 +370,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="SmartManipulator-X" class="md-nav__button md-logo" aria-label="SmartManipulator-X" data-md-component="logo">
+    <a href="../.." title="SmartManipulator-X" class="md-nav__button md-logo" aria-label="SmartManipulator-X" data-md-component="logo">
       
-  <img src="../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
 
     </a>
     SmartManipulator-X
@@ -419,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -498,7 +478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+      <a href="../../overview/" class="md-nav__link">
         
   
   
@@ -526,14 +506,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
   
 
     
@@ -554,7 +534,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../development/" class="md-nav__link">
+      <a href="../../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
         
   
   
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -641,7 +705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../robot-pc/" class="md-nav__link">
+      <a href="../../robot-pc/" class="md-nav__link">
         
   
   
@@ -669,14 +733,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../mechanical/" class="md-nav__link">
+      <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mechanical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BCN3D Moveo mechanics
   
 
     
@@ -756,14 +848,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
   
 
     
@@ -784,7 +876,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../dynamixel/compatibility-spec/" class="md-nav__link">
+      <a href="../../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dynamixel/compatibility-spec/" class="md-nav__link">
         
   
   
@@ -812,7 +932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../operator-pc/" class="md-nav__link">
+      <a href="../../operator-pc/" class="md-nav__link">
         
   
   
@@ -875,7 +995,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -891,7 +1011,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -904,14 +1024,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -932,14 +1052,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -960,14 +1080,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1004,7 +1124,7 @@
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1022,7 +1142,7 @@
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1048,10 +1168,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#starting" class="md-nav__link">
+  <a href="#datasheet-values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Starting
+        Datasheet values
       
     </span>
   </a>
@@ -1059,10 +1179,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connecting" class="md-nav__link">
+  <a href="#wiring" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connecting
+        Wiring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wiring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signal-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signal level
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior-the-gripper-node-must-provide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior the gripper node must provide
       
     </span>
   </a>
@@ -1070,10 +1218,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#motor-detection-and-connection-monitoring" class="md-nav__link">
+  <a href="#calibration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Motor detection and connection monitoring
+        Calibration
       
     </span>
   </a>
@@ -1081,65 +1229,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#window-layout" class="md-nav__link">
+  <a href="#safety" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Window layout
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-one-stepper-axis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing one stepper axis
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-the-gripper-servo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing the gripper servo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#messages-you-will-see-with-the-current-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Messages you will see with the current firmware
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#automated-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automated check
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#internals" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internals
+        Safety
       
     </span>
   </a>
@@ -1192,7 +1285,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1208,149 +1301,6 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
     About
   
 
@@ -1364,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
+      <a href="../../about/" class="md-nav__link">
         
   
   
@@ -1392,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../LICENSE/" class="md-nav__link">
+      <a href="../../LICENSE/" class="md-nav__link">
         
   
   
@@ -1447,10 +1397,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#starting" class="md-nav__link">
+  <a href="#datasheet-values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Starting
+        Datasheet values
       
     </span>
   </a>
@@ -1458,10 +1408,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connecting" class="md-nav__link">
+  <a href="#wiring" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connecting
+        Wiring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wiring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signal-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signal level
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior-the-gripper-node-must-provide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior the gripper node must provide
       
     </span>
   </a>
@@ -1469,10 +1447,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#motor-detection-and-connection-monitoring" class="md-nav__link">
+  <a href="#calibration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Motor detection and connection monitoring
+        Calibration
       
     </span>
   </a>
@@ -1480,65 +1458,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#window-layout" class="md-nav__link">
+  <a href="#safety" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Window layout
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-one-stepper-axis" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing one stepper axis
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing-the-gripper-servo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing the gripper servo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#messages-you-will-see-with-the-current-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Messages you will see with the current firmware
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#automated-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automated check
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#internals" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internals
+        Safety
       
     </span>
   </a>
@@ -1562,422 +1485,195 @@
 
 
 
-<h1 id="motor-tester-gui">Motor tester GUI<a class="headerlink" href="#motor-tester-gui" title="Permanent link">&para;</a></h1>
-<p><code>tools/dxl_test_gui</code> in the controller repository (SmartManipulator-X-Controller)
-is a desktop application for testing the firmware and
-every stepper axis over <strong>DYNAMIXEL Protocol 2.0</strong>
-(<a href="https://docs.robotis.com/docs/dxl/protocol/protocol2/">ROBOTIS specification</a>).
-It acts as the bus master, the same role the Robot PC has. It runs on Windows
-or Linux and needs only Python, Tkinter, and <code>pyserial</code>.</p>
-<figure class="smx-figure">
-<p><img alt="Motor test tab with the simulator after an automatic A↔B test" src="images/motor-test-tab.png" /></p>
-<figcaption>Motor test tab with the simulator after an automatic A↔B test</figcaption>
-</figure>
-<h2 id="starting">Starting<a class="headerlink" href="#starting" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Way</th>
-<th>Command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VS Code on Windows</td>
-<td><strong>Ctrl+Shift+B</strong> → <strong>Run motor tester GUI</strong> or <strong>Run motor tester GUI (simulator)</strong></td>
-</tr>
-<tr>
-<td>Windows, no VS Code</td>
-<td>double-click <code>tools\dxl_test_gui\run_gui.bat</code> (creates <code>.venv</code> on first run)</td>
-</tr>
-<tr>
-<td>Any OS</td>
-<td><code>.venv</code> Python: <code>python tools/dxl_test_gui/dxl_gui.py [--port COM5] [--sim] [--sim-uncalibrated]</code></td>
-</tr>
-</tbody>
-</table>
-<p>Set up <code>.venv</code> first; see <a href="../firmware/development/#host-python-environment-venv">Development environment</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--port COM5</code></td>
-<td>Preselects a serial port</td>
-</tr>
-<tr>
-<td><code>--baud 460800</code> / <code>--baud Auto</code></td>
-<td>Preselects the PC port bit rate (default 460800, the kit's USB side)</td>
-</tr>
-<tr>
-<td><code>--no-pic32-bridge</code></td>
-<td>Does not send <code>&amp;</code> after opening the port (direct USB-UART cable instead of the kit's PIC32 bridge)</td>
-</tr>
-<tr>
-<td><code>--sim</code></td>
-<td>Built-in Python simulator that behaves like the <strong>simulation firmware</strong> (motion and telemetry); no board needed</td>
-</tr>
-<tr>
-<td><code>--sim-uncalibrated</code></td>
-<td>Python simulator of the <strong>target firmware</strong> with an axis whose position scale is 0 (position and telemetry return Access Error)</td>
-</tr>
-</tbody>
-</table>
-<p>With the real board, flash the <strong>simulation firmware</strong> first. The firmware runs
-on the kit, answers over the same UART, and simulates the axes, so you can test
-the whole protocol path without motors. The device list then shows
-<strong>SIM · <motor></strong> for every axis, and the board line and motor title show
-<em>simulation firmware</em> (Firmware Version 129).</p>
-<h2 id="connecting">Connecting<a class="headerlink" href="#connecting" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Connect the kit's USB Mini-B to the PC. The port shows up as <code>COMx</code>
-   (Windows) or <code>/dev/ttyACM0</code> (Linux).</li>
-<li>Pick the port and keep <strong>Baud 460800</strong>, the rate between the PC and the
-   kit's PIC32 (the PIC32 talks to the firmware at 230400). Keep
-   <strong>PIC32 bridge (&amp;)</strong> ticked: the PIC32 passes data to the
-   SmartFusion2 only after it has received <code>&amp;</code>, which the tool sends after
-   opening the port and after every rate change (see
-   <a href="../hardware/wiring/#host-link-usb-pic32-smartfusion2">Host link</a>). <strong>Auto</strong> tries
-   460800, 230400, 115200, 57600, 1000000, 2000000, and 9600 bps and keeps the first
-   rate at which a device answers a broadcast PING. If you pick another rate
-   while connected, the tool switches the open port and detects the motors
-   again. The connection label shows the rate in use. <em>Timeout</em> is the time the tool
-   waits for each status packet (default 150 ms).</li>
-<li>Click <strong>Connect</strong>. The tool runs <strong>Detect motors</strong>: it pings IDs 1-6, the
-   controller (ID 200) and the gripper servo (ID 7), and lists the axes with
-   their driver and motor (see below).</li>
-</ol>
-<p><strong>Scan (PING)</strong> searches any ID range. <strong>Broadcast PING</strong> asks every device to
-answer at once.</p>
-<h2 id="motor-detection-and-connection-monitoring">Motor detection and connection monitoring<a class="headerlink" href="#motor-detection-and-connection-monitoring" title="Permanent link">&para;</a></h2>
-<p><strong>Detect motors</strong> pings the chosen ID range and the controller device (ID 200).
-It then reads each motor's <strong>Model Information</strong>. The device list shows:</p>
-<ul>
-<li><strong>Driver · motor</strong> for every detected axis, for example
-  <code>TMC5160 · 23HS2430 (NEMA23, 3.00 A)</code>. The driver is detected by the
-  firmware; the motor frame and current are configured in the firmware. The GUI
-  looks them up in the project's motor profiles
-  (<code>apps/SmartManipulator_Controller/include/motor/motor_profiles.h</code>) to show
-  the motor name. If several profiles share frame and current (23HS2430 and
-  SM57HT112-3004A are both NEMA23, 3.0 A), the GUI shows the motor that
-  <code>motor_axes.h</code> assigns to that ID.</li>
-<li><strong>⚠ config: …</strong> after the motor when the board reports a different motor
-  than <code>motor_axes.h</code> in this checkout assigns to that ID, for example after
-  flashing a firmware built from another configuration. The log then says
-  <em>Motor configuration differs from this project</em>; rebuild and flash, or
-  update the checkout.</li>
-<li><strong>— not detected / absent</strong> for axes whose driver did not answer, for example
-  a missing module or no 24 V motor supply.</li>
-<li><strong>Board</strong> line: <code>online · &lt;variant&gt; firmware &lt;version&gt; · drivers n/6 · gripper ID 7</code>.
-  Green means all drivers were found, orange means some are missing. The
-  gripper part is missing when the firmware has no servo.</li>
-</ul>
-<p>This uses only standard DYNAMIXEL Protocol 2.0 transactions (PING and READ).</p>
-<p>Connection monitoring runs continuously:</p>
-<table>
-<thead>
-<tr>
-<th>Situation</th>
-<th>What the GUI shows</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>USB cable or board unplugged (port disappears or I/O fails)</td>
-<td><strong>● Connection lost</strong>; rows marked <em>port lost</em>; controls disabled</td>
-<td>Closes the port. With <em>Reconnect automatically</em> checked, it reopens the port when it reappears and detects the motors again.</td>
-</tr>
-<tr>
-<td>Port still open, but the board stops answering (power off, reset, firmware hang)</td>
-<td><strong>● Port open, board not responding</strong>, after 3 cycles without an answer</td>
-<td>Keeps checking every second. When the board answers again, it re-detects the motors.</td>
-</tr>
-<tr>
-<td>One axis stops answering while the board is alive</td>
-<td>Row status <em>driver lost</em></td>
-<td>The rest keeps working; click <strong>Detect motors</strong> to update.</td>
-</tr>
-</tbody>
-</table>
-<p>When live readout is off, a one-second heartbeat (PING of the controller)
-keeps the monitoring running.</p>
-<h2 id="window-layout">Window layout<a class="headerlink" href="#window-layout" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Function</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Top bar</td>
-<td>Port, baud rate, <strong>PIC32 bridge (&amp;)</strong>, timeout, Connect/Disconnect, connection state, and the red <strong>STOP — Torque OFF all</strong> button (key <strong>Esc</strong>; also switches the gripper servo off)</td>
-</tr>
-<tr>
-<td>Device list</td>
-<td><strong>Board</strong> line, then one row per axis: ID, <em>Driver · motor</em> (<code>SIM · …</code> on the simulation firmware), torque, mode, present position, moving, status. With <strong>Live readout</strong> on, the selected motor (or all, with <em>all IDs</em>) is polled every N ms. <em>Reconnect automatically</em> reopens a lost port.</td>
-</tr>
-<tr>
-<td>Communication</td>
-<td>TX/RX counters, last round-trip time, timeouts, status errors, CRC and framing errors, worker queue</td>
-</tr>
-<tr>
-<td><strong>Motor test</strong> tab</td>
-<td>Step-by-step test of the selected axis (below)</td>
-</tr>
-<tr>
-<td><strong>Gripper</strong> tab</td>
-<td>Gripper servo (ID 7): torque, goal in degrees within the position limits, Min/Center/Max presets, Profile Velocity (ramp), position limits; live position, goal, pulse width (µs) and Moving while the tab is open (see <a href="#testing-the-gripper-servo">Testing the gripper servo</a>)</td>
-</tr>
-<tr>
-<td><strong>Registers</strong> tab</td>
-<td>Control Table browser: Read all, Read selected, WRITE, REG_WRITE, ACTION</td>
-</tr>
-<tr>
-<td><strong>Raw packet</strong> tab</td>
-<td>Any instruction with hex parameters; stuffing and CRC are added for you</td>
-</tr>
-<tr>
-<td><strong>Packet log</strong> tab</td>
-<td>Every TX/RX packet with timestamp, decoding, and hex dump; <em>Save to file…</em></td>
-</tr>
-</tbody>
-</table>
-<h2 id="testing-one-stepper-axis">Testing one stepper axis<a class="headerlink" href="#testing-one-stepper-axis" title="Permanent link">&para;</a></h2>
+<h1 id="gripper-servo-mg996r">Gripper servo (MG996R)<a class="headerlink" href="#gripper-servo-mg996r" title="Permanent link">&para;</a></h1>
+<p>The gripper is driven by an MG996R hobby servo. On the bus it will appear as
+a virtual DYNAMIXEL device on <strong>ID 7</strong>, so <code>gripper_controller</code> and the
+<a href="../../robot-pc/#joint-contract">joint contract</a> stay unchanged.</p>
 <blockquote>
-<p>Before you drive a motor, check that the device list shows the right motor
-for the axis (no ⚠ config warning) and follow the
-<a href="../hardware/tmc5160/#bring-up-checklist">bring-up checklist</a>.
-<strong>Detect motors</strong> works without motor current: it only needs VM on the
-module (the TMC5160 logic is powered from VM).</p>
+<p><strong>Status (2026-11-15):</strong> separate project, not started. It begins after the
+chain Operator PC → Robot PC → doppelstep works (decision D9 of the
+<a href="../../plan/doppelstep-cm4/#decisions">integration plan</a>). Until then the
+gripper runs on mock hardware. The MCU of the gripper node is open.</p>
+<p><strong>Sources:</strong> Handsontec <em>MG996R Metal Gear Servo Motor</em> user guide
+(<a href="https://www.handsontec.com/dataspecs/motor_fan/MG996R.pdf"><code>MG996R.pdf</code></a>
+on the manufacturer's website, link checked on 2026-11-15). If the link
+stops working, the repository keeps a backup copy
+(<code>docs/hardware/datasheets/Handsontec_MG996R_user_guide.pdf</code>, not published
+on this website).</p>
 </blockquote>
+<h2 id="datasheet-values">Datasheet values<a class="headerlink" href="#datasheet-values" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value (Handsontec user guide)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating voltage</td>
+<td>4.8–7.2 V</td>
+</tr>
+<tr>
+<td>Stall torque</td>
+<td>9.4 kgf·cm at 4.8 V, 11 kgf·cm at 6 V</td>
+</tr>
+<tr>
+<td>Operating speed</td>
+<td>0.17 s/60° at 4.8 V, 0.14 s/60° at 6 V</td>
+</tr>
+<tr>
+<td>Running current</td>
+<td>500 mA</td>
+</tr>
+<tr>
+<td>Stall current</td>
+<td>2.5 A at 6 V</td>
+</tr>
+<tr>
+<td>Dead band width</td>
+<td>5 µs</td>
+</tr>
+<tr>
+<td>Control signal</td>
+<td>PWM, 20 ms period (50 Hz), 1–2 ms pulse</td>
+</tr>
+<tr>
+<td>Positions</td>
+<td>~1 ms = one end, 1.5 ms = middle, ~2 ms = other end</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>approximately 120° for 1–2 ms</td>
+</tr>
+<tr>
+<td>Weight, dimensions</td>
+<td>55 g; 40.7 × 19.7 × 42.9 mm</td>
+</tr>
+<tr>
+<td>Connector</td>
+<td>3-pin, brown = ground (−), red = +V, orange = signal</td>
+</tr>
+</tbody>
+</table>
+<p>Shop listings often say "180°" and "13 kg·cm"; plan with the datasheet values
+and measure the real angle per millisecond on the gripper
+(see <a href="#calibration">Calibration</a>).</p>
+<h2 id="wiring">Wiring<a class="headerlink" href="#wiring" title="Permanent link">&para;</a></h2>
+<figure class="smx-figure">
+<p><img alt="Gripper servo wiring: the gripper node on the bus drives the orange signal wire; the servo gets +6 V from its own converter; grounds meet at the star point" src="../images/wiring-gripper-servo.svg" /></p>
+<figcaption>Gripper servo wiring: the gripper node on the bus drives the orange signal wire; the servo gets +6 V from its own converter; grounds meet at the star point</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th>Servo wire</th>
+<th>Connects to</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orange (signal)</td>
+<td>PWM output of the gripper node, 3.3 V logic, 50 Hz</td>
+<td>Short wire, routed with the ground</td>
+</tr>
+<tr>
+<td>Red (+V)</td>
+<td>+6 V of the servo DC/DC converter</td>
+<td>Never from a logic supply: the servo draws up to 2.5 A</td>
+</tr>
+<tr>
+<td>Brown (−)</td>
+<td>Minus of the servo DC/DC converter and the GND star point</td>
+<td>The servo current must not flow through the bus ground</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Converter</td>
+<td>DC/DC from V_M to <strong>6 V, ≥ 5 A</strong>, for the servo only; stay within 4.8–7.2 V</td>
+</tr>
+<tr>
+<td>Bulk capacitor</td>
+<td>Low-ESR electrolytic, 470–1000 µF, ≥ 10 V, at the servo connector, against dips at start and stall (project practice, not from the datasheet)</td>
+</tr>
+<tr>
+<td>Wires</td>
+<td>+6 V and − at least 0.5 mm²</td>
+</tr>
+<tr>
+<td>Gripper node</td>
+<td>DATA and GND from the <a href="../../dynamixel/bus/">DYNAMIXEL bus</a>, its own logic supply (open, part of the gripper project)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="signal-level">Signal level<a class="headerlink" href="#signal-level" title="Permanent link">&para;</a></h3>
+<p>The gripper node drives a 3.3 V signal. Most MG996R servos switch reliably
+at 3.3 V, but the datasheet gives no input threshold. If the servo jitters
+although the pulses are clean on an oscilloscope, add a one-way level
+shifter such as a 74AHCT125 powered from 5 V. Never pull the signal up to
+the 6 V servo supply: that would drive more than 3.3 V into the MCU pin.</p>
+<h2 id="behavior-the-gripper-node-must-provide">Behavior the gripper node must provide<a class="headerlink" href="#behavior-the-gripper-node-must-provide" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>DYNAMIXEL Protocol 2.0 device on ID 7, same bus parameters as the drives</td>
+</tr>
+<tr>
+<td>Pulse</td>
+<td>50 Hz, 1000–2000 µs, ≥ 1 µs resolution (servo dead band 5 µs)</td>
+</tr>
+<tr>
+<td>Torque off</td>
+<td>No pulses: the servo is limp</td>
+</tr>
+<tr>
+<td>Start</td>
+<td>The servo position after power-up is unknown; the first Torque ON moves at full speed to the start position</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Software ramp of the pulse width (Profile Velocity), because the servo itself always moves at full speed</td>
+</tr>
+<tr>
+<td>Limits</td>
+<td>Position limits stored in the device, set from the calibration</td>
+</tr>
+</tbody>
+</table>
+<h2 id="calibration">Calibration<a class="headerlink" href="#calibration" title="Permanent link">&para;</a></h2>
+<p>The servo has no position feedback. Find the end positions by hand:</p>
 <ol>
-<li><strong>Select the motor</strong> in the device list. The tool reads its configuration.</li>
-<li><strong>Section 2, Configuration:</strong></li>
-<li><em>Operating mode</em>: Position (3), Extended position (4), or Velocity (1).
-     Click <strong>Apply mode</strong>. The mode can change only with torque off; the tool
-     offers to switch torque off first.</li>
-<li><em>Drive mode</em>: <strong>Reverse</strong> (bit 0) inverts the direction. <strong>Torque on by
-     goal</strong> (bit 3) enables torque automatically on a new goal.</li>
-<li><em>Profile vel / acc</em>, for example 100 / 20, then <strong>Write profile</strong>. 0 means
-     the motor defaults: speed = Velocity Limit (address 44), acceleration
-     from the motor profile. Profile velocity above the Velocity Limit
-     returns Data Range Error.</li>
-<li><em>Homing offset</em> shifts the zero (units of 0.088°).</li>
-<li><strong>Section 1, Torque</strong>: click the button to switch torque ON (green) or OFF.
-   Below the present position, the telemetry line shows velocity (rpm),
-   current (mA), PWM (%), supply voltage, temperature, and the position and
-   velocity trajectory. On the target firmware the current is the TMC5160
-   current setting in use, voltage and temperature are nominal values, and
-   PWM is 0.</li>
-<li><strong>Section 3, Position control</strong>: use the slider (0–4095 = 0–360° in mode 3,
-   ±4 turns in mode 4) or type a goal, then <strong>Move to goal</strong>. You can also use
-   the 0°/90°/180°/270° presets or jog with − / + by the chosen step.</li>
-<li><strong>Section 4, Velocity control</strong> (mode 1): set a speed within ± the axis'
-   Velocity Limit (× 0.229 rpm; the slider follows it), then <strong>Start</strong> / <strong>Stop</strong>.</li>
-<li><strong>Section 5, Automatic test</strong>: enter positions A and B, cycles, dwell, and a
-   time limit, then <strong>Start test</strong>. The tool enables torque, moves A↔B, waits
-   for <em>Moving = 0</em>, and reports each move's time and the final position error.
-   <strong>Abort</strong> stops after the current step.</li>
-<li><strong>Section 6, All axes</strong>: Torque ON/OFF for all, all axes to the current goal
-   with <strong>SYNC_WRITE</strong> (the firmware runs them one after another), and an LED
-   test.</li>
+<li>Low profile velocity, Torque ON.</li>
+<li>Move in steps of 1–2° towards <em>closed</em> until the jaws just touch, then back
+   off by 2–3°. Note the angle. Do not hold the servo against a stop: it then
+   draws the stall current of 2.5 A and heats up.</li>
+<li>Do the same towards <em>open</em>.</li>
+<li>Store both values as position limits.</li>
 </ol>
-<p>Every action is listed under <strong>Last operations</strong>: green for success, red for an
-error, with a hint. For example, Access Error on position means the axis has no
-position scale or the operating mode is wrong.</p>
-<figure class="smx-figure">
-<p><img alt="Registers tab" src="images/registers-tab.png" /></p>
-<figcaption>Registers tab</figcaption>
-</figure>
-<h2 id="testing-the-gripper-servo">Testing the gripper servo<a class="headerlink" href="#testing-the-gripper-servo" title="Permanent link">&para;</a></h2>
-<p>The gripper servo (MG996R on CorePWM) is a separate virtual DYNAMIXEL device,
-ID 7 by default. It has its own <strong>Gripper</strong> tab, not a row in the device list.</p>
-<figure class="smx-figure">
-<p><img alt="Gripper tab with the simulator: servo at 70° after a move with Profile velocity 50" src="images/gripper-tab.png" /></p>
-<figcaption>Gripper tab with the simulator: servo at 70° after a move with Profile velocity 50</figcaption>
-</figure>
-<p><strong>Detection.</strong> <strong>Detect motors</strong> asks the controller (ID 200) for the servo ID
-(controller register 5) and then pings that ID. The <strong>Board</strong> line then ends
-with <em>gripper ID 7</em>. If register 5 is 0, the firmware was built without
-<code>CONFIG_SMX_SERVO</code>, and the tab shows <em>Gripper servo: not detected</em> with all
-controls disabled. Without a controller answer, the tool tries the default
-ID 7.</p>
-<p><strong>Header.</strong> The title shows the ID, the model (<em>SMX gripper servo</em>, model number
-<code>0x5356</code>) and the firmware variant. The line below shows the output (CorePWM
-on the target firmware, <em>simulated</em> on the simulation firmware), the pulse
-range and travel, for example <em>1000–2000 µs = 0–90° (0–1024 units)</em>, and the
-position limits in use.</p>
-<table>
-<thead>
-<tr>
-<th>Section</th>
-<th>Controls</th>
-<th>Registers</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. Torque and state</strong></td>
-<td><strong>Torque OFF → enable</strong> / <strong>Torque ON → disable</strong>. Torque ON starts the 50 Hz pulses, Torque OFF stops them (the servo goes limp). Live values: <em>Position</em>, <em>Goal</em>, <em>Pulse</em> (µs, <em>off</em> with torque off) and <em>Moving</em>.</td>
-<td>Torque Enable (64), Goal Position (116), Present Position (132), Moving (122)</td>
-</tr>
-<tr>
-<td><strong>2. Position</strong></td>
-<td>Slider and <em>Goal [°]</em> (Enter = Move), with the matching units and pulse width next to it. <strong>Move</strong> writes the goal. <strong>Min limit</strong>, <strong>Center</strong> and <strong>Max limit</strong> move to the position limits or their middle.</td>
-<td>Goal Position (116)</td>
-</tr>
-<tr>
-<td><strong>3. Configuration</strong></td>
-<td><em>Profile velocity</em> (0 = no ramp, the servo moves at its own full speed; each unit is 0.229 rpm, so 50 ≈ 69 °/s) and <strong>Write velocity</strong>. <em>Position limits [°]</em> and <strong>Write limits</strong> (Torque OFF only). <strong>Read configuration from servo</strong> loads velocity, limits, goal and torque into the tab.</td>
-<td>Profile Velocity (112), Max/Min Position Limit (48/52)</td>
-</tr>
-</tbody>
-</table>
-<p>The units are the axis units, 0.088° each (4096 = 360°); the servo travel
-0–90° is 0–1024.</p>
-<p>Steps:</p>
+<h2 id="safety">Safety<a class="headerlink" href="#safety" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Open the <strong>Gripper</strong> tab. <strong>Detect motors</strong> has already read the servo
-   configuration into it. While the tab is open, the live readout polls the
-   servo instead of the selected axis.</li>
-<li>Set <strong>Profile velocity</strong>, for example 50, and click <em>Write velocity</em>.</li>
-<li>Click <strong>Torque OFF → enable</strong>. The first time after power-up the servo moves
-   to the start position (45°) at full speed, because its real position is not
-   known.</li>
-<li>Enter a goal in degrees, drag the slider, or use <em>Min limit</em>, <em>Center</em>, <em>Max
-   limit</em>, then click <strong>Move</strong>. The firmware ramps the pulse in 20 ms steps;
-   <em>Moving</em> shows <em>YES</em> until the ramp ends.</li>
-<li>Restrict the travel to what the gripper can do: switch torque off, enter
-   the limits in section 3 and click <em>Write limits</em>. The slider then covers
-   only the new range.</li>
+<li>Plug or unplug the servo only with the 6 V converter off.</li>
+<li>Only 3.3 V signals from the gripper node; no pull-up to the servo supply.</li>
+<li>Torque OFF removes the pulses: the gripper may open under load.</li>
+<li>Keep hands out of the gripper at the first Torque ON after power-up.</li>
 </ol>
-<p>Rules and messages:</p>
-<ul>
-<li>A goal outside the position limits is refused in the GUI with a hint; the
-  firmware would answer Data Range Error.</li>
-<li>A goal written with torque off is only stored (the log says so); the servo
-  moves to it when torque is switched on.</li>
-<li>Position limits written with torque on return Access Error.</li>
-<li><strong>STOP</strong> (Esc) also switches the servo torque off; on closing, the tool
-  offers to switch torque off on all motors and the gripper.</li>
-<li><em>Position</em> is the commanded ramp position, not a measurement: the MG996R
-  has no feedback. Check the real position by eye.</li>
-</ul>
-<h2 id="messages-you-will-see-with-the-current-firmware">Messages you will see with the current firmware<a class="headerlink" href="#messages-you-will-see-with-the-current-firmware" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Message</th>
-<th>Cause</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Present position <em>unavailable</em> / Access Error on Goal Position</td>
-<td>The axis has no position scale (only in <code>--sim-uncalibrated</code> or a firmware built without motor profiles)</td>
-</tr>
-<tr>
-<td>Access Error on Drive Mode, Homing Offset, Current Limit, Velocity Limit</td>
-<td>Torque is ON; these registers are written with Torque OFF only</td>
-</tr>
-<tr>
-<td>Hardware Error Status bit 0 and Torque OFF by itself</td>
-<td>The TMC5160 lost VM and restarted; the firmware configured it again. Position restarted at 0: switch Torque ON again</td>
-</tr>
-<tr>
-<td>Access Error on Goal Velocity write in mode 3</td>
-<td>Wrong mode; Goal Velocity is written only in mode 1</td>
-</tr>
-<tr>
-<td>Access Error on <em>Operating Mode</em></td>
-<td>Torque is ON</td>
-</tr>
-<tr>
-<td>Data Length Error</td>
-<td>The write did not start at a register address or did not match its width</td>
-</tr>
-<tr>
-<td>Values in the wrong fields, one step behind (only with an old GUI)</td>
-<td>The PIC32 held back a final <code>%</code> byte, see <a href="../hardware/wiring/#host-link-usb-pic32-smartfusion2">Host link</a>; current <code>DxlBus</code> adds a <code>0x00</code> after such packets</td>
-</tr>
-<tr>
-<td>Timeout on every ID</td>
-<td>Wrong port or baud rate (kit USB port: 460800; try <strong>Auto</strong>), <strong>PIC32 bridge (&amp;)</strong> unticked, no power, firmware not running, or a text console active on the UART</td>
-</tr>
-<tr>
-<td>Baud Rate register shows 23, not 460800</td>
-<td>Correct: the register reports the firmware UART (PIC32 ↔ SmartFusion2, 230400 bps; project code 23, 46 would be 460800). The PC port runs at 460800</td>
-</tr>
-</tbody>
-</table>
-<h2 id="automated-check">Automated check<a class="headerlink" href="#automated-check" title="Permanent link">&para;</a></h2>
-<p><code>firmware_check.py</code> runs the same protocol transactions automatically and
-prints PASS/FAIL. On the simulation firmware it runs 49 checks, including
-motion, telemetry and the gripper servo. On the target firmware it runs the protocol checks only;
-motion runs only with <code>--allow-motion</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">tools</span><span class="p">\</span><span class="n">dxl_test_gui</span><span class="p">\</span><span class="n">firmware_check</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-port</span> <span class="n">COM5</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">tools</span><span class="p">\</span><span class="n">dxl_test_gui</span><span class="p">\</span><span class="n">firmware_check</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-sim</span>     <span class="c"># Python simulator</span>
-</code></pre></div>
-<figure class="smx-figure">
-<p><img alt="GUI with the simulator (FW 129, like the simulation firmware): telemetry line of axis 2 in section 1" src="images/simulation-firmware.png" /></p>
-<figcaption>GUI with the simulator (FW 129, like the simulation firmware): telemetry line of axis 2 in section 1</figcaption>
-</figure>
-<h2 id="internals">Internals<a class="headerlink" href="#internals" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>dxl_gui.py</code></td>
-<td>Tkinter user interface. A single worker thread runs all bus transactions; the user interface never blocks.</td>
-</tr>
-<tr>
-<td><code>dxl/protocol.py</code></td>
-<td>Protocol 2.0 codec: CRC-16, byte stuffing, stream parser, packet descriptions</td>
-</tr>
-<tr>
-<td><code>dxl/bus.py</code></td>
-<td>Thread-safe master: PING, broadcast PING, READ, WRITE, REG_WRITE, ACTION, SYNC_READ, SYNC_WRITE; statistics and packet log callback</td>
-</tr>
-<tr>
-<td><code>dxl/control_table.py</code></td>
-<td>XW430 register subset, servo and controller registers, units, operating modes</td>
-</tr>
-<tr>
-<td><code>dxl/motors.py</code></td>
-<td>Reads <code>motor_profiles.h</code> and <code>motor_axes.h</code>, names the motors and detects a configuration mismatch</td>
-</tr>
-<tr>
-<td><code>dxl/sim.py</code></td>
-<td>Simulator with the same instructions, register rules, and error codes as <code>dynamixel_x430.c</code> and <code>dynamixel_servo.c</code> (both variants)</td>
-</tr>
-<tr>
-<td><code>tmc_diag.py</code></td>
-<td>TMC5160 bring-up diagnostics through the raw register window (IOIN/SD_MODE, CHOPCONF, DRV_STATUS, MSCNT), optionally during a move</td>
-</tr>
-<tr>
-<td><code>firmware_check.py</code></td>
-<td>Automated conformance check against a port or the Python simulator</td>
-</tr>
-<tr>
-<td><code>tests/test_protocol.py</code></td>
-<td>Unit tests, including the firmware codec cross-check</td>
-</tr>
-</tbody>
-</table>
-<p>When the firmware's instructions, register rules, or error codes change,
-update <code>dxl/sim.py</code> and <code>dxl/control_table.py</code> to match, then run the tests.</p>
 
 
 
@@ -2013,7 +1709,7 @@ update <code>dxl/sim.py</code> and <code>dxl/control_table.py</code> to match, t
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../firmware/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Firmware Architecture">
+          <a href="../wiring/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Wiring">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2023,20 +1719,20 @@ update <code>dxl/sim.py</code> and <code>dxl/control_table.py</code> to match, t
                 Previous
               </span>
               <div class="md-ellipsis">
-                Firmware Architecture
+                Wiring
               </div>
             </div>
           </a>
         
         
           
-          <a href="../hardware/wiring/" class="md-footer__link md-footer__link--next" aria-label="Next: Hello FPGA Kit Wiring">
+          <a href="../../about/" class="md-footer__link md-footer__link--next" aria-label="Next: Author &amp; Company">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Hello FPGA Kit Wiring
+                Author & Company
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2109,10 +1805,10 @@ update <code>dxl/sim.py</code> and <code>dxl/control_table.py</code> to match, t
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

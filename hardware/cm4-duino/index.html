@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/hardware/servo/">
+        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/hardware/cm4-duino/">
       
       
-        <link rel="prev" href="../tmc5160/">
+        <link rel="prev" href="../../operator-pc/">
       
       
-        <link rel="next" href="../../about/">
+        <link rel="next" href="../doppelstep/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Gripper Servo (MG996R) - SmartManipulator-X</title>
+        <title>CM4-Duino board - SmartManipulator-X</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gripper-servo-mg996r" class="md-skip">
+        <a href="#cm4-duino-robot-pc-board" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gripper Servo (MG996R)
+              CM4-Duino board
             
           </span>
         </div>
@@ -310,33 +310,13 @@
   
   
   
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
     
   
   
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../wiring/" class="md-tabs__link">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -763,7 +855,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -844,177 +964,6 @@
       
   
   
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Firmware
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Firmware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../firmware/getting-started/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../firmware/development/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Environment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../firmware/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Firmware Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../gui/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Motor Tester GUI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -1036,10 +985,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -1057,8 +1006,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1067,62 +1016,6 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1147,7 +1040,7 @@
   <span class="md-ellipsis">
     
   
-    Gripper Servo (MG996R)
+    CM4-Duino board
   
 
     
@@ -1165,7 +1058,7 @@
   <span class="md-ellipsis">
     
   
-    Gripper Servo (MG996R)
+    CM4-Duino board
   
 
     
@@ -1191,10 +1084,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#datasheet-values" class="md-nav__link">
+  <a href="#specifications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Datasheet values
+        Specifications
       
     </span>
   </a>
@@ -1202,22 +1095,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connection-to-the-hello-fpga-kit" class="md-nav__link">
+  <a href="#onboard-components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connection to the Hello FPGA Kit
+        Onboard components
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Connection to the Hello FPGA Kit">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Header pinout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Header pinout">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signal-level" class="md-nav__link">
+  <a href="#digital-header-right-side-top-to-bottom" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Signal level
+        Digital header (right side, top to bottom)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-and-analog-headers-left-side-top-to-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power and analog headers (left side, top to bottom)
       
     </span>
   </a>
@@ -1230,10 +1145,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#signal-from-the-firmware" class="md-nav__link">
+  <a href="#function-pads" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Signal from the firmware
+        Function pads
       
     </span>
   </a>
@@ -1241,10 +1156,82 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bring-up" class="md-nav__link">
+  <a href="#software-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bring-up
+        Software setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Software setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flashing-the-emmc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flashing the eMMC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-20-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB 2.0 port
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adc-ads7830" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADC (ADS7830)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-used-by-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings used by this project
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanical-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanical data
       
     </span>
   </a>
@@ -1252,10 +1239,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#calibration" class="md-nav__link">
+  <a href="#precautions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Calibration
+        Precautions
       
     </span>
   </a>
@@ -1263,10 +1250,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#safety" class="md-nav__link">
+  <a href="#vendor-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Safety
+        Vendor files
       
     </span>
   </a>
@@ -1277,6 +1264,90 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doppelstep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    doppelstep drives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gripper-servo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper Servo (MG996R)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1309,10 +1380,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -1330,8 +1401,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1431,10 +1502,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#datasheet-values" class="md-nav__link">
+  <a href="#specifications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Datasheet values
+        Specifications
       
     </span>
   </a>
@@ -1442,22 +1513,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connection-to-the-hello-fpga-kit" class="md-nav__link">
+  <a href="#onboard-components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connection to the Hello FPGA Kit
+        Onboard components
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Connection to the Hello FPGA Kit">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Header pinout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Header pinout">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signal-level" class="md-nav__link">
+  <a href="#digital-header-right-side-top-to-bottom" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Signal level
+        Digital header (right side, top to bottom)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-and-analog-headers-left-side-top-to-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power and analog headers (left side, top to bottom)
       
     </span>
   </a>
@@ -1470,10 +1563,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#signal-from-the-firmware" class="md-nav__link">
+  <a href="#function-pads" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Signal from the firmware
+        Function pads
       
     </span>
   </a>
@@ -1481,10 +1574,82 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bring-up" class="md-nav__link">
+  <a href="#software-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bring-up
+        Software setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Software setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flashing-the-emmc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flashing the eMMC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-20-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB 2.0 port
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adc-ads7830" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADC (ADS7830)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-used-by-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings used by this project
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanical-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanical data
       
     </span>
   </a>
@@ -1492,10 +1657,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#calibration" class="md-nav__link">
+  <a href="#precautions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Calibration
+        Precautions
       
     </span>
   </a>
@@ -1503,10 +1668,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#safety" class="md-nav__link">
+  <a href="#vendor-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Safety
+        Vendor files
       
     </span>
   </a>
@@ -1530,256 +1695,564 @@
 
 
 
-<h1 id="gripper-servo-mg996r">Gripper servo (MG996R)<a class="headerlink" href="#gripper-servo-mg996r" title="Permanent link">&para;</a></h1>
-<p>The gripper uses an MG996R hobby servo. The SmartFusion2 drives it with a
-50 Hz pulse from CorePWM in the FPGA fabric. The firmware makes it a virtual
-DYNAMIXEL device on ID 7, see <a href="../../firmware/#gripper-servo">Gripper servo</a>
-in the firmware architecture and the <strong>Gripper</strong> tab in the
-<a href="../../gui/#testing-the-gripper-servo">motor tester GUI</a>.</p>
+<h1 id="cm4-duino-robot-pc-board">CM4-Duino Robot PC board<a class="headerlink" href="#cm4-duino-robot-pc-board" title="Permanent link">&para;</a></h1>
+<p>The Robot PC of SmartManipulator-X runs on a Waveshare <strong>CM4-Duino</strong> carrier
+board with a Raspberry Pi <strong>Compute Module 4</strong> (variant with Wi-Fi). The board
+has the size and header layout of an Arduino Uno R3 and exposes the CM4 GPIO,
+an 8-channel ADC, HDMI, one USB 2.0 port, a camera connector and an M.2 slot.</p>
 <blockquote>
-<p><strong>Sources:</strong> Handsontec <em>MG996R Metal Gear Servo Motor</em> user guide
-(<a href="../datasheets/Handsontec_MG996R_user_guide.pdf"><code>Handsontec_MG996R_user_guide.pdf</code></a>,
-<a href="https://www.handsontec.com/dataspecs/motor_fan/MG996R.pdf">online</a>),
-<a href="../datasheets/Hello_FPGA_Kit_schematics_rev1.pdf">Hello FPGA Kit schematics Rev. 1</a>,
-wiring concept <a href="../Wiring_RevD_DirectWiring_EN.pdf">Rev. D</a> and the Libero
-hardware contract (CorePWM). If this page and a source disagree, the source
-is authoritative; update this page.</p>
-<p><strong>Status (2026-10-11):</strong> firmware and GUI are implemented and tested on the
-simulation firmware and <code>native_sim</code>. On the kit the servo follows Goal
-Position from the GUI (6 V supply with sufficient current). The travel
-(<code>SMX_SERVO_TRAVEL_DEG</code>) and the gripper limits are <strong>not calibrated yet</strong>.</p>
+<p><strong>Why this page is so detailed:</strong> the CM4-Duino is no longer sold through
+the official Waveshare channels and its wiki page may disappear. This page
+keeps everything the project needs from the
+<a href="https://www.waveshare.com/wiki/CM4-Duino">Waveshare wiki</a>, retrieved on
+2026-11-15; the links below point to the
+<a href="#vendor-files">vendor files</a> on the Waveshare servers. If this page and
+the <a href="https://files.waveshare.com/upload/a/a1/CM4-Duino-sch.pdf">schematic</a>
+disagree, the schematic is authoritative; update this page.</p>
+<p><strong>Status (2026-11-15):</strong> board selected, not yet brought up in this
+project. Nothing below is verified on our hardware unless marked so.</p>
 </blockquote>
-<h2 id="datasheet-values">Datasheet values<a class="headerlink" href="#datasheet-values" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Value (Handsontec user guide)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Operating voltage</td>
-<td>4.8–7.2 V</td>
-</tr>
-<tr>
-<td>Stall torque</td>
-<td>9.4 kgf·cm at 4.8 V, 11 kgf·cm at 6 V</td>
-</tr>
-<tr>
-<td>Operating speed</td>
-<td>0.17 s/60° at 4.8 V, 0.14 s/60° at 6 V</td>
-</tr>
-<tr>
-<td>Running current</td>
-<td>500 mA</td>
-</tr>
-<tr>
-<td>Stall current</td>
-<td>2.5 A at 6 V</td>
-</tr>
-<tr>
-<td>Dead band width</td>
-<td>5 µs</td>
-</tr>
-<tr>
-<td>Control signal</td>
-<td>PWM, 20 ms period (50 Hz), 1–2 ms pulse</td>
-</tr>
-<tr>
-<td>Positions</td>
-<td>~1 ms = one end ("−90"), 1.5 ms = middle ("0"), ~2 ms = other end ("90")</td>
-</tr>
-<tr>
-<td>Rotation</td>
-<td>approximately 120° (60° in each direction)</td>
-</tr>
-<tr>
-<td>Weight, dimensions</td>
-<td>55 g; 40.7 × 19.7 × 42.9 mm (drawing: 40.3 mm between the mounting holes, 53.6 mm over the flanges, 47.6 mm high with the horn)</td>
-</tr>
-<tr>
-<td>Connector</td>
-<td>3-pin, brown = ground (−), red = +V, orange = signal</td>
-</tr>
-</tbody>
-</table>
-<p>Notes on the values:</p>
-<ul>
-<li>Shop listings and this project's earlier notes give "180°" and "13 kg·cm".
-  The user guide gives <strong>about 120°</strong> for the 1–2 ms range and <strong>11 kgf·cm at
-  6 V</strong>. Plan the gripper with the datasheet values.</li>
-<li>The guide labels positions "−90 / 0 / 90" but also states 120° of travel.
-  Measure the real angle per millisecond on the gripper (see
-  <a href="#calibration">Calibration</a>) instead of relying on either number.</li>
-<li>The signal in the guide's diagram is drawn at the supply level (~5 V). The
-  guide gives no input threshold. The kit outputs <strong>3.3 V</strong> (see
-  <a href="#signal-level">Signal level</a>).</li>
-</ul>
-<h2 id="connection-to-the-hello-fpga-kit">Connection to the Hello FPGA Kit<a class="headerlink" href="#connection-to-the-hello-fpga-kit" title="Permanent link">&para;</a></h2>
-<figure class="smx-figure">
-<p><img alt="Gripper servo wiring: SERVO-PWM from J8-4, 6 V from a separate DC/DC converter, common ground" src="../images/servo-wiring.svg" /></p>
-<figcaption>Gripper servo wiring: SERVO-PWM from J8-4, 6 V from a separate DC/DC converter, common ground</figcaption>
-</figure>
-<table>
-<thead>
-<tr>
-<th>Servo wire</th>
-<th>Connects to</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Orange (signal)</td>
-<td>Kit <strong>J8-4</strong> = Arduino IO3 / D3, ball <strong>N7</strong>, net <code>MSIO104NB4_N7_ARD_INT1_PWM_IO3</code></td>
-<td>CorePWM channel 1, 3.3 V logic. Dupont m/f jumper, ≤ 30 cm</td>
-</tr>
-<tr>
-<td>Red (+V)</td>
-<td><strong>+6 V</strong> of the servo DC/DC converter</td>
-<td>Never from the kit (J9-5 5 V or 3V3): the kit is powered from USB and the servo draws up to 2.5 A</td>
-</tr>
-<tr>
-<td>Brown (−)</td>
-<td><strong>−</strong> of the servo DC/DC converter, and through it the GND star point</td>
-<td>The servo current must not flow through the kit or the Dupont wires</td>
-</tr>
-<tr>
-<td>–</td>
-<td>Kit <strong>J9-6 / J9-7 (GND)</strong> → GND star point (minus of the 24 V PSU)</td>
-<td>Common reference for the signal. This connection is already part of the <a href="../wiring/#wiring-list-logic-dupont-mf-30-cm">wiring list</a></td>
-</tr>
-</tbody>
-</table>
-<p>Supply:</p>
+<p>Waveshare drawings: <a href="https://www.waveshare.com/wiki/File:CM4-Duino4.png">pinout</a> (Arduino-style headers with
+the CM4 GPIO numbers and functions) and
+<a href="https://www.waveshare.com/wiki/File:CM4-Duino-details-intro.jpg">onboard components</a>.</p>
+<h2 id="specifications">Specifications<a class="headerlink" href="#specifications" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Item</th>
-<th>Specification</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Converter</td>
-<td>DC/DC 24 V → <strong>6 V, ≥ 5 A</strong>, used for the servo only. 6 V gives 11 kgf·cm (datasheet); stay within 4.8–7.2 V</td>
+<td>Compute module</td>
+<td>Socket for every Compute Module 4 variant (with or without eMMC, with or without wireless)</td>
 </tr>
 <tr>
-<td>Bulk capacitor</td>
-<td>Recommended: low-ESR electrolytic of about 470–1000 µF / ≥ 10 V at the servo connector, against voltage dips at start and stall (not from the datasheet; project practice for hobby servos)</td>
+<td>Power input</td>
+<td>5 V through the USB Type-C connector; use <strong>5 V / 3 A</strong> (Waveshare states 5 V / 2 A as the minimum; the extra current is headroom for the M.2 slot, the USB port and the bus interface), otherwise the CM4 throttles or switches off</td>
 </tr>
 <tr>
-<td>Wires</td>
-<td>+6 V and − of the servo: ≥ 0.5 mm² (stall current 2.5 A). Only the signal goes over a Dupont jumper</td>
+<td>Type-C as data port</td>
+<td>With the BOOT switch ON the CM4 boots from Type-C as a USB device (eMMC flashing with <code>rpiboot</code>)</td>
 </tr>
 <tr>
-<td>Ground</td>
-<td>Star point at the 24 V PSU minus. Kit GND, DC/DC minus and the servo − all meet there</td>
+<td>USB</td>
+<td>1 × USB 2.0 Type-A host port, <strong>disabled by default</strong> (see <a href="#usb-20-port">USB 2.0 port</a>)</td>
+</tr>
+<tr>
+<td>Video</td>
+<td>1 × HDMI (HDMI0), up to 4K at 30 fps; <strong>no DSI</strong> connector</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>1 × MIPI CSI-2, 15-pin 1.0 mm FPC; a single camera works only as CAM0</td>
+</tr>
+<tr>
+<td>M.2</td>
+<td>M-key slot on the CM4 PCIe lane (one lane), for an NVMe SSD (<strong>2242</strong>) or another PCIe module</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>microSD socket, used only with CM4 Lite (without eMMC)</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>TI <strong>ADS7830</strong>, 8 channels, 8 bit, I²C, up to 70 kSPS, default address <strong>0x48</strong></td>
+</tr>
+<tr>
+<td>User I/O</td>
+<td>LED on <strong>GPIO6</strong>; button USER1 on <strong>GPIO4</strong>; button USER2 on <strong>GPIO5</strong> (or CM4 reset, selectable)</td>
+</tr>
+<tr>
+<td>Headers</td>
+<td>Arduino Uno R3 layout; the CM4 GPIO run at the <strong>IO-VREF</strong> level (3.3 V by default), with no level shifters</td>
+</tr>
+<tr>
+<td>Ethernet</td>
+<td><strong>No RJ45 connector and no magnetics</strong> on the board. The CM4 Ethernet is not usable without an adapter; this project uses the CM4 Wi-Fi</td>
+</tr>
+<tr>
+<td>Dimensions, weight</td>
+<td>73.58 × 53.34 mm, 25 g</td>
+</tr>
+<tr>
+<td>Operating system</td>
+<td>Raspberry Pi OS (the wiki covers Bookworm, and older Bullseye/Buster setups)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="signal-level">Signal level<a class="headerlink" href="#signal-level" title="Permanent link">&para;</a></h3>
-<p>The kit I/O level is 3.3 V (IOREF = 3P3V); its pins must never see more than
-3.3 V. The servo only receives the signal, so no voltage flows back into N7.
-Most MG996R servos switch reliably at 3.3 V, but the datasheet does not
-specify the input threshold.</p>
-<ul>
-<li>If the servo jitters or ignores the pulses although the oscilloscope shows a
-  clean 50 Hz signal at J8-4, add a one-way level shifter, for example a
-  74AHCT125 powered from 5 V (input 3.3 V compatible, output 5 V).</li>
-<li>Do not use a resistor pull-up to 6 V on the signal line: it would drive more
-  than 3.3 V into N7.</li>
-</ul>
-<h2 id="signal-from-the-firmware">Signal from the firmware<a class="headerlink" href="#signal-from-the-firmware" title="Permanent link">&para;</a></h2>
+<h2 id="onboard-components">Onboard components<a class="headerlink" href="#onboard-components" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Setting</th>
-<th>Value</th>
-<th>Where</th>
+<th>Item</th>
+<th>Function</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Period</td>
-<td>20 ms (50 Hz): PRESCALE 99 → 1 µs tick at PCLK 100 MHz, PERIOD 19999</td>
-<td><code>src/servo_corepwm.c</code>, Libero contract</td>
+<td>Type-C (PWR &amp; BOOT)</td>
+<td>5 V input; also the USB device port for flashing the eMMC</td>
 </tr>
 <tr>
-<td>Pulse width</td>
-<td>1000–2000 µs, 1 µs resolution (dead band of the servo: 5 µs)</td>
-<td>Kconfig <code>SMX_SERVO_PULSE_MIN_US</code> / <code>_MAX_US</code></td>
+<td>USB 2.0 Type-A</td>
+<td>Host port, off until enabled in <code>config.txt</code></td>
 </tr>
 <tr>
-<td>Position scale</td>
-<td>Goal Position 0 … range maps linearly to the pulse width; range = <code>SMX_SERVO_TRAVEL_DEG</code> in 0.088° units</td>
-<td>Kconfig <code>SMX_SERVO_TRAVEL_DEG</code> (default 90)</td>
+<td>HDMI0</td>
+<td>Display output</td>
 </tr>
 <tr>
-<td>Start</td>
-<td>No pulses after reset and with Torque OFF (servo limp). The first Torque ON moves to <code>SMX_SERVO_INITIAL_DEG</code> (default 45° = 1500 µs) at full speed</td>
-<td>Kconfig <code>SMX_SERVO_INITIAL_DEG</code></td>
+<td>BOOT switch</td>
+<td><strong>ON:</strong> boot from the Type-C port (<code>rpiboot</code>). <strong>OFF:</strong> boot from eMMC or microSD</td>
 </tr>
 <tr>
-<td>Speed</td>
-<td>Software ramp of the pulse width every 20 ms (Profile Velocity); 0 = jump, the servo moves at 0.14 s/60°</td>
-<td>GUI <strong>Gripper</strong> tab, register 112</td>
+<td>CM4 connector</td>
+<td>Two 100-pin board-to-board connectors</td>
+</tr>
+<tr>
+<td>CAM</td>
+<td>MIPI CSI-2 camera (CAM0)</td>
+</tr>
+<tr>
+<td>PWR / ACT LEDs</td>
+<td>Power and CM4 activity</td>
+</tr>
+<tr>
+<td>User LED</td>
+<td>GPIO6</td>
+</tr>
+<tr>
+<td>USER1, USER2</td>
+<td>Push buttons, GPIO4 and GPIO5 (USER2 can be the reset button instead)</td>
+</tr>
+<tr>
+<td>ADS7830</td>
+<td>8-channel ADC on I²C (GPIO2/GPIO3)</td>
+</tr>
+<tr>
+<td>Arduino headers</td>
+<td>GPIO, I²C, SPI, UART, PWM, analog inputs, power</td>
+</tr>
+<tr>
+<td>Function pads</td>
+<td>Solder-jumper options, see <a href="#function-pads">Function pads</a></td>
+</tr>
+<tr>
+<td>M.2 M-key</td>
+<td>NVMe SSD 2242 or another PCIe device</td>
+</tr>
+<tr>
+<td>microSD</td>
+<td>System card for CM4 Lite</td>
 </tr>
 </tbody>
 </table>
-<p>The default <code>SMX_SERVO_TRAVEL_DEG</code> of 90 only scales the degrees shown to the
-host. With the datasheet's ~120° for 1–2 ms the gripper turns about 1.33 times
-the displayed angle until the value is calibrated.</p>
-<h2 id="bring-up">Bring-up<a class="headerlink" href="#bring-up" title="Permanent link">&para;</a></h2>
-<p>Run these steps in order. Mount the servo without the horn or with the gripper
-open, so a wrong pulse cannot crush anything.</p>
+<h2 id="header-pinout">Header pinout<a class="headerlink" href="#header-pinout" title="Permanent link">&para;</a></h2>
+<p>The labels <code>Dn</code> printed on the board are the <strong>BCM GPIO numbers of the CM4</strong>
+(<code>D14</code> = GPIO14), not Arduino pin numbers. The "Uno position" column says
+which Arduino Uno pin sits at the same place; it is derived from the standard
+Uno layout and matters only when an Arduino shield is plugged in.</p>
+<h3 id="digital-header-right-side-top-to-bottom">Digital header (right side, top to bottom)<a class="headerlink" href="#digital-header-right-side-top-to-bottom" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Silkscreen</th>
+<th>CM4 pin</th>
+<th>Alternate function</th>
+<th>Uno position</th>
+<th>Use in this project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCL</td>
+<td>GPIO3</td>
+<td>I²C1 SCL (shared with the ADS7830)</td>
+<td>SCL</td>
+<td>ADC (bus voltage monitoring, optional)</td>
+</tr>
+<tr>
+<td>SDA</td>
+<td>GPIO2</td>
+<td>I²C1 SDA (shared with the ADS7830)</td>
+<td>SDA</td>
+<td>ADC (optional)</td>
+</tr>
+<tr>
+<td>AREF</td>
+<td>–</td>
+<td>ADC reference (<code>AD_REF</code> net)</td>
+<td>AREF</td>
+<td>–</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+<td>–</td>
+<td>GND</td>
+<td>Bus interface ground</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>GPIO11</td>
+<td>SPI0 SCLK</td>
+<td>D13</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>GPIO9</td>
+<td>SPI0 MISO</td>
+<td>D12</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>GPIO10</td>
+<td>SPI0 MOSI</td>
+<td>D11</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>GPIO8</td>
+<td>SPI0 CE0</td>
+<td>D10</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D23</td>
+<td>GPIO23</td>
+<td>–</td>
+<td>D9</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>GPIO22</td>
+<td>–</td>
+<td>D8</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D21</td>
+<td>GPIO21</td>
+<td>–</td>
+<td>D7</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D18</td>
+<td>GPIO18</td>
+<td>PWM0</td>
+<td>D6</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D19</td>
+<td>GPIO19</td>
+<td>PWM1</td>
+<td>D5</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D20</td>
+<td>GPIO20</td>
+<td>–</td>
+<td>D4</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D17</td>
+<td>GPIO17</td>
+<td>–</td>
+<td>D3</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D16</td>
+<td>GPIO16</td>
+<td>–</td>
+<td>D2</td>
+<td>free</td>
+</tr>
+<tr>
+<td>D14</td>
+<td>GPIO14</td>
+<td>UART0 TXD</td>
+<td>D1 / TX</td>
+<td><strong>DYNAMIXEL bus TX</strong></td>
+</tr>
+<tr>
+<td>D15</td>
+<td>GPIO15</td>
+<td>UART0 RXD</td>
+<td>D0 / RX</td>
+<td><strong>DYNAMIXEL bus RX</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="power-and-analog-headers-left-side-top-to-bottom">Power and analog headers (left side, top to bottom)<a class="headerlink" href="#power-and-analog-headers-left-side-top-to-bottom" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Silkscreen</th>
+<th>Function</th>
+<th>Uno position</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A7</td>
+<td>ADS7830 channel 7</td>
+<td>(NC on the Uno)</td>
+</tr>
+<tr>
+<td>CFG</td>
+<td><strong>A6</strong> (ADS7830 channel 6) or <strong>3.3 V</strong>, selected by the CFG pad</td>
+<td>IOREF</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>CM4 reset (<code>RUN</code>) or global enable, selected by the RUN/GL-EN pad</td>
+<td>RESET</td>
+</tr>
+<tr>
+<td>3V3</td>
+<td>3.3 V (supplies the <a href="../wiring/#robot-pc-cm4-duino-to-the-bus-interface">bus interface</a>)</td>
+<td>3.3V</td>
+</tr>
+<tr>
+<td>5V</td>
+<td>5 V</td>
+<td>5V</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>Ground</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>Ground</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>VIN</td>
+<td>Not described by Waveshare; do not use it to power the board until checked in the schematic</td>
+<td>VIN</td>
+</tr>
+<tr>
+<td>A0–A5</td>
+<td>ADS7830 channels 0–5</td>
+<td>A0–A5</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">3.3 V logic, no protection</p>
+<p>The GPIO connect straight to the CM4 (IO-VREF, 3.3 V by default; 1.8 V
+selectable). 5 V Arduino shields and 5 V signals damage the CM4. Every
+interface built for this project (bus transceiver, sensors) must use
+3.3 V logic on the CM4 side.</p>
+</div>
+<h2 id="function-pads">Function pads<a class="headerlink" href="#function-pads" title="Permanent link">&para;</a></h2>
+<p>Solder-jumper and 0 Ω options on the top side, next to the CM4 connector:</p>
+<table>
+<thead>
+<tr>
+<th>Pad</th>
+<th>Options</th>
+<th>Function</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BT-DIS</td>
+<td>open / closed</td>
+<td>Disables Bluetooth (CM4 with wireless only)</td>
+<td>open</td>
+</tr>
+<tr>
+<td>WIFI-DIS</td>
+<td>open / closed</td>
+<td>Disables Wi-Fi (CM4 with wireless only). <strong>Must stay open in this project</strong></td>
+<td>open</td>
+</tr>
+<tr>
+<td>WP-DIS</td>
+<td>open / closed</td>
+<td>Write-protect option of the CM4 (not described by Waveshare)</td>
+<td>open</td>
+</tr>
+<tr>
+<td>IO-VREF</td>
+<td>1.8 V / 3.3 V</td>
+<td>Logic level of the GPIO bank</td>
+<td>3.3 V</td>
+</tr>
+<tr>
+<td>RUN / GL-EN</td>
+<td>RUN / GL-EN</td>
+<td>Whether the RST pin and reset button reset the CM4 (<code>RUN</code>) or switch it off (<code>GLOBAL_EN</code>)</td>
+<td>not stated by Waveshare; check on the board</td>
+</tr>
+<tr>
+<td>CFG</td>
+<td>3V3 / A6</td>
+<td>Function of the IOREF position of the power header</td>
+<td>A6</td>
+</tr>
+<tr>
+<td>USER 2</td>
+<td>RST / D5</td>
+<td>USER2 button as reset or as GPIO5</td>
+<td>D5 (GPIO5)</td>
+</tr>
+<tr>
+<td>AD I2C ADDR</td>
+<td>A0, A1 each to 3V3 or GND</td>
+<td>ADS7830 address <code>0b10010 A1 A0</code>: 0x48 to 0x4B</td>
+<td>both GND, <strong>0x48</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The defaults for BT-DIS, WIFI-DIS and WP-DIS are not documented by Waveshare;
+"open" is what the product photos show. Bluetooth is switched off in software
+for this project (<code>dtoverlay=disable-bt</code>), not with the pad.</p>
+<h2 id="software-setup">Software setup<a class="headerlink" href="#software-setup" title="Permanent link">&para;</a></h2>
+<p>The paths below are for Raspberry Pi OS Bookworm (<code>/boot/firmware/config.txt</code>;
+Bullseye and older use <code>/boot/config.txt</code>).</p>
+<h3 id="flashing-the-emmc">Flashing the eMMC<a class="headerlink" href="#flashing-the-emmc" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Firmware:</strong> flash the target firmware. In the GUI, <strong>Detect motors</strong> shows
-   <em>gripper ID 7</em> in the board line; the <strong>Gripper</strong> tab shows <em>Output:
-   CorePWM</em>.</li>
-<li><strong>Signal without the servo:</strong> connect only an oscilloscope to J8-4 and GND.
-   With Torque OFF the line stays low. Torque ON in the <strong>Gripper</strong> tab: 50 Hz,
-   pulse 1500 µs (start position 45°). Move to the limits: 1000 µs and
-   2000 µs. The <em>Pulse</em> field in the GUI shows the same values.</li>
-<li><strong>Supply:</strong> with the servo unplugged, set the DC/DC output to 6 V and
-   check the common ground (kit GND to the PSU minus).</li>
-<li><strong>Servo:</strong> switch the 24 V PSU and the DC/DC off, plug the servo in (brown
-   −, red +, orange signal), switch on, then Torque ON. The servo moves to the
-   middle position at full speed.</li>
-<li><strong>Slow test:</strong> set <em>Profile velocity</em> to 20–50 (27–69 °/s) and move in
-   small steps. Watch the servo supply voltage during moves.</li>
-<li><strong>Limits:</strong> find the open and closed gripper positions (see
-   <a href="#calibration">Calibration</a>), enter them as <em>Position limits</em> with Torque
-   OFF, and click <em>Write limits</em>. Repeat after every reset: the limits are not
-   stored.</li>
+<li>Set the BOOT switch to <strong>ON</strong> and connect the Type-C port to a PC. Connect
+   nothing else, so the CM4 is powered only from the PC.</li>
+<li>Run <code>rpiboot</code> on the PC (Raspberry Pi
+   <a href="https://github.com/raspberrypi/usbboot">usbboot</a>; Waveshare ships a
+   Windows installer, <code>Rpiboot_setup.zip</code>). The eMMC appears as a USB drive.</li>
+<li>Write the image with Raspberry Pi Imager.</li>
+<li>Set the BOOT switch to <strong>OFF</strong>, power the board from a 5 V / 3 A supply.</li>
 </ol>
-<h2 id="calibration">Calibration<a class="headerlink" href="#calibration" title="Permanent link">&para;</a></h2>
-<p>The firmware cannot measure the servo position. Find the gripper's end
-positions by hand:</p>
-<ol>
-<li>Profile velocity about 30, Torque ON.</li>
-<li>Move in steps of 1–2° towards <em>closed</em> until the jaws just touch, then back
-   off by 2–3°. Note the angle. Do not hold the servo against a stop: it then
-   draws up to the stall current of 2.5 A and heats up.</li>
-<li>Do the same towards <em>open</em>.</li>
-<li>Enter both values as <em>Position limits</em>. For a permanent default, change
-   <code>SMX_SERVO_TRAVEL_DEG</code>, <code>SMX_SERVO_PULSE_MIN_US</code> / <code>_MAX_US</code> or
-   <code>SMX_SERVO_INITIAL_DEG</code> in Kconfig and rebuild.</li>
-</ol>
-<p>If the measured rotation for 1000–2000 µs differs from 90°, set
-<code>SMX_SERVO_TRAVEL_DEG</code> to the measured angle so the GUI shows true degrees.</p>
-<h2 id="safety">Safety<a class="headerlink" href="#safety" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Never power the servo from the kit (J9-5 5 V, J9-4 3V3) or over the
-   breadboard.</li>
-<li>Only 3.3 V signals on J8-4. No pull-up to the servo supply.</li>
-<li>Plug or unplug the servo only with the DC/DC output off.</li>
-<li>Torque OFF (or <strong>STOP</strong>, key Esc, in the GUI) removes the pulses: the
-   servo is limp and the gripper may open under load.</li>
-<li>The servo position after power-up is unknown. The first Torque ON moves at
-   full speed to the start position: keep hands out of the gripper.</li>
-</ol>
+<p>A CM4 Lite boots from the microSD card instead; prepare the card on a PC.</p>
+<h3 id="usb-20-port">USB 2.0 port<a class="headerlink" href="#usb-20-port" title="Permanent link">&para;</a></h3>
+<p>The port is off by default to save power. Enable it in <code>config.txt</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">dtoverlay</span><span class="o">=</span><span class="s">dwc2,dr_mode=host</span>
+</code></pre></div>
+<p>Raspberry Pi OS images after 2021-10-30 set <code>otg_mode=1</code> in the <code>[cm4]</code>
+section. The port then still works but the kernel logs
+<code>config failed, hub doesn't have any ports! (err -19)</code>. Remove <code>otg_mode=1</code>
+and keep the <code>dtoverlay</code> line above to get rid of it.</p>
+<h3 id="adc-ads7830">ADC (ADS7830)<a class="headerlink" href="#adc-ads7830" title="Permanent link">&para;</a></h3>
+<ul>
+<li>I²C bus 1 (GPIO2/GPIO3), address 0x48 by default; enable I²C in
+  <code>raspi-config</code> or with <code>dtparam=i2c_arm=on</code>.</li>
+<li>Single-ended inputs by default (differential possible), 8 bit, reference on
+  <code>AD_REF</code>.</li>
+<li>An unconnected input reads random values.</li>
+<li>Waveshare's Python example is archived as
+  <a href="https://files.waveshare.com/upload/5/5d/CM4-duino-code.zip"><code>CM4-duino-code.zip</code></a> (<code>ADS7830.py</code>,
+  run with <code>sudo python3 ADS7830.py</code>).</li>
+</ul>
+<h3 id="camera">Camera<a class="headerlink" href="#camera" title="Permanent link">&para;</a></h3>
+<p>Not used by the project now; kept for completeness. Only CAM0 exists. Add the
+overlay of the sensor to <code>config.txt</code>, for example <code>dtoverlay=imx219,cam0</code>
+(others: <code>ov5647</code>, <code>ov9281</code>, <code>imx290</code> with <code>clock-frequency=37125000</code>,
+<code>imx296</code>, <code>imx378</code>, <code>imx477</code>, <code>imx519</code>, <code>imx708</code>), reboot and test with
+<code>libcamera-hello --list-cameras</code>. If the log says
+<code>Camera frontend has timed out!</code>, update the firmware (<code>sudo rpi-update</code>).</p>
+<h3 id="settings-used-by-this-project">Settings used by this project<a class="headerlink" href="#settings-used-by-this-project" title="Permanent link">&para;</a></h3>
+<p>Planned, see <a href="../../robot-pc/cm4-duino/">Robot PC on the CM4-Duino</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># /boot/firmware/config.txt  (SmartManipulator-X, planned)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="na">enable_uart</span><span class="o">=</span><span class="s">1</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="na">dtoverlay</span><span class="o">=</span><span class="s">disable-bt</span><span class="w">          </span><span class="c1"># PL011 UART0 on GPIO14/15 for the DYNAMIXEL bus</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="na">dtoverlay</span><span class="o">=</span><span class="s">dwc2,dr_mode=host</span><span class="w">   </span><span class="c1"># USB 2.0 port (only if a USB device is needed)</span>
+</code></pre></div>
+<h2 id="mechanical-data">Mechanical data<a class="headerlink" href="#mechanical-data" title="Permanent link">&para;</a></h2>
+<p>Waveshare drawings and photos:
+<a href="https://www.waveshare.com/wiki/File:CM4-Duino2.png">board outline dimensions</a>,
+<a href="https://www.waveshare.com/wiki/File:Compute_Module_4_IO_Board_5.png">Compute Module 4 outline dimensions</a>,
+<a href="https://www.waveshare.com/wiki/File:CM4_Duino_Spec_01.jpg">board with the CM4 fitted</a>. The 3D model is
+<a href="https://files.waveshare.com/upload/a/a4/CM4-Duino_3D.zip"><code>CM4-Duino_3D.zip</code></a>.</p>
+<h2 id="precautions">Precautions<a class="headerlink" href="#precautions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Do not plug or unplug anything except USB and HDMI while the board is powered.</li>
+<li>Use a 5 V / 3 A supply on Type-C; the motor supply of the arm
+  stays separate (see <a href="../../dynamixel/bus/#power-and-ground">DYNAMIXEL bus</a>).</li>
+<li>While flashing over Type-C, connect nothing else to the board.</li>
+</ul>
+<h2 id="vendor-files">Vendor files<a class="headerlink" href="#vendor-files" title="Permanent link">&para;</a></h2>
+<p>Links checked on 2026-11-15. The files are © Waveshare. Because the board is
+discontinued, the repository keeps a backup copy in
+<code>docs/hardware/cm4-duino/vendor/</code>; it is not covered by the Apache License 2.0
+and is not published on this website. If a link below stops working, use the
+backup in the repository.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Content</th>
+<th>Waveshare original</th>
+<th>Backup in the repository</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schematic</td>
+<td>Circuit of the board</td>
+<td><a href="https://files.waveshare.com/upload/a/a1/CM4-Duino-sch.pdf"><code>CM4-Duino-sch.pdf</code></a></td>
+<td><code>CM4-Duino-sch.pdf</code></td>
+</tr>
+<tr>
+<td>Pinout drawing</td>
+<td>Headers with CM4 GPIO numbers</td>
+<td><a href="https://www.waveshare.com/wiki/File:CM4-Duino4.png"><code>File:CM4-Duino4.png</code></a></td>
+<td><code>smx-cm4duino-pinout.png</code></td>
+</tr>
+<tr>
+<td>Onboard components</td>
+<td>Labeled board photo</td>
+<td><a href="https://www.waveshare.com/wiki/File:CM4-Duino-details-intro.jpg"><code>File:CM4-Duino-details-intro.jpg</code></a></td>
+<td><code>smx-cm4duino-onboard.jpg</code></td>
+</tr>
+<tr>
+<td>Board dimensions</td>
+<td>Outline drawing</td>
+<td><a href="https://www.waveshare.com/wiki/File:CM4-Duino2.png"><code>File:CM4-Duino2.png</code></a></td>
+<td><code>smx-cm4duino-dimensions.png</code></td>
+</tr>
+<tr>
+<td>CM4 dimensions</td>
+<td>Outline drawing</td>
+<td><a href="https://www.waveshare.com/wiki/File:Compute_Module_4_IO_Board_5.png"><code>File:Compute_Module_4_IO_Board_5.png</code></a></td>
+<td><code>smx-cm4duino-cm4-dimensions.png</code></td>
+</tr>
+<tr>
+<td>Board with the CM4</td>
+<td>Photo</td>
+<td><a href="https://www.waveshare.com/wiki/File:CM4_Duino_Spec_01.jpg"><code>File:CM4_Duino_Spec_01.jpg</code></a></td>
+<td><code>smx-cm4duino-connection.jpg</code></td>
+</tr>
+<tr>
+<td>Example code</td>
+<td>ADS7830 Python example</td>
+<td><a href="https://files.waveshare.com/upload/5/5d/CM4-duino-code.zip"><code>CM4-duino-code.zip</code></a></td>
+<td><code>CM4-duino-code.zip</code></td>
+</tr>
+<tr>
+<td>3D model</td>
+<td>Board model</td>
+<td><a href="https://files.waveshare.com/upload/a/a4/CM4-Duino_3D.zip"><code>CM4-Duino_3D.zip</code></a></td>
+<td><code>CM4-Duino_3D.zip</code></td>
+</tr>
+</tbody>
+</table>
+<p>Further references, without a backup because their publishers keep them
+available: <a href="https://www.raspberrypi.com/documentation/computers/compute-module.html">Raspberry Pi CM4 datasheet and documentation</a>,
+<a href="https://github.com/raspberrypi/usbboot">usbboot</a>,
+<a href="https://www.ti.com/product/ADS7830">ADS7830 datasheet (TI)</a>.</p>
 
 
 
@@ -1815,7 +2288,7 @@ positions by hand:</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../tmc5160/" class="md-footer__link md-footer__link--prev" aria-label="Previous: TMC5160 Driver Modules">
+          <a href="../../operator-pc/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Operator PC">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1825,20 +2298,20 @@ positions by hand:</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                TMC5160 Driver Modules
+                Operator PC
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../about/" class="md-footer__link md-footer__link--next" aria-label="Next: Author &amp; Company">
+          <a href="../doppelstep/" class="md-footer__link md-footer__link--next" aria-label="Next: doppelstep drives">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Author & Company
+                doppelstep drives
               </div>
             </div>
             <div class="md-footer__button md-icon">

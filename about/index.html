@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/about/">
       
       
-        <link rel="prev" href="../hardware/servo/">
+        <link rel="prev" href="../hardware/gripper-servo/">
       
       
         <link rel="next" href="../LICENSE/">
@@ -314,27 +314,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -763,7 +855,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -870,7 +990,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -886,182 +1006,67 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Development Environment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Firmware Architecture
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Motor Tester GUI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hardware
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
     Hardware
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CM4-Duino board
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    doppelstep drives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1077,7 +1082,7 @@
   <span class="md-ellipsis">
     
   
-    Hello FPGA Kit Wiring
+    Wiring
   
 
     
@@ -1098,35 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
@@ -1179,10 +1156,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -1200,8 +1177,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1479,8 +1456,8 @@
 <p><img alt="SystemFromScratch® logo" class="sfs-brand__logo" src="../assets/images/brand/systemfromscratch-logo-on-dark.png" /></p>
 </div>
 <p>SmartManipulator-X is designed, written and maintained by <strong>Anton Vynohradov</strong> and
-published by <strong>SystemFromScratch®</strong> — secure embedded systems and compliance-ready
-engineering, from concept to certification.</p>
+published by <strong>SystemFromScratch®</strong>: "Secure embedded systems and compliance-ready
+engineering — from concept to certification-ready product."</p>
 <h2 id="author">Author<a class="headerlink" href="#author" title="Permanent link">&para;</a></h2>
 <div class="sfs-author">
 <p class="sfs-author__name"><strong>Anton Vynohradov</strong> · <a href="https://orcid.org/0009-0005-6965-0911">ORCID 0009-0005-6965-0911</a></p>
@@ -1510,7 +1487,7 @@ remotely worldwide.</p>
 </tr>
 <tr>
 <td>Security &amp; compliance</td>
-<td>Secure boot, threat modelling, MISRA C/C++, EU Cyber Resilience Act (CRA) readiness</td>
+<td>Secure boot, threat modeling, MISRA C/C++, EU Cyber Resilience Act (CRA) readiness</td>
 </tr>
 <tr>
 <td>Industries</td>
@@ -1522,8 +1499,8 @@ remotely worldwide.</p>
 Buildroot · ARM Cortex-M · STM32 · Microchip FPGA · RISC-V · CAN / ISO-TP · ROS 2 ·
 Docker · Git · CI/CD · MISRA C/C++ · EU CRA</p>
 <p>For SmartManipulator-X, Anton designed the system architecture, the Robot PC image and
-its ROS 2 configuration, the robot description generated from the BCN3D Moveo CAD, the
-SmartFusion2 controller firmware with its motor tester, and this documentation.</p>
+its ROS 2 configuration, the robot description generated from the BCN3D Moveo CAD, the doppelstep
+stepper drives, and this documentation.</p>
 <h2 id="systemfromscratch">SystemFromScratch®<a class="headerlink" href="#systemfromscratch" title="Permanent link">&para;</a></h2>
 <p>SystemFromScratch® was founded by Anton Vynohradov. The company combines deep embedded
 engineering with cybersecurity and certification-focused product development, for teams
@@ -1539,34 +1516,40 @@ regulations that govern them.</p>
 </thead>
 <tbody>
 <tr>
-<td>Embedded software development</td>
-<td>Bare-metal, RTOS and Linux firmware for performance, reliability and long-term maintainability</td>
-</tr>
-<tr>
-<td>BSP &amp; device drivers</td>
-<td>Board support packages, bootloaders and low-level drivers for MCUs, SoCs, FPGAs and custom hardware</td>
-</tr>
-<tr>
-<td>RTOS &amp; Embedded Linux</td>
-<td>Zephyr, FreeRTOS and Embedded Linux (Yocto, Buildroot): porting, configuration, integration, reproducible builds</td>
+<td>Hardware design with partners</td>
+<td>We choose proven, available parts with you, so your product is not tied to one expensive supplier.</td>
 </tr>
 <tr>
 <td>Hardware bring-up &amp; integration</td>
-<td>Schematic review, first boot, validation and production support, including SoC FPGA and motor-control platforms</td>
+<td>The first power-on of a new board is where schedules slip. We take it from first boot to a working system.</td>
 </tr>
 <tr>
-<td>Cybersecurity &amp; CRA readiness</td>
-<td>Secure boot, firmware integrity, threat modelling and a secure development lifecycle for the EU Cyber Resilience Act</td>
+<td>BSP &amp; device drivers</td>
+<td>Board support packages, bootloaders and drivers that make your hardware usable and keep timing exact.</td>
 </tr>
 <tr>
-<td>Compliance &amp; consulting</td>
-<td>MISRA C/C++, static analysis, code and architecture reviews, compliance roadmaps</td>
+<td>RTOS &amp; Embedded Linux</td>
+<td>A maintained, secure foundation — Zephyr, FreeRTOS or Embedded Linux — instead of home-grown code that only one person understands.</td>
+</tr>
+<tr>
+<td>Embedded software development</td>
+<td>Your devices talk to each other reliably — CAN, RS-485, UART, USB — even when the hardware underneath changes.</td>
+</tr>
+<tr>
+<td>System integration</td>
+<td>Everything works together end to end, and can be tested on a laptop before the hardware exists.</td>
+</tr>
+<tr>
+<td>Cybersecurity, CRA &amp; compliance</td>
+<td>Security and code quality designed in from the start — secure boot, signed updates, MISRA — so audits and EU Cyber Resilience Act conformity are not a last-minute patch.</td>
 </tr>
 </tbody>
 </table>
 <p>SmartManipulator-X is one of the open-source projects in the SystemFromScratch®
 portfolio: public engineering work that can be inspected line by line, from the ROS 2
-host down to the stepper driver.</p>
+host down to the stepper driver. It is also teaching material for several levels, from
+readers who only want to work on robotics algorithms in simulation to engineers who
+build and bring up the electronics (<a href="../beginners/">connection guide for beginners</a>).</p>
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1582,7 +1565,7 @@ host down to the stepper driver.</p>
 </tr>
 <tr>
 <td>E-mail</td>
-<td><a href="mailto:avynohradov@systemfromscratch.com">avynohradov@systemfromscratch.com</a></td>
+<td><a href="mailto:contact@systemfromscratch.com">contact@systemfromscratch.com</a></td>
 </tr>
 <tr>
 <td>GitHub</td>
@@ -1624,11 +1607,11 @@ Get in touch through <a href="https://systemfromscratch.com">systemfromscratch.c
 in this documentation to identify the publisher of SmartManipulator-X; the Apache License
 2.0 grants no rights to use them, and they may not be used to endorse or promote products
 derived from SmartManipulator-X without prior written permission.</p>
-<p>ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd. SmartFusion2
-and Libero are trademarks of Microchip Technology Inc. TRINAMIC and TMC5160 are
-trademarks of Analog Devices, Inc. BIGTREETECH is a trademark of Shenzhen Big Tree
-Technology Co., Ltd. ROS is a trademark of Open Source Robotics Foundation, Inc. BCN3D is
-a trademark of BCN3D Technologies. SmartManipulator-X is not affiliated with or endorsed
+<p>ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd. Raspberry Pi
+is a trademark of Raspberry Pi Ltd. Waveshare is a trademark of Waveshare Electronics.
+STM32 is a registered trademark of STMicroelectronics International N.V. ROS is a
+trademark of Open Source Robotics Foundation, Inc. BCN3D is a trademark of BCN3D
+Technologies. SmartManipulator-X is not affiliated with or endorsed
 by these companies; their names are used only to identify the products the project
 builds on.</p>
 <p>The mechanical design comes from the
@@ -1671,7 +1654,7 @@ DYNAMIXEL SDK and hardware interface.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../hardware/servo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Gripper Servo (MG996R)">
+          <a href="../hardware/gripper-servo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Gripper Servo (MG996R)">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>

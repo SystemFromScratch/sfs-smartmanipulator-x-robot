@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -18,7 +18,7 @@
         <link rel="prev" href="../mechanical/">
       
       
-        <link rel="next" href="../dynamixel/compatibility-spec/">
+        <link rel="next" href="../dynamixel/bus/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>System Architecture - SmartManipulator-X</title>
+        <title>System architecture - SmartManipulator-X</title>
       
     
     
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              System Architecture
+              System architecture
             
           </span>
         </div>
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../hardware/wiring/" class="md-tabs__link">
+        <a href="../hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -777,7 +869,7 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
   
 
     
@@ -795,7 +887,7 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
   
 
     
@@ -843,17 +935,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arm-and-fpga-partition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ARM and FPGA partition
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#component-ownership" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -869,6 +950,17 @@
     <span class="md-ellipsis">
       
         Software reuse boundary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operating-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating modes
       
     </span>
   </a>
@@ -912,6 +1004,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1010,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -1026,7 +1146,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -1039,14 +1159,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/getting-started/" class="md-nav__link">
+      <a href="../hardware/cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -1067,14 +1187,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/development/" class="md-nav__link">
+      <a href="../hardware/doppelstep/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -1095,14 +1215,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../firmware/" class="md-nav__link">
+      <a href="../hardware/wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1123,14 +1243,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gui/" class="md-nav__link">
+      <a href="../hardware/gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1181,7 +1301,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1194,149 +1314,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1458,17 +1435,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arm-and-fpga-partition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ARM and FPGA partition
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#component-ownership" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1484,6 +1450,17 @@
     <span class="md-ellipsis">
       
         Software reuse boundary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operating-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating modes
       
     </span>
   </a>
@@ -1540,87 +1517,63 @@
 
 
 
-<h1 id="system-architecture">System Architecture<a class="headerlink" href="#system-architecture" title="Permanent link">&para;</a></h1>
+<h1 id="system-architecture">System architecture<a class="headerlink" href="#system-architecture" title="Permanent link">&para;</a></h1>
+<p>SmartManipulator-X has three parts: the Operator PC plans motions, the Robot
+PC runs ROS 2 control and is the master of a DYNAMIXEL bus, and one doppelstep
+drive per stepper motor answers on that bus as a DYNAMIXEL servo. This page
+shows how they connect, who owns what, where the ROBOTIS software is reused,
+and in which operating modes the system runs.</p>
 <h2 id="project-objective">Project objective<a class="headerlink" href="#project-objective" title="Permanent link">&para;</a></h2>
-<p>The target is to use the ROS 2 control and operator-software concepts of ROBOTIS <a href="https://docs.robotis.com/docs/systems/openmanipulator_x/overview/">OpenMANIPULATOR-X</a> with the mechanical design of <a href="https://github.com/BCN3D/BCN3D-Moveo">BCN3D Moveo</a>. A Microchip SmartFusion2 (M2S Hello FPGA Kit) replaces the DYNAMIXEL actuators: it drives stepper motors on the Moveo mechanism and a hobby servo on the gripper, and presents them to the host as virtual DYNAMIXEL devices.</p>
+<p>The target is to use the ROS 2 control and operator-software concepts of ROBOTIS <a href="https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/">OpenMANIPULATOR-X</a> with the mechanical design of <a href="https://github.com/BCN3D/BCN3D-Moveo">BCN3D Moveo</a>. Instead of DYNAMIXEL actuators, each stepper joint has a <a href="../hardware/doppelstep/">doppelstep</a> drive that answers on a DYNAMIXEL Protocol 2.0 bus as an XM430-W350 servo. The Robot PC, a Raspberry Pi CM4 on a <a href="../hardware/cm4-duino/">CM4-Duino</a> board, is the bus master and runs the unchanged ROBOTIS host software.</p>
 <p>These sources have different roles. OpenMANIPULATOR-X is the reference for the ROS/DYNAMIXEL software stack; BCN3D Moveo is the mechanical reference. The OpenMANIPULATOR-X robot geometry, joints, actuator assumptions, and hardware configuration must not be copied as if they described Moveo.</p>
+<blockquote>
+<p>What is implemented today is on the <a href="../status/">project status</a> page.</p>
+</blockquote>
 <h2 id="system-context">System context<a class="headerlink" href="#system-context" title="Permanent link">&para;</a></h2>
 <figure class="smx-figure">
-<p><img alt="SmartManipulator-X system: Operator PC, Robot PC, Hello FPGA Kit, TMC5160 axes and gripper servo" src="images/system-architecture.svg" /></p>
-<figcaption>SmartManipulator-X system: Operator PC, Robot PC, Hello FPGA Kit, TMC5160 axes and gripper servo</figcaption>
+<p><img alt="SmartManipulator-X system: Operator PC, Robot PC on the CM4-Duino, DYNAMIXEL bus, six doppelstep drives, gripper (separate project) and Moveo mechanics" src="images/system-architecture.svg" /></p>
+<figcaption>SmartManipulator-X system: Operator PC, Robot PC on the CM4-Duino, DYNAMIXEL bus, six doppelstep drives, gripper (separate project) and Moveo mechanics</figcaption>
 </figure>
-<p>The SmartFusion2 is a motor controller implementing device behavior; it is not merely a USB-to-DYNAMIXEL converter. Details of each link:</p>
+<p>Each doppelstep drive is a motor controller with its own device behavior (Control Table, motion profiles, current loop); it is not a protocol converter. Details of each link:</p>
 <table>
 <thead>
 <tr>
 <th>Link</th>
 <th>Implementation</th>
 <th>Reference</th>
+<th>State</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Robot PC ↔ kit</td>
-<td>USB Mini-B → MCP2221A (CDC ACM) → PIC32 → MMUART_0. PC side 460800 bps, firmware side 230400 bps; the PIC32 forwards only after the host has sent <code>&amp;</code></td>
-<td><a href="../hardware/wiring/#host-link-usb-pic32-smartfusion2">Host link</a></td>
+<td>Operator PC ↔ Robot PC</td>
+<td>ROS 2 DDS (Fast DDS, UDPv4), <code>ROS_DOMAIN_ID</code> 42; Docker network <code>smx_net</code> in development, CM4 Wi-Fi on the robot</td>
+<td><a href="../robot-pc/">Robot PC</a>, <a href="../operator-pc/">Operator PC</a></td>
+<td>Docker network: done. Wi-Fi: planned</td>
 </tr>
 <tr>
-<td>Firmware ↔ stepper drivers</td>
-<td>MSS SPI_0, routed through the fabric to the Arduino header, six chip selects; TMC5160 in motion-controller mode (no STEP/DIR)</td>
-<td><a href="../hardware/wiring/">Hello FPGA Kit wiring</a>, <a href="../hardware/tmc5160/">TMC5160 driver modules</a></td>
+<td>Robot PC ↔ drives</td>
+<td>DYNAMIXEL Protocol 2.0 bus from the CM4 PL011 UART0 (GPIO14/15) through a half-duplex interface</td>
+<td><a href="../dynamixel/bus/">DYNAMIXEL bus</a></td>
+<td>Planned</td>
 </tr>
 <tr>
-<td>Firmware ↔ gripper servo</td>
-<td>CorePWM channel 1 in the fabric, APB registers at <code>0x5000_0000</code>, output on D3 (N7)</td>
-<td><a href="../hardware/servo/">Gripper servo (MG996R)</a></td>
+<td>Drive ↔ motor</td>
+<td>B-G431B-ESC1 power stage, shared-leg topology (legs U, V, W), current loop at 20 kHz, 16 microsteps, 24 V</td>
+<td><a href="../hardware/doppelstep/">doppelstep drives</a>, <a href="https://systemfromscratch.com/sfs-doppelstep/hardware/">doppelstep hardware</a></td>
+<td>Firmware done in simulation</td>
+</tr>
+<tr>
+<td>Robot PC ↔ gripper</td>
+<td>Virtual DYNAMIXEL on ID 7 with a PWM output to the MG996R</td>
+<td>Separate project</td>
+<td>Open</td>
 </tr>
 <tr>
 <td>Power</td>
-<td>24 V PSU for the TMC5160 modules (VM), DC/DC 24 → 6 V for the servo, kit from USB; one GND star point at the PSU minus</td>
-<td><a href="../hardware/wiring/#power-and-servo">Power and servo</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="arm-and-fpga-partition">ARM and FPGA partition<a class="headerlink" href="#arm-and-fpga-partition" title="Permanent link">&para;</a></h2>
-<p>As built (Libero stage 2, firmware on <code>main</code>):</p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Where</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Host link, Protocol 2.0, Control Tables, unit conversion</td>
-<td>Cortex-M3 (Zephyr)</td>
-<td>Implemented; host link verified on the kit</td>
-</tr>
-<tr>
-<td>Axis control: ramps, position counter, current</td>
-<td>TMC5160 (motion-controller mode), configured over SPI by the Cortex-M3</td>
-<td>Implemented; detection, registers and ramp generator verified on one module (A0); the shaft does not turn yet, the module is in STEP/DIR mode (<code>SD_MODE=1</code>)</td>
-</tr>
-<tr>
-<td>Gripper servo ramp (20 ms steps)</td>
-<td>Cortex-M3 (<code>k_timer</code>)</td>
-<td>Implemented; works on the kit</td>
-</tr>
-<tr>
-<td>Gripper servo pulse generation</td>
-<td>FPGA fabric (CorePWM)</td>
-<td>In the Libero design; the servo follows Goal Position on the kit (travel not calibrated)</td>
-</tr>
-<tr>
-<td>Pin routing of SPI_0 and MMUART_0</td>
-<td>FPGA fabric</td>
-<td>Verified on the kit</td>
-</tr>
-<tr>
-<td>STEP/DIR generation, encoders, high-rate loops</td>
-<td>–</td>
-<td>Not used: the drivers generate the ramps; no encoders in stage 1</td>
+<td>5 V for the CM4-Duino; separate 24 V motor supply for the drives; common ground star point</td>
+<td><a href="../dynamixel/bus/#power-and-ground">DYNAMIXEL bus</a></td>
+<td>Planned</td>
 </tr>
 </tbody>
 </table>
@@ -1630,115 +1583,118 @@
 <tr>
 <th>Component</th>
 <th>Responsibility</th>
-<th>Repository boundary</th>
+<th>Repository</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SmartFusion2 firmware</td>
-<td>DYNAMIXEL Protocol 2.0 device behavior, Control Tables, TMC5160 configuration and commands, gripper servo</td>
-<td>Controller repository (<code>SmartManipulator-X-Controller</code>: <code>apps/SmartManipulator_Controller</code>, plus the host motor tester <code>tools/dxl_test_gui</code>)</td>
-</tr>
-<tr>
-<td>SmartFusion2 FPGA design</td>
-<td>Pin routing, CorePWM, clocks; the hardware contract for the firmware</td>
-<td>Separate Libero repository (<code>SmartManipulator-X-Libero</code>, <code>docs/firmware_interface.md</code>)</td>
-</tr>
-<tr>
 <td>Robot PC</td>
-<td>ROS 2 Jazzy, <code>ros2_control</code>, verified ROBOTIS hardware path, USB access, robot bringup, canonical robot description</td>
-<td>Robot PC repository (<code>sfs-smartmanipulator-x-robot</code>, which also publishes this documentation)</td>
+<td>ROS 2 Jazzy, <code>ros2_control</code>, the ROBOTIS hardware path, bus master, robot bringup, canonical robot description, CM4-Duino deployment, this documentation</td>
+<td><a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot">sfs-smartmanipulator-x-robot</a></td>
 </tr>
 <tr>
 <td>Operator PC</td>
 <td>MoveIt 2, RViz2, Gazebo, operator workflows, ROS 2 DDS client</td>
-<td>Operator PC repository (<code>sfs-smartmanipulator-x-operator</code>)</td>
+<td><a href="https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator">sfs-smartmanipulator-x-operator</a></td>
+</tr>
+<tr>
+<td>doppelstep</td>
+<td>Stepper drive firmware: Protocol 2.0 device, XM430-W350 Control Table, motor control, protection, firmware update</td>
+<td><a href="https://github.com/SystemFromScratch/sfs-doppelstep">sfs-doppelstep</a></td>
+</tr>
+<tr>
+<td>Gripper</td>
+<td>Virtual DYNAMIXEL device on ID 7 driving the MG996R</td>
+<td>Separate project (not started)</td>
+</tr>
+<tr>
+<td>Bus interface hardware</td>
+<td>Half-duplex interface between the CM4-Duino and the bus, power distribution</td>
+<td>In this repository while it is a breadboard; its own hardware repository if it becomes a PCB</td>
 </tr>
 <tr>
 <td>BCN3D Moveo</td>
 <td>Mechanical links, joints, printed parts, assembly and mechanical limits</td>
-<td>Upstream mechanical source; the project model (<code>smartmanipulator_x_description</code>) is generated from its CAD in the Robot PC repository</td>
+<td>Upstream mechanical source; the project model (<code>smartmanipulator_x_description</code>) is generated from its CAD in this repository</td>
 </tr>
 <tr>
 <td>ROBOTIS packages</td>
-<td>Reusable SDK, hardware interface, messages, and upstream OpenMANIPULATOR software</td>
-<td>Separate upstream checkouts managed by the Robot PC manifests</td>
+<td>SDK, hardware interface, messages, upstream OpenMANIPULATOR software</td>
+<td>Upstream checkouts managed by <code>ros2_robot.repos</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="software-reuse-boundary">Software reuse boundary<a class="headerlink" href="#software-reuse-boundary" title="Permanent link">&para;</a></h2>
 <p>The physical control path is:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MoveIt 2
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  -&gt; ros2_control
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  -&gt; ROBOTIS dynamixel_hardware_interface
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  -&gt; DynamixelSDK
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  -&gt; USB (MCP2221A, /dev/ttyACM0) -&gt; PIC32 -&gt; MMUART_0
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  -&gt; SmartFusion2 virtual DYNAMIXEL devices (IDs 1-6 axes, ID 7 gripper)
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  -&gt; TMC5160 over SPI -&gt; stepper motors
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  -&gt; CorePWM -&gt; gripper servo
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MoveIt 2 (Operator PC)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  -&gt; ROS 2 DDS
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  -&gt; ros2_control (Robot PC)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  -&gt; ROBOTIS dynamixel_hardware_interface
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  -&gt; DynamixelSDK
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  -&gt; /dev/ttyDXL (CM4 PL011 UART0) -&gt; half-duplex interface
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  -&gt; DYNAMIXEL bus: doppelstep IDs 1-6 (XM430-W350), gripper ID 7 (separate project)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  -&gt; stepper motors / MG996R servo
 </code></pre></div>
-<p>Reuse the existing ROBOTIS hardware interface if source analysis confirms that its model configuration, protocol operations, control-table accesses, command/state interfaces, and timing requirements can be supported. Do not add a project-specific <code>smartfusion2_hardware_interface</code> pre-emptively. Implement only the device behavior needed by the verified host stack, not a presumed complete XM430 clone. Two host requirements come from the kit, not from DYNAMIXEL: the host must send <code>&amp;</code> once after opening the port, and a <code>0x00</code> after any packet that ends with <code>0x25</code> (see <a href="../hardware/wiring/#host-link-usb-pic32-smartfusion2">Host link</a>).</p>
-<p>The devices report project model numbers where they differ from a real DYNAMIXEL: the axes report XW430-T333-R (1270), the gripper servo <code>0x5356</code>, the controller <code>0x5358</code>. Whether the ROBOTIS stack accepts these must be checked before it is configured (see the <a href="../dynamixel/compatibility-spec/">compatibility specification</a>).</p>
-<p>Reusing the OpenMANIPULATOR-X ROS application does not make its robot model or joint/controller configuration valid for Moveo. MoveIt planning groups, joint names, limits, kinematics, transmission assumptions, ros2_control interfaces, and controller configuration must agree with a verified Moveo description and the physical stepper setup.</p>
-<p>The Robot PC image is intentionally separate from the Operator PC runtime. MoveIt, RViz2, and Gazebo do not belong in the Robot PC image. In simulation, route <code>ros2_control</code> to the selected Gazebo integration; on the real robot, route it to the DYNAMIXEL/SmartFusion2 path. Keep the robot model and joint semantics consistent across both modes.</p>
-<h2 id="operating-assumptions">Operating assumptions<a class="headerlink" href="#operating-assumptions" title="Permanent link">&para;</a></h2>
-<ul>
-<li>The Robot PC target is Ubuntu 24.04 with ROS 2 Jazzy; the Robot PC profile uses Docker.</li>
-<li>The Operator PC runs ROS 2 Jazzy and reaches the Robot PC using DDS over the configured network.</li>
-<li>The kit enumerates through its MCP2221A as a USB CDC ACM device, commonly <code>/dev/ttyACM0</code>. Only the Robot PC owns this connection; the Operator PC does not require direct USB access.</li>
-<li>DDS domain ID, interface selection, discovery, and firewall policy must be configured consistently across hosts. SSH is for administration, not the ROS data path.</li>
-<li>Positioning is open loop: no encoders, no limit switches, no homing. The arm is placed in the start pose by hand before power-up; the servo position is unknown until the first command.</li>
-<li>Power-up order: 24 V (TMC5160 logic runs from VM) and the servo DC/DC before the kit.</li>
-</ul>
-<h2 id="verified-state-versus-target">Verified state versus target<a class="headerlink" href="#verified-state-versus-target" title="Permanent link">&para;</a></h2>
+<p>Reuse the stock ROBOTIS hardware interface. doppelstep reports the real XM430-W350 model number (1020) and its Control Table, so no project-specific hardware interface and no custom model file are planned. What the Jazzy hardware interface actually reads and writes must still be checked against doppelstep in the <a href="../dynamixel/compatibility-spec/">compatibility specification</a> before it is relied on.</p>
+<p>The bus carries only DYNAMIXEL packets. Protocol 2.0 is already a collision-free master/slave protocol, so no second link layer is added; that keeps DynamixelSDK, DYNAMIXEL Wizard and USB-to-DYNAMIXEL adapters usable on the bus.</p>
+<p>Reusing the OpenMANIPULATOR-X ROS application does not make its robot model or joint/controller configuration valid for Moveo. MoveIt planning groups, joint names, limits, kinematics, transmission assumptions, <code>ros2_control</code> interfaces, and controller configuration must agree with the Moveo description and the physical stepper setup.</p>
+<p>The Robot PC image is intentionally separate from the Operator PC runtime. MoveIt, RViz2, and Gazebo do not belong in the Robot PC image.</p>
+<h2 id="operating-modes">Operating modes<a class="headerlink" href="#operating-modes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Area</th>
-<th>Current state</th>
-<th>Target or open verification</th>
+<th>Mode</th>
+<th>Hardware in <code>ros2_control</code></th>
+<th>Bus</th>
+<th>State</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SmartFusion2 firmware</td>
-<td>Implemented in the controller repository: 6 axes, gripper servo, controller device. Passes <code>firmware_check.py</code> 49/49 on <code>native_sim</code>. On the kit: host link, TMC5160 detection, register mapping and ramp generator on A0, and the gripper servo work</td>
-<td>Motion of the axes (A0 module in STEP/DIR mode, <code>SD_MODE=1</code>); servo travel calibration; gear ratios, joint limits</td>
+<td>Mock</td>
+<td><code>mock_components/GenericSystem</code></td>
+<td>–</td>
+<td>Done</td>
 </tr>
 <tr>
-<td>FPGA design</td>
-<td>Libero stage 2: pin routing and CorePWM; the CorePWM output drives the servo on the kit</td>
-<td>Pulse widths not measured with an oscilloscope yet</td>
+<td>SIL</td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td>Virtual bus joining doppelstep <code>native_sim</code> instances</td>
+<td>Planned (Stage 1)</td>
 </tr>
 <tr>
-<td>Robot description</td>
-<td>Generated from the BCN3D Moveo CAD (<code>tools/cad/</code>): link lengths, joint axes, visual and collision meshes, gripper linkage</td>
-<td>Measure joint limits on the arm; verify motor directions against the model conventions</td>
+<td>Bench</td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td>One B-G431B-ESC1 over its ST-LINK virtual COM port</td>
+<td>Planned (Stage 2)</td>
 </tr>
 <tr>
-<td>Robot PC</td>
-<td>ROS 2 Jazzy image; runs with mock hardware on <code>smx_net</code>, smoke test passes from a second container; real-hardware <code>ros2_control</code> path not configured</td>
-<td>Verify upstream Jazzy sources against the device behavior (model numbers, registers, <code>&amp;</code> and <code>0x25</code> handling)</td>
-</tr>
-<tr>
-<td>Operator PC</td>
-<td>Separate repository</td>
-<td>Consume the canonical Moveo description and validate DDS</td>
-</tr>
-<tr>
-<td>Mechanical/electrical integration</td>
-<td>Wiring Rev. D (draft): six TMC5160T Pro, MG996R gripper servo, 24 V and 6 V supplies</td>
-<td>Joint-to-motor mapping on the real arm, shoulder pairing (IDs 2 and 3), limits, safety (emergency stop)</td>
+<td>Robot</td>
+<td><code>dynamixel_hardware_interface</code></td>
+<td>CM4-Duino UART0, six drives</td>
+<td>Planned (Stages 3–4)</td>
 </tr>
 </tbody>
 </table>
+<p>The robot model and the joint names are identical in all modes.</p>
+<h2 id="operating-assumptions">Operating assumptions<a class="headerlink" href="#operating-assumptions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The Robot PC software runs in Docker with ROS 2 Jazzy (Ubuntu 24.04 image); the host is Raspberry Pi OS on the CM4, or any Docker host during development.</li>
+<li>Only the Robot PC owns the bus. The Operator PC never connects to the drives.</li>
+<li>DDS domain ID, interface selection, discovery and firewall policy are configured consistently on both hosts. SSH is for administration, not the ROS data path.</li>
+<li>Positioning is open loop: no encoders, no limit switches, no homing yet. The arm is placed in the start pose by hand before power-up.</li>
+<li>Power-up order and an emergency stop are still open and must be defined before the full arm moves.</li>
+</ul>
+<h2 id="verified-state-versus-target">Verified state versus target<a class="headerlink" href="#verified-state-versus-target" title="Permanent link">&para;</a></h2>
+<p>The per-item state is kept on the <a href="../status/">project status</a> page. The <a href="../plan/doppelstep-cm4/">integration plan</a> lists the stages, their exit criteria and the decisions.</p>
 <h2 id="upstream-references">Upstream references<a class="headerlink" href="#upstream-references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://docs.robotis.com/docs/systems/openmanipulator_x/overview/">ROBOTIS OpenMANIPULATOR-X overview</a></li>
+<li><a href="https://emanual.robotis.com/docs/en/platform/openmanipulator_x/overview/">ROBOTIS OpenMANIPULATOR-X overview</a></li>
 <li><a href="https://github.com/BCN3D/BCN3D-Moveo">BCN3D Moveo source repository</a></li>
 <li><a href="https://github.com/ROBOTIS-GIT/open_manipulator">ROBOTIS OpenMANIPULATOR ROS 2 source</a></li>
 <li><a href="https://github.com/ROBOTIS-GIT/DynamixelSDK">DynamixelSDK source</a></li>
 <li><a href="https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface">DYNAMIXEL hardware interface source</a></li>
+<li><a href="https://github.com/SystemFromScratch/sfs-doppelstep">doppelstep source</a> and <a href="https://systemfromscratch.com/sfs-doppelstep/">documentation</a></li>
 </ul>
 
 
@@ -1775,7 +1731,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../mechanical/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BCN3D Moveo Mechanics">
+          <a href="../mechanical/" class="md-footer__link md-footer__link--prev" aria-label="Previous: BCN3D Moveo mechanics">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1785,20 +1741,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                BCN3D Moveo Mechanics
+                BCN3D Moveo mechanics
               </div>
             </div>
           </a>
         
         
           
-          <a href="../dynamixel/compatibility-spec/" class="md-footer__link md-footer__link--next" aria-label="Next: DYNAMIXEL Compatibility">
+          <a href="../dynamixel/bus/" class="md-footer__link md-footer__link--next" aria-label="Next: DYNAMIXEL Bus">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                DYNAMIXEL Compatibility
+                DYNAMIXEL Bus
               </div>
             </div>
             <div class="md-footer__button md-icon">

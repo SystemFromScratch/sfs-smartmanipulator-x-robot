@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo robot arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: a SmartFusion2 controller answers as virtual DYNAMIXEL servos and drives the stepper motors; the Robot PC runs ROS 2 Jazzy in Docker.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack: doppelstep stepper drives answer as DYNAMIXEL servos on one bus, and the Robot PC runs ROS 2 Jazzy in Docker on a Raspberry Pi CM4 (CM4-Duino).">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/firmware/development/">
+        <link rel="canonical" href="https://systemfromscratch.github.io/sfs-smartmanipulator-x-robot/hardware/doppelstep/">
       
       
-        <link rel="prev" href="../getting-started/">
+        <link rel="prev" href="../cm4-duino/">
       
       
-        <link rel="next" href="../">
+        <link rel="next" href="../wiring/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Development Environment - SmartManipulator-X</title>
+        <title>doppelstep drives - SmartManipulator-X</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#firmware-development-environment" class="md-skip">
+        <a href="#doppelstep-joint-drives" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Development Environment
+              doppelstep drives
             
           </span>
         </div>
@@ -316,27 +316,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../hardware/wiring/" class="md-tabs__link">
+        <a href="../cm4-duino/" class="md-tabs__link">
           
   
   
@@ -533,7 +513,35 @@
   <span class="md-ellipsis">
     
   
-    Getting Started
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection guide for beginners
   
 
     
@@ -562,6 +570,62 @@
     
   
     Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan/doppelstep-cm4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration plan: doppelstep + CM4-Duino
   
 
     
@@ -669,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot PC on the CM4-Duino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../mechanical/" class="md-nav__link">
         
   
@@ -676,7 +768,7 @@
   <span class="md-ellipsis">
     
   
-    BCN3D Moveo Mechanics
+    BCN3D Moveo mechanics
   
 
     
@@ -763,7 +855,35 @@
   <span class="md-ellipsis">
     
   
-    System Architecture
+    System architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dynamixel/bus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DYNAMIXEL Bus
   
 
     
@@ -875,7 +995,7 @@
   <span class="md-ellipsis">
     
   
-    Firmware
+    Hardware
   
 
     
@@ -891,7 +1011,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Firmware
+    Hardware
   
 
           </label>
@@ -904,14 +1024,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../cm4-duino/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Getting Started
+    CM4-Duino board
   
 
     
@@ -948,7 +1068,7 @@
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -966,7 +1086,7 @@
   <span class="md-ellipsis">
     
   
-    Development Environment
+    doppelstep drives
   
 
     
@@ -992,10 +1112,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#repository-layout" class="md-nav__link">
+  <a href="#hardware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository layout
+        Hardware
       
     </span>
   </a>
@@ -1003,10 +1123,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pinned-tool-versions" class="md-nav__link">
+  <a href="#what-the-robot-pc-sees" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pinned tool versions
+        What the Robot PC sees
       
     </span>
   </a>
@@ -1014,10 +1134,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dev-container" class="md-nav__link">
+  <a href="#connection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dev Container
+        Connection
       
     </span>
   </a>
@@ -1025,10 +1145,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vs-code-tasks" class="md-nav__link">
+  <a href="#per-drive-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        VS Code tasks
+        Per-drive configuration
       
     </span>
   </a>
@@ -1036,49 +1156,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#building" class="md-nav__link">
+  <a href="#bench-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Building
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Building">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-artifacts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build artifacts
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ccache" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ccache
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#west-and-zephyr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        West and Zephyr
+        Bench tools
       
     </span>
   </a>
@@ -1086,120 +1167,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#host-python-environment-venv" class="md-nav__link">
+  <a href="#doppelstep-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Host Python environment (.venv)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tests
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-style" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code style
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#line-endings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Line endings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-without-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker without VS Code
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debugging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Debugging
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updating-tool-versions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updating tool versions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ci" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#licenses-and-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Licenses and secrets
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
+        doppelstep documentation
       
     </span>
   </a>
@@ -1222,14 +1193,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../wiring/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Firmware Architecture
+    Wiring
   
 
     
@@ -1250,14 +1221,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gui/" class="md-nav__link">
+      <a href="../gripper-servo/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Motor Tester GUI
+    Gripper Servo (MG996R)
   
 
     
@@ -1308,7 +1279,7 @@
   <span class="md-ellipsis">
     
   
-    Hardware
+    About
   
 
     
@@ -1321,149 +1292,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/wiring/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hello FPGA Kit Wiring
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/tmc5160/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TMC5160 Driver Modules
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../hardware/servo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gripper Servo (MG996R)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    About
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1563,10 +1391,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#repository-layout" class="md-nav__link">
+  <a href="#hardware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository layout
+        Hardware
       
     </span>
   </a>
@@ -1574,10 +1402,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pinned-tool-versions" class="md-nav__link">
+  <a href="#what-the-robot-pc-sees" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pinned tool versions
+        What the Robot PC sees
       
     </span>
   </a>
@@ -1585,10 +1413,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dev-container" class="md-nav__link">
+  <a href="#connection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Dev Container
+        Connection
       
     </span>
   </a>
@@ -1596,10 +1424,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vs-code-tasks" class="md-nav__link">
+  <a href="#per-drive-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        VS Code tasks
+        Per-drive configuration
       
     </span>
   </a>
@@ -1607,49 +1435,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#building" class="md-nav__link">
+  <a href="#bench-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Building
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Building">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build-artifacts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build artifacts
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ccache" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ccache
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#west-and-zephyr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        West and Zephyr
+        Bench tools
       
     </span>
   </a>
@@ -1657,120 +1446,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#host-python-environment-venv" class="md-nav__link">
+  <a href="#doppelstep-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Host Python environment (.venv)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tests
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-style" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code style
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#line-endings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Line endings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker-without-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker without VS Code
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debugging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Debugging
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updating-tool-versions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updating tool versions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ci" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#licenses-and-secrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Licenses and secrets
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
+        doppelstep documentation
       
     </span>
   </a>
@@ -1794,405 +1473,224 @@
 
 
 
-<h1 id="firmware-development-environment">Firmware development environment<a class="headerlink" href="#firmware-development-environment" title="Permanent link">&para;</a></h1>
-<p>This page describes the controller firmware repository
-(SmartManipulator-X-Controller). The Robot PC repository has its own
-<a href="../../development/">development page</a>. The firmware repository uses separate
-environments:</p>
+<h1 id="doppelstep-joint-drives">doppelstep joint drives<a class="headerlink" href="#doppelstep-joint-drives" title="Permanent link">&para;</a></h1>
+<p>Each stepper joint of the arm is driven by its own
+<a href="https://github.com/SystemFromScratch/sfs-doppelstep"><strong>doppelstep</strong></a> drive: a
+small stepper controller that answers on the DYNAMIXEL bus as a smart servo.
+For the Robot PC every joint motor therefore looks like a DYNAMIXEL
+XM430-W350, so the unchanged ROBOTIS <code>dynamixel_hardware_interface</code> and
+DynamixelSDK are meant to drive it (to be verified, see the
+<a href="../../dynamixel/compatibility-spec/">compatibility specification</a>).</p>
+<blockquote>
+<p><strong>Status (2026-11-15):</strong> doppelstep v0.1.0 is verified on a PC with a
+simulated motor (<code>native_sim</code>), not yet with a real motor. One
+B-G431B-ESC1 board is ready on the bench. The single-wire bus interface is
+not implemented yet. The <a href="https://systemfromscratch.com/sfs-doppelstep/">doppelstep documentation</a> is authoritative
+for the drive; this page records only what SmartManipulator-X relies on and
+links to the details.</p>
+</blockquote>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Environment</th>
-<th>Runs where</th>
-<th>Contains</th>
+<th>Item</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Firmware</strong></td>
-<td>Docker image (Dev Container, Compose, or CI)</td>
-<td>Zephyr, west, Zephyr SDK with <code>arm-zephyr-eabi</code>, CMake, Ninja, ccache, and the DynamixelSDK host library</td>
+<td>Board</td>
+<td>ST <strong>B-G431B-ESC1</strong> discovery kit (power stage and STM32 on one board, with an on-board ST-LINK)</td>
 </tr>
 <tr>
-<td><strong>Host tools</strong></td>
-<td>Repository <code>.venv</code> on Windows or Linux</td>
-<td>Python dependencies of <code>tools/dxl_test_gui</code> (<code>requirements.txt</code>)</td>
+<td>MCU</td>
+<td>STM32G431CB, Cortex-M4F at 170 MHz, 128 KiB flash, 32 KiB RAM</td>
 </tr>
 <tr>
-<td><strong>FPGA / hardware</strong></td>
-<td>Host only</td>
-<td>Microchip Libero SoC and licenses: MSS, clocks, fabric, pins, programming</td>
+<td>Motor</td>
+<td>Two-phase (bipolar) stepper; NEMA 14, 17 and 23 in this arm (<a href="../wiring/#joint-motors">joint motors</a>)</td>
+</tr>
+<tr>
+<td>Firmware</td>
+<td>Zephyr RTOS, MCUboot (RSA-2048 signed images, serial recovery over the DYNAMIXEL bus); <a href="https://systemfromscratch.com/sfs-doppelstep/architecture/">architecture</a></td>
+</tr>
+<tr>
+<td>Control</td>
+<td>Current loop at 20 kHz, motion profiles at 1 kHz, 16 microsteps per full step</td>
+</tr>
+<tr>
+<td>Protection</td>
+<td>Overcurrent, bus voltage (10–28 V) and shared-leg faults switch the outputs off in the current-loop interrupt; NTC overtemperature; coil self-test before torque (<a href="https://systemfromscratch.com/sfs-doppelstep/protection/">protection</a>)</td>
+</tr>
+<tr>
+<td>Supply</td>
+<td>10–28 V accepted, tuned for 24 V (<a href="https://systemfromscratch.com/sfs-doppelstep/hardware/#supply-and-bus-voltage">hardware</a>)</td>
+</tr>
+<tr>
+<td>Motor connection</td>
+<td>Shared-leg topology: coil A between U and W, coil B between V and W (<a href="https://systemfromscratch.com/sfs-doppelstep/hardware/#motor-wiring">motor wiring</a>, <a href="../wiring/#joint-drives-b-g431b-esc1">Wiring</a>)</td>
 </tr>
 </tbody>
 </table>
-<p>Libero and Microchip licenses are never installed in the image or committed to
-the repository.</p>
-<h2 id="repository-layout">Repository layout<a class="headerlink" href="#repository-layout" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>.
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── apps/SmartManipulator_Controller/   Zephyr application (product firmware)
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── boards/                         target overlay, _sim overlay, board .conf
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── include/{dynamixel,motor,servo}/ public module headers
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── src/                            main, transport, codec, XW430 and servo models,
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │                                   motor workers and backends, servo output
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── tests/protocol2_test.c          host unit tests for the codec
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── prj.conf, prj_sim.conf, Kconfig, CMakeLists.txt
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├── tools/dxl_test_gui/                 Protocol 2.0 motor tester (Python/Tkinter)
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├── .devcontainer/devcontainer.json     Dev Container (uses ../Dockerfile)
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── .vscode/                            tasks, workspace menu scripts, settings
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>├── Dockerfile, compose.yaml            firmware build image
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── west.yml                            Zephyr manifest (pinned revision)
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── requirements.txt                    host Python dependencies (.venv) of the GUI
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>└── .gitattributes                      line-ending rules (LF; CRLF for .bat/.ps1)
-</code></pre></div>
-<p>Generated directories (<code>build/</code>, <code>.west/</code>, <code>.ccache/</code>, <code>.venv/</code>, <code>zephyr/</code>
-checkouts) are ignored and must not be committed.</p>
-<h2 id="pinned-tool-versions">Pinned tool versions<a class="headerlink" href="#pinned-tool-versions" title="Permanent link">&para;</a></h2>
+<h2 id="what-the-robot-pc-sees">What the Robot PC sees<a class="headerlink" href="#what-the-robot-pc-sees" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Version</th>
+<th>Item</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Zephyr (<code>west.yml</code>)</td>
-<td><code>v4.5.0-rc1</code> (first release with <code>m2s_hello_fpga_kit/m2s010</code>)</td>
+<td>Protocol</td>
+<td>DYNAMIXEL Protocol 2.0</td>
 </tr>
 <tr>
-<td>Base image</td>
-<td><code>python:3.12.15-slim-bookworm</code>, digest-pinned, <code>linux/amd64</code></td>
+<td>Model</td>
+<td>XM430-W350, model number <strong>1020</strong></td>
 </tr>
 <tr>
-<td>west</td>
-<td>1.4.0</td>
+<td>Control Table</td>
+<td>The XM430-W350 table, with the range and access checks of the real servo</td>
 </tr>
 <tr>
-<td>Zephyr SDK</td>
-<td>1.0.0 (ARM toolchain in <code>/opt/zephyr-sdk/gnu/arm-zephyr-eabi</code>)</td>
+<td>Operating modes</td>
+<td>Position, extended position, velocity</td>
 </tr>
 <tr>
-<td>CMake</td>
-<td>3.30.5</td>
+<td>Instructions</td>
+<td>Including Sync/Bulk Read and Write, Fast Sync/Bulk Read, Reboot, Factory Reset</td>
 </tr>
 <tr>
-<td>ccache</td>
-<td>4.12.3</td>
+<td>Other</td>
+<td>Bus Watchdog; EEPROM area kept in flash</td>
 </tr>
 <tr>
-<td>jsonschema / pyelftools</td>
-<td>4.26.0 / 0.33</td>
+<td>Host tools</td>
+<td><code>dynamixel_hardware_interface</code>, DynamixelSDK, DYNAMIXEL Wizard</td>
 </tr>
 <tr>
-<td>DynamixelSDK (host library only)</td>
-<td>4.1.0, commit <code>f838bc90f72fcf5b9c279432d6e12fc24969daa8</code></td>
-</tr>
-<tr>
-<td>pyserial (<code>.venv</code>)</td>
-<td>3.5</td>
-</tr>
-<tr>
-<td>Image tag (<code>compose.yaml</code>)</td>
-<td><code>zephyr-sf2:1.0.0</code></td>
+<td>Bus UART</td>
+<td>USART2 on PB3 (TX) / PB4 (RX); factory 57600 bps, up to 4.5 Mbps (<a href="https://systemfromscratch.com/sfs-doppelstep/dynamixel/">DYNAMIXEL emulation</a>)</td>
 </tr>
 </tbody>
 </table>
-<p>Versions are <code>ARG</code>s in the <code>Dockerfile</code>. The SDK, ARM toolchain, and ccache
-archives are verified by SHA-256. Do not use <code>latest</code> or a moving branch for
-build-critical dependencies.</p>
-<h2 id="dev-container">Dev Container<a class="headerlink" href="#dev-container" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Install Docker (with BuildKit) and the VS Code <strong>Dev Containers</strong>
-   extension.</li>
-<li>Open the repository and run <strong>F1 → Dev Containers: Reopen in Container</strong>.</li>
-</ol>
-<p><code>.devcontainer/devcontainer.json</code> builds the repository <code>Dockerfile</code> (the
-single source of truth for tool versions). It mounts the repository at
-<code>/workspace</code> and <code>.ccache/</code> at <code>/ccache</code>, sets <code>BOARD=m2s_hello_fpga_kit/m2s010</code>,
-and installs the Zephyr IDE, C/C++, CMake, Cortex-Debug, and Serial Monitor
-extensions. After you change the <code>Dockerfile</code> or build arguments, run
-<strong>Dev Containers: Rebuild Container</strong>. Reopening the container does not update
-the tools.</p>
-<p>Check the toolchain inside the container:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>west<span class="w"> </span>--version
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>arm-zephyr-eabi-gcc<span class="w"> </span>--version
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>cmake<span class="w"> </span>--version<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ninja<span class="w"> </span>--version
-</code></pre></div>
-<h2 id="vs-code-tasks">VS Code tasks<a class="headerlink" href="#vs-code-tasks" title="Permanent link">&para;</a></h2>
-<p><strong>Ctrl+Shift+B</strong> opens <strong>Zephyr: Workspace Menu</strong>. Its options depend on the
-operating system:</p>
+<p>Because the model number is a real ROBOTIS one, no project-specific model
+file is needed on the host. Which registers the Jazzy hardware interface
+actually reads and writes is checked in the
+<a href="../../dynamixel/compatibility-spec/">compatibility specification</a>.</p>
+<h2 id="connection">Connection<a class="headerlink" href="#connection" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>OS</th>
-<th>Action</th>
-<th>Implementation</th>
+<th>Situation</th>
+<th>Link</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Linux (Dev Container)</td>
-<td><strong>Initialize + update</strong>: <code>west init -l .</code> if needed, then <code>west update</code></td>
-<td><code>.vscode/workspace-menu.sh</code></td>
+<td>Simulation (SIL)</td>
+<td>Firmware as <code>native_sim</code> on the PC, serial port over TCP (<code>tools/sim/run_native.py run --tcp 5555</code>)</td>
+<td>Works in the doppelstep repository; integration with the Robot PC is <a href="../../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">planned</a></td>
 </tr>
 <tr>
-<td></td>
-<td><strong>Update dependencies</strong>: initializes if needed, then <code>west update</code></td>
-<td></td>
+<td>Bench</td>
+<td>PC ↔ ST-LINK <strong>virtual COM port</strong> of the board; SWD and RTT logging stay available at the same time</td>
+<td>Planned (decision D6)</td>
 </tr>
 <tr>
-<td></td>
-<td><strong>Build firmware</strong>: checks the workspace (<code>ensure-west-workspace.sh</code>), then <code>west build</code></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Clean</strong>: removes <code>build/</code>, <code>build-sim/</code>, <code>build-native/</code></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Clean and Build</strong>: pristine build (<code>-p always</code>)</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Build simulation firmware</strong> / <strong>Clean and Build simulation firmware</strong>: <code>-d build-sim -- -DFILE_SUFFIX=sim</code></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Run simulation on PC (native_sim)</strong>: builds the simulation for <code>native_sim/native/64</code> and runs it; the UART is a <code>/dev/pts/N</code></td>
-<td></td>
-</tr>
-<tr>
-<td>Windows host</td>
-<td><strong>Create .venv</strong>: creates <code>.venv</code>, upgrades pip, installs <code>requirements.txt</code>, checks Tkinter</td>
-<td><code>.vscode/host-menu.ps1</code></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Run motor tester GUI</strong> / <strong>(simulator)</strong>: creates <code>.venv</code> if needed, then starts <code>tools/dxl_test_gui</code></td>
-<td></td>
+<td>Arm</td>
+<td>Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND)</td>
+<td>Planned, see <a href="../../dynamixel/bus/">DYNAMIXEL bus</a> and <a href="../wiring/#joint-drives-b-g431b-esc1">Wiring</a></td>
 </tr>
 </tbody>
 </table>
-<p>Individual tasks are available under <strong>Tasks: Run Task</strong>: <em>Zephyr: Build</em>,
-<em>Zephyr: Pristine Build</em>, <em>Zephyr: Build (simulation)</em> (all depend on <em>Zephyr: Ensure workspace</em>),
-<em>Zephyr: Clean</em>, <em>Zephyr: Ccache Stats</em>, <em>Zephyr: Ccache Clear</em>. Keep shell
-logic in the scripts under <code>.vscode/</code>, not inline in <code>tasks.json</code>.</p>
-<h2 id="building">Building<a class="headerlink" href="#building" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># target firmware (TMC5160 over SPI)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>m2s_hello_fpga_kit/m2s010<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># simulation firmware (no motor hardware; prj_sim.conf + _sim overlay)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>m2s_hello_fpga_kit/m2s010<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build-sim<span class="w"> </span>--<span class="w"> </span>-DFILE_SUFFIX<span class="o">=</span>sim
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># simulation firmware as a Linux executable (UART on a pseudo-terminal)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build-native<span class="w"> </span>--<span class="w"> </span>-DFILE_SUFFIX<span class="o">=</span>sim
-</code></pre></div>
-<p>Use a separate build directory per variant. The variants are described in
-<a href="../#firmware-variants">Firmware variants</a>. Run these
-commands from the workspace root. The root is a west workspace, and <code>-s</code>
-selects the application. Make a <strong>pristine build</strong> after changes to
-<code>prj.conf</code>, Kconfig, DeviceTree overlays, CMake files, the Zephyr version, or
-the toolchain:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>west<span class="w"> </span>build<span class="w"> </span>-p<span class="w"> </span>always<span class="w"> </span>-b<span class="w"> </span>m2s_hello_fpga_kit/m2s010<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build
-</code></pre></div>
-<p>Zephyr picks the board overlay from <code>boards/</code> automatically:
-<code>m2s_hello_fpga_kit_m2s010.overlay</code> for the target, and
-<code>m2s_hello_fpga_kit_m2s010_sim.overlay</code> with <code>FILE_SUFFIX=sim</code>. Passing
-<code>-DDTC_OVERLAY_FILE=...</code> replaces it; use <code>-DEXTRA_DTC_OVERLAY_FILE=...</code> to add
-one.</p>
-<h3 id="build-artifacts">Build artifacts<a class="headerlink" href="#build-artifacts" title="Permanent link">&para;</a></h3>
+<p>The ST-LINK virtual COM port is a full-duplex UART bridge on the same USART2.
+It tests the protocol and timing, not the single-wire physical layer. Because
+USART2 carries the bus, the doppelstep console and log run over SEGGER RTT
+through the debug probe. The single-wire mode is planned in doppelstep as the
+<code>single-wire;</code> property on <code>&amp;usart2</code> (TX pin only).</p>
+<h2 id="per-drive-configuration">Per-drive configuration<a class="headerlink" href="#per-drive-configuration" title="Permanent link">&para;</a></h2>
+<p>Set on every drive before it joins the bus (EEPROM area, for example with
+DYNAMIXEL Wizard or the doppelstep bench GUI):</p>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>Use</th>
+<th>Register</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>build/zephyr/zephyr.elf</code></td>
-<td>Debugging (symbols)</td>
+<td>ID</td>
+<td>Joint ID from the <a href="../../robot-pc/#joint-contract">joint contract</a> (1–6)</td>
 </tr>
 <tr>
-<td><code>build/zephyr/zephyr.hex</code> / <code>zephyr.bin</code></td>
-<td>Programming tools. Check the eNVM and hardware configuration first.</td>
+<td>Baud Rate</td>
+<td>Bus baud rate, see <a href="../../dynamixel/bus/#bus-parameters">DYNAMIXEL bus</a></td>
 </tr>
 <tr>
-<td><code>build/compile_commands.json</code></td>
-<td>IntelliSense (<code>C_Cpp.default.compileCommands</code>)</td>
+<td>Return Delay Time</td>
+<td>Default until the bus timing is measured</td>
+</tr>
+<tr>
+<td>Drive Mode</td>
+<td>Reverse direction where the motor turns against the joint convention</td>
+</tr>
+<tr>
+<td>Run current</td>
+<td>Rated current of the joint motor (<a href="../wiring/#joint-motors">joint motors</a>, set in the <a href="https://systemfromscratch.com/sfs-doppelstep/configuration/">motor node configuration</a>)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="ccache">ccache<a class="headerlink" href="#ccache" title="Permanent link">&para;</a></h3>
-<p>The cache lives in <code>.ccache/</code> on the host and is mounted at <code>/ccache</code>, so it
-survives container rebuilds. Use <code>ccache --show-stats</code> and <code>ccache --clear</code>,
-or the matching VS Code tasks. The cache is only an optimization. If a build
-behaves strangely, make a pristine build first.</p>
-<h2 id="west-and-zephyr">West and Zephyr<a class="headerlink" href="#west-and-zephyr" title="Permanent link">&para;</a></h2>
-<p><code>west.yml</code> pins Zephyr <code>v4.5.0-rc1</code> and imports its modules. Run <code>west update</code>
-after changing the manifest. Keep the revision pinned; never use <code>main</code>. A
-change of the Zephyr version must be verified with a build, a pristine build,
-the host tests, and a test on the kit.</p>
-<h2 id="host-python-environment-venv">Host Python environment (.venv)<a class="headerlink" href="#host-python-environment-venv" title="Permanent link">&para;</a></h2>
-<p><code>requirements.txt</code> in the repository root lists the host dependencies:
-<code>pyserial==3.5</code> for the GUI. Tkinter comes with Python and cannot be installed
-with pip.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Windows (PowerShell, repository root)</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">py</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Linux (repository root); first: sudo apt install python3-tk python3-venv</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</code></pre></div>
-<p>On Windows, the <strong>Create .venv</strong> menu action does the same.
-<code>tools/dxl_test_gui/run_gui.bat</code> creates the environment on first use.</p>
-<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h2>
+<h2 id="bench-tools">Bench tools<a class="headerlink" href="#bench-tools" title="Permanent link">&para;</a></h2>
+<p>The doppelstep repository has a <a href="https://systemfromscratch.com/sfs-doppelstep/gui/">bench GUI</a> (live plots, CSV
+recording, the full Control Table, SIL scenarios with an HTML report, firmware
+update) and a smoke test (<code>tools/sim/dxl_smoke_test.py</code>). Bring up every drive
+with the doppelstep <a href="https://systemfromscratch.com/sfs-doppelstep/hardware/#bring-up-checklist">bring-up checklist</a>
+before connecting it to the Robot PC; after driver changes, run its
+<a href="https://systemfromscratch.com/sfs-doppelstep/hardware-checklist/">hardware checklist</a>.</p>
+<h2 id="doppelstep-documentation">doppelstep documentation<a class="headerlink" href="#doppelstep-documentation" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Test</th>
-<th>Command</th>
-<th>Where</th>
+<th>Page</th>
+<th>Use in this project</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Firmware codec (C)</td>
-<td><code>gcc -std=c11 -Wall -Wextra -Werror -I include src/protocol2.c tests/protocol2_test.c -o /tmp/protocol2_test &amp;&amp; /tmp/protocol2_test</code> in <code>apps/SmartManipulator_Controller</code></td>
-<td>Container or any gcc host</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/getting-started/">Getting started</a></td>
+<td>Build, flash, run <code>native_sim</code></td>
 </tr>
 <tr>
-<td>GUI codec, bus, simulator, and <strong>firmware cross-check</strong></td>
-<td><code>python -m unittest discover -s tests -v</code> in <code>tools/dxl_test_gui</code></td>
-<td><code>.venv</code> or the container</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/hardware/">Hardware and bring-up</a></td>
+<td>Motor wiring, supply, bring-up checklist</td>
 </tr>
 <tr>
-<td><strong>Protocol conformance of the real firmware</strong></td>
-<td><code>python tools/dxl_test_gui/firmware_check.py --port &lt;COMx or /dev/pts/N&gt;</code></td>
-<td>Board with the simulation (or target) firmware; or <code>native_sim</code> in the container</td>
-</tr>
-</tbody>
-</table>
-<p>The cross-check compiles <code>src/protocol2.c</code> into a shared library. It verifies
-that the firmware and the Python codec produce identical packets and that the
-firmware parser accepts the Python packets. It is skipped when <code>gcc</code> is not
-available.</p>
-<p><code>firmware_check.py</code> sends a fixed sequence of transactions and reports PASS or
-FAIL per check:
-- PING and broadcast PING, identity registers, and Realtime Tick;
-- every error code;
-- SYNC_READ, SYNC_WRITE, REG_WRITE, and ACTION;
-- CRC and stuffing robustness;
-- the gripper servo device, if the controller reports one (protocol, limits,
-  ramp, SYNC_WRITE);
-- on the simulation firmware only: position and velocity motion and telemetry.</p>
-<p>It never moves motors on the target firmware unless <code>--allow-motion</code> is given.
-To test the complete firmware stack without a board, inside the container:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>apps/SmartManipulator_Controller<span class="w"> </span>-d<span class="w"> </span>build-native<span class="w"> </span>--<span class="w"> </span>-DFILE_SUFFIX<span class="o">=</span>sim
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>build-native/zephyr/zephyr.exe<span class="w"> </span><span class="p">&amp;</span><span class="w">          </span><span class="c1"># note the /dev/pts/N it prints</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>python3<span class="w"> </span>tools/dxl_test_gui/firmware_check.py<span class="w"> </span>--port<span class="w"> </span>/dev/pts/N
-</code></pre></div>
-<p>This needs <code>pyserial</code> in the container Python; the image does not include it
-(<code>pip install pyserial==3.5</code>). The motor backends have no
-unit tests; <code>motor_tmc5160.c</code> must be tested on hardware.</p>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>The system documentation, including these firmware pages, is maintained in the
-Robot PC repository. See <a href="../../development/#documentation">Documentation</a> there.</p>
-<h2 id="code-style">Code style<a class="headerlink" href="#code-style" title="Permanent link">&para;</a></h2>
-<p><code>clang-format.txt</code> holds the formatting configuration (LLVM-based, with
-embedded-systems customizations). clang-format looks for a file named <code>.clang-format</code>, so
-either pass the file explicitly (<code>clang-format --style=file:clang-format.txt</code>)
-or copy it to <code>.clang-format</code>.</p>
-<h2 id="line-endings">Line endings<a class="headerlink" href="#line-endings" title="Permanent link">&para;</a></h2>
-<p><code>.gitattributes</code> makes every text file LF in the working tree, including on
-Windows. The exceptions are <code>*.bat</code>, <code>*.cmd</code>, and <code>*.ps1</code>, which use CRLF. Bash
-in the container fails on CRLF scripts (<code>$'\r': command not found</code>). If an old
-clone still has CRLF files, commit your work and then run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>--cached<span class="w"> </span>-q<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>reset<span class="w"> </span>--hard
-</code></pre></div>
-<h2 id="docker-without-vs-code">Docker without VS Code<a class="headerlink" href="#docker-without-vs-code" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>zephyr-sf2:1.0.0<span class="w"> </span>.
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">:/workspace"</span><span class="w"> </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/.ccache:/ccache"</span><span class="w"> </span>-w<span class="w"> </span>/workspace<span class="w"> </span>zephyr-sf2:1.0.0
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># or, using compose.yaml (runs the default build):</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr
-</code></pre></div>
-<h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h2>
-<p>Debug with <code>zephyr.elf</code> through VS Code, Cortex-Debug, GDB, and a
-SmartFusion2-compatible debug probe. The probe configuration depends on the
-board setup and is not yet defined here. The host UART carries binary Protocol
-2.0 traffic, so there is no text console. Use a debugger, or route diagnostics
-to the spare <code>uart1</code> with an explicit DeviceTree and Kconfig change.</p>
-<h2 id="updating-tool-versions">Updating tool versions<a class="headerlink" href="#updating-tool-versions" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Change the <code>ARG</code> in the <code>Dockerfile</code> (and its SHA-256 for downloaded
-   archives).</li>
-<li>Rebuild the image (<code>docker build --no-cache ...</code> or <strong>Rebuild Container</strong>).</li>
-<li>Build, make a pristine build, and run the host tests.</li>
-<li>Test on the M2S Hello FPGA Kit.</li>
-<li>Bump the image tag and update the version tables (this page and the
-   <code>zephyr-smartfusion2</code> skill).</li>
-</ol>
-<h2 id="ci">CI<a class="headerlink" href="#ci" title="Permanent link">&para;</a></h2>
-<p>CI should use the same <code>Dockerfile</code>: build the image, run <code>west update</code>, build
-both variants (<code>build</code> and <code>build-sim</code>), and archive <code>zephyr.elf/.hex/.bin</code>.
-Run the codec tests as well. Run the <code>native_sim</code> build together with
-<code>firmware_check.py</code> as an end-to-end protocol test.
-Persist <code>/ccache</code> through the CI cache. A firmware-only pipeline needs no
-Libero and no Microchip licenses.</p>
-<h2 id="licenses-and-secrets">Licenses and secrets<a class="headerlink" href="#licenses-and-secrets" title="Permanent link">&para;</a></h2>
-<p>Never commit or bake into images: Microchip license files, license server
-credentials, tokens, keys, or proprietary binaries. Keep Libero on the host.</p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Symptom</th>
-<th>Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>$'\r': command not found</code> in a <code>.vscode/*.sh</code> task</td>
-<td>CRLF line endings; see <a href="#line-endings">Line endings</a></td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/dead-time/">Dead time of the power stage</a></td>
+<td>Required measurement before the first motor</td>
 </tr>
 <tr>
-<td><code>west: command not found</code></td>
-<td>Not inside the container; <code>which west</code> should print <code>/opt/venv/bin/west</code></td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/protection/">Protection</a></td>
+<td>Self-test, trips, Hardware Error Status</td>
 </tr>
 <tr>
-<td><code>source directory "." does not contain a CMakeLists.txt</code></td>
-<td>Add <code>-s apps/SmartManipulator_Controller</code>, or use the menu</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/dynamixel/">DYNAMIXEL emulation</a></td>
+<td>Control Table and instructions the Robot PC uses</td>
 </tr>
 <tr>
-<td><code>arm-zephyr-eabi-gcc: command not found</code></td>
-<td><code>PATH</code> must contain <code>/opt/zephyr-sdk/gnu/arm-zephyr-eabi/bin</code>; rebuild the container</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/configuration/">Configuration</a></td>
+<td>Motor node values (current, trip limits)</td>
 </tr>
 <tr>
-<td>Strange build after <code>prj.conf</code> / overlay changes</td>
-<td>Pristine build (<code>-p always</code>)</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/gui/">GUI</a></td>
+<td>Bench tool</td>
 </tr>
 <tr>
-<td>IntelliSense errors</td>
-<td>Build once so <code>build/compile_commands.json</code> exists</td>
-</tr>
-<tr>
-<td>ccache shows no hits</td>
-<td><code>echo $CCACHE_DIR</code> should print <code>/ccache</code>; check that <code>.ccache/</code> exists on the host</td>
-</tr>
-<tr>
-<td>GUI: <code>No module named serial</code></td>
-<td>Use the <code>.venv</code> interpreter, or run <strong>Create .venv</strong></td>
-</tr>
-<tr>
-<td>GUI: <code>No module named tkinter</code></td>
-<td>Reinstall Python from python.org with Tcl/Tk, or <code>apt install python3-tk</code></td>
-</tr>
-<tr>
-<td>GUI: timeouts on every ID</td>
-<td>Wrong COM port or baud rate (kit USB port: 460800; choose <strong>Auto</strong> to detect it), PIC32 not switched to UART (<code>&amp;</code>, checkbox <strong>PIC32 bridge</strong>), board not powered, firmware not running, or the UART still has a text console</td>
+<td><a href="https://systemfromscratch.com/sfs-doppelstep/architecture/">Architecture</a></td>
+<td>Firmware structure</td>
 </tr>
 </tbody>
 </table>
@@ -2231,7 +1729,7 @@ credentials, tokens, keys, or proprietary binaries. Keep Libero on the host.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+          <a href="../cm4-duino/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CM4-Duino board">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2241,20 +1739,20 @@ credentials, tokens, keys, or proprietary binaries. Keep Libero on the host.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Getting Started
+                CM4-Duino board
               </div>
             </div>
           </a>
         
         
           
-          <a href="../" class="md-footer__link md-footer__link--next" aria-label="Next: Firmware Architecture">
+          <a href="../wiring/" class="md-footer__link md-footer__link--next" aria-label="Next: Wiring">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Firmware Architecture
+                Wiring
               </div>
             </div>
             <div class="md-footer__button md-icon">

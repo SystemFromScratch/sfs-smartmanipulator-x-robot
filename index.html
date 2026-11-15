@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack, through a SmartFusion2 controller that answers as DYNAMIXEL servos.">
+        <meta name="description" content="A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack, through doppelstep stepper drives that answer as DYNAMIXEL servos, with the Robot PC on a CM4-Duino.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -27,7 +27,7 @@
     
     
       
-        <title>SmartManipulator-X — a ROS 2 robot arm on virtual DYNAMIXEL servos - SmartManipulator-X</title>
+        <title>SmartManipulator-X — a ROS 2 robot arm on stepper drives that answer as DYNAMIXEL servos - SmartManipulator-X</title>
       
     
     
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SmartManipulator-X — a ROS 2 robot arm on virtual DYNAMIXEL servos
+              SmartManipulator-X — a ROS 2 robot arm on stepper drives that answer as DYNAMIXEL servos
             
           </span>
         </div>
@@ -315,27 +315,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="firmware/getting-started/" class="md-tabs__link">
-          
-  
-  
-  Firmware
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="hardware/wiring/" class="md-tabs__link">
+        <a href="hardware/cm4-duino/" class="md-tabs__link">
           
   
   
@@ -377,9 +357,9 @@
   <div class="sfs-container sfs-hero__grid">
     <div class="sfs-hero__text">
       <span class="sfs-eyebrow">Open-source robotics project</span>
-      <h1>ROS 2 robot arm<span class="sfs-accent">on virtual DYNAMIXEL</span></h1>
+      <h1>ROS 2 robot arm<span class="sfs-accent">on DYNAMIXEL-speaking stepper drives</span></h1>
       <div class="sfs-rule"></div>
-      <p class="sfs-lead">SmartManipulator-X lets the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack drive a BCN3D Moveo arm: a SmartFusion2 controller answers DYNAMIXEL Protocol 2.0 as virtual servos and drives the stepper motors, while the Robot PC runs ros2_control in Docker.</p>
+      <p class="sfs-lead">SmartManipulator-X is built so that the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack can drive a BCN3D Moveo arm: every stepper joint gets a doppelstep drive that answers DYNAMIXEL Protocol 2.0 as an XM430-W350, and the Robot PC runs ros2_control in Docker, on a Raspberry Pi CM4 on the robot.</p>
       <div class="sfs-actions">
   
   <a class="sfs-btn sfs-btn--primary" href="getting-started/">Get started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -391,7 +371,7 @@
         
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>ROS 2 Jazzy<br>in Docker</span></li>
         
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg><span>SmartFusion2<br>Zephyr RTOS</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg><span>Raspberry Pi CM4<br>CM4-Duino</span></li>
         
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M6 12v6M12 12v6M18 12v6"/><rect x="3" y="4" width="6" height="5" rx="1"/></svg><span>DYNAMIXEL<br>Protocol 2.0</span></li>
         
@@ -400,7 +380,7 @@
       </ul>
     </div>
     <div class="sfs-hero__visual">
-      <img src="assets/images/hero-3d.svg" alt="Isometric scene: a Robot PC running ROS 2 sends DYNAMIXEL packets over USB to a SmartFusion2 board with six TMC5160 drivers, which moves a BCN3D Moveo arm">
+      <img src="assets/images/hero-3d.svg" alt="Isometric scene: a Robot PC running ROS 2 sends DYNAMIXEL packets to a row of doppelstep stepper drives, which move a BCN3D Moveo arm">
     </div>
   </div>
 </section>
@@ -423,12 +403,12 @@
       <article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M6 12v6M12 12v6M18 12v6"/><rect x="3" y="4" width="6" height="5" rx="1"/></svg></div>
   <h3>Keep the ROS 2 stack unchanged</h3>
-  <p>The SmartFusion2 answers as virtual DYNAMIXEL devices: six stepper axes (IDs 1–6), the gripper servo (ID 7) and a controller device. The simulation firmware passes the protocol conformance check, 49 of 49, on native_sim.</p>
-  <ul class="sfs-tags"><li>Protocol 2.0</li><li>Control Table</li><li>Zephyr</li></ul>
+  <p>Each stepper joint has a doppelstep drive that answers as a DYNAMIXEL XM430-W350 (IDs 1–6) on one Protocol 2.0 bus, so the stock ROBOTIS hardware interface is meant to drive the arm without project-specific code. The gripper follows as a virtual DYNAMIXEL on ID 7.</p>
+  <ul class="sfs-tags"><li>Protocol 2.0</li><li>XM430-W350</li><li>doppelstep</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M6 13l3-3 3 2 4-5"/></svg></div>
   <h3>Develop without the arm</h3>
-  <p>The Robot PC runs ros2_control with mock hardware on a Docker network that stands in for the Ethernet link; a second container checks discovery, the controllers and a trajectory over DDS.</p>
+  <p>The Robot PC runs ros2_control with mock hardware on a Docker network that stands in for the link to the Operator PC; MoveIt commands from the Operator PC container already reach it over DDS.</p>
   <ul class="sfs-tags"><li>Docker</li><li>ros2_control</li><li>DDS</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
@@ -441,24 +421,24 @@
 
   <section class="sfs-section">
     <span class="sfs-eyebrow">What you get</span>
-    <h2 class="sfs-title">One system from MoveIt to the stepper driver</h2>
-    <p class="sfs-intro">Three computers and one contract: the Robot PC with ROS 2 control, the SmartFusion2 controller with its firmware and FPGA design, and the Operator PC for planning and simulation, documented together.</p>
+    <h2 class="sfs-title">One system from MoveIt to the stepper drive</h2>
+    <p class="sfs-intro">Three parts and one contract: the Operator PC for planning, the Robot PC with ROS 2 control on a Raspberry Pi CM4, and the doppelstep drives on a DYNAMIXEL bus, documented together with what works today and what is planned.</p>
     <div class="sfs-grid">
       <a class="sfs-card sfs-card--link" href="robot-pc/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M6 13l3-3 3 2 4-5"/></svg></div>
   <h3>Robot PC</h3>
-  <p>ROS 2 Jazzy image with ros2_control, the ROBOTIS DYNAMIXEL interface and the USB link to the controller.</p>
+  <p>ROS 2 Jazzy image with ros2_control and the ROBOTIS DYNAMIXEL interface, for any Docker host and the CM4.</p>
   <ul class="sfs-tags"><li>Docker</li><li>ros2_control</li></ul>
-</a><a class="sfs-card sfs-card--link" href="firmware/">
+</a><a class="sfs-card sfs-card--link" href="hardware/cm4-duino/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></div>
-  <h3>Virtual DYNAMIXEL firmware</h3>
-  <p>Zephyr firmware on the SmartFusion2 Cortex-M3: Protocol 2.0, Control Tables, TMC5160 axes and the gripper servo.</p>
-  <ul class="sfs-tags"><li>Zephyr</li><li>Protocol 2.0</li></ul>
-</a><a class="sfs-card sfs-card--link" href="hardware/wiring/">
+  <h3>CM4-Duino board</h3>
+  <p>The Robot PC board on the robot: pinout, settings and links to the vendor files of a discontinued board.</p>
+  <ul class="sfs-tags"><li>CM4</li><li>Pinout</li></ul>
+</a><a class="sfs-card sfs-card--link" href="dynamixel/bus/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0zM12 17v4"/></svg></div>
-  <h3>Hardware</h3>
-  <p>Hello FPGA Kit wiring, six TMC5160 driver modules, the MG996R gripper servo and power.</p>
-  <ul class="sfs-tags"><li>TMC5160</li><li>Wiring</li></ul>
+  <h3>DYNAMIXEL bus</h3>
+  <p>Topology, bus parameters, ID map and the half-duplex interface between the CM4 and the drives.</p>
+  <ul class="sfs-tags"><li>Protocol 2.0</li><li>Half duplex</li></ul>
 </a><a class="sfs-card sfs-card--link" href="architecture/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
   <h3>The shared contract</h3>
@@ -467,13 +447,13 @@
 </a><a class="sfs-card sfs-card--link" href="overview/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg></div>
   <h3>Complete documentation</h3>
-  <p>Guides, the Robot PC, the firmware, the hardware and the mechanics on one site, also as a PDF user manual.</p>
+  <p>Guides, the Robot PC, the bus, the hardware and the mechanics on one site, also as a PDF user manual.</p>
   <ul class="sfs-tags"><li>Guides</li><li>PDF</li></ul>
-</a><a class="sfs-card sfs-card--link" href="gui/">
+</a><a class="sfs-card sfs-card--link" href="status/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
-  <h3>Checked end to end</h3>
-  <p>Smoke test over DDS for the Robot PC, protocol conformance check and motor tester GUI for the firmware.</p>
-  <ul class="sfs-tags"><li>Smoke test</li><li>Conformance</li></ul>
+  <h3>Status and plan</h3>
+  <p>One page with the state of every part, and the staged plan from simulation to the full arm.</p>
+  <ul class="sfs-tags"><li>Status</li><li>Roadmap</li></ul>
 </a>
     </div>
   </section>
@@ -481,7 +461,7 @@
   
   <section class="sfs-section">
     <div class="sfs-stats">
-      <div><strong>6 + 1</strong><span>stepper axes + gripper</span></div><div><strong>49/49</strong><span>protocol checks on native_sim</span></div><div><strong>460800</strong><span>bps host link</span></div><div><strong>Jazzy</strong><span>ROS 2 on the Robot PC</span></div>
+      <div><strong>6 + 1</strong><span>stepper drives + gripper</span></div><div><strong>XM430</strong><span>emulated by each drive</span></div><div><strong>CM4</strong><span>Robot PC on the robot</span></div><div><strong>Jazzy</strong><span>ROS 2 on the Robot PC</span></div>
     </div>
   </section>
   
@@ -490,7 +470,7 @@
     <p><span class="sfs-eyebrow">Quick start</span></p>
 <h2 id="the-robot-pc-in-simulation-in-two-commands">The Robot PC in simulation, in two commands<a class="headerlink" href="#the-robot-pc-in-simulation-in-two-commands" title="Permanent link">&para;</a></h2>
 <p>No board and no arm are needed: the Robot PC runs <code>ros2_control</code> with mock
-hardware in Docker, on a network that stands in for the Ethernet link to the
+hardware in Docker, on a network that stands in for the Wi-Fi link to the
 Operator PC. A second container on the same network checks it over ROS 2 DDS.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SystemFromScratch/sfs-smartmanipulator-x-robot.git
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>sfs-smartmanipulator-x-robot
@@ -513,7 +493,15 @@ offers the same steps as tasks (<a href="getting-started/">Getting started</a>).
 <tbody>
 <tr>
 <td>Understand the system, its repositories and its current state</td>
-<td><a href="overview/">Overview</a></td>
+<td><a href="overview/">Overview</a>, <a href="status/">Project status</a></td>
+</tr>
+<tr>
+<td>See what comes next and which decisions are made</td>
+<td><a href="plan/doppelstep-cm4/">Integration plan</a></td>
+</tr>
+<tr>
+<td>Work on robotics algorithms without knowing much electronics</td>
+<td><a href="beginners/">Connection guide for beginners</a></td>
 </tr>
 <tr>
 <td>Run the Robot PC and check it from a second host</td>
@@ -524,24 +512,24 @@ offers the same steps as tasks (<a href="getting-started/">Getting started</a>).
 <td><a href="development/">Development</a></td>
 </tr>
 <tr>
-<td>Connect the Operator PC or the real controller board</td>
+<td>Connect the Operator PC or a serial device to the Robot PC</td>
 <td><a href="robot-pc/">Robot PC</a></td>
 </tr>
 <tr>
-<td>See how the Robot PC, the firmware and the Operator PC fit together</td>
+<td>Set up the Robot PC on the robot</td>
+<td><a href="robot-pc/cm4-duino/">Robot PC on the CM4-Duino</a>, <a href="hardware/cm4-duino/">CM4-Duino board</a></td>
+</tr>
+<tr>
+<td>See how the Operator PC, the Robot PC and the drives fit together</td>
 <td><a href="architecture/">System architecture</a></td>
 </tr>
 <tr>
-<td>Check what the host expects from the virtual DYNAMIXEL devices</td>
+<td>Wire the drives, the bus, the supplies and the gripper servo</td>
+<td><a href="hardware/wiring/">Wiring</a>, <a href="dynamixel/bus/">DYNAMIXEL bus</a>, <a href="hardware/gripper-servo/">Gripper servo</a></td>
+</tr>
+<tr>
+<td>Check what the host expects from the drives</td>
 <td><a href="dynamixel/compatibility-spec/">DYNAMIXEL compatibility</a></td>
-</tr>
-<tr>
-<td>Build the controller firmware or test the axes</td>
-<td><a href="firmware/getting-started/">Firmware</a>, <a href="gui/">Motor tester GUI</a></td>
-</tr>
-<tr>
-<td>Wire the Hello FPGA Kit, the TMC5160 drivers and the servo</td>
-<td><a href="hardware/wiring/">Hardware</a></td>
 </tr>
 <tr>
 <td>Read everything offline or print it</td>
@@ -557,7 +545,7 @@ offers the same steps as tasks (<a href="getting-started/">Getting started</a>).
         <img class="sfs-portfolio__logo" src="assets/images/brand/systemfromscratch-logo-on-dark.png" alt="SystemFromScratch® logo">
         <span class="sfs-eyebrow">SystemFromScratch®</span>
         <h2 class="sfs-title">Part of an open-source embedded portfolio</h2>
-        <p class="sfs-intro">SmartManipulator-X is developed by Anton Vynohradov under SystemFromScratch® — embedded software and hardware built from the first schematic to certification.</p>
+        <p class="sfs-intro">SmartManipulator-X is developed by Anton Vynohradov under SystemFromScratch®: "Secure embedded systems and compliance-ready engineering — from concept to certification-ready product." It is also teaching material for several levels, from algorithms in simulation to the electronics of the real arm.</p>
       </div>
       <div class="sfs-actions">
   
@@ -567,7 +555,7 @@ offers the same steps as tasks (<a href="getting-started/">Getting started</a>).
   
 </div>
     </div>
-    <p class="sfs-trademark">SystemFromScratch® is a registered trademark. ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd.; SmartFusion2 is a trademark of Microchip Technology Inc.; SmartManipulator-X is not affiliated with or endorsed by them.</p>
+    <p class="sfs-trademark">SystemFromScratch® is a registered trademark. ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd.; Raspberry Pi is a trademark of Raspberry Pi Ltd; Waveshare, STM32, ROS and BCN3D are trademarks of their owners; SmartManipulator-X is not affiliated with or endorsed by them.</p>
   </section>
 
 </div>
