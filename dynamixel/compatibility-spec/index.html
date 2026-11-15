@@ -534,6 +534,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorial-simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: the whole robot in simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../beginners/" class="md-nav__link">
         
   
@@ -1107,6 +1135,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sil-run-9-2026-11-15-moveit-from-the-operator-pc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 9 (2026-11-15): MoveIt from the Operator PC
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1579,6 +1618,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sil-run-9-2026-11-15-moveit-from-the-operator-pc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 9 (2026-11-15): MoveIt from the Operator PC
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1850,6 +1900,16 @@ read errors are the ten expected Fast Sync Read attempts before the fallback.</p
 <p><strong>For the real bus:</strong> the read timeout of the host is one control period (10 ms at
 100 Hz), not the DynamixelSDK timeout. A Sync Read of all drives, including their
 return delay times, must therefore finish well within one period.</p>
+<h3 id="sil-run-9-2026-11-15-moveit-from-the-operator-pc">SIL run 9 (2026-11-15): MoveIt from the Operator PC<a class="headerlink" href="#sil-run-9-2026-11-15-moveit-from-the-operator-pc" title="Permanent link">&para;</a></h3>
+<p>Same setup as run 8, with the Operator PC (<code>move_group</code>, RViz2) on <code>smx_net</code>. Two
+MoveGroup goals (plan and execute) to the SRDF poses <code>ready</code> (0, 0.5, 0.8, 0, 0.6 rad)
+and <code>home</code> (all 0): both <code>SUCCEEDED</code>, <code>Completed trajectory execution with status
+SUCCEEDED</code> in <code>move_group</code>, no <code>SyncRead Rx Fail</code>, no overrun, no incomplete read on
+the bus. This meets the exit of Stage 1.</p>
+<p>Observed: after each motion the joints stand 5–6 encoder steps (0.008–0.011 rad) from
+the goal, for example <code>j2_shoulder</code> 0.492 instead of 0.5. Within the 0.01 rad tolerance
+of the goal; not investigated yet whether the cause is the simulated drive (position
+loop, step resolution) or the trajectory controller.</p>
 <p>How to repeat the check: <a href="../../robot-pc/sil-tutorial/">SIL tutorial</a>.</p>
 <p>Do not claim full XM430 emulation or production readiness based only on successful packet exchange. Register behavior, mechanical mapping, and physical motion all require separate evidence.</p>
 

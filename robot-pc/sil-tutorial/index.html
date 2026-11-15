@@ -534,6 +534,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorial-simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: the whole robot in simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../beginners/" class="md-nav__link">
         
   
@@ -1707,7 +1735,8 @@ drives</strong> instead of motors. You need no electronics, only a PC.</p>
 <blockquote>
 <p><strong>Status (2026-11-15):</strong> SIL works end to end and <code>smx_smoke_test.sh</code> passes. Since
 SIL run 8 the controllers run at 25 Hz in SIL, and after the start there are no
-failed reads and no overruns (see <a href="#known-limitations">known limitations</a>). Stage 1 of the
+failed reads and no overruns (see <a href="#known-limitations">known limitations</a>). New to all
+this? Start with the <a href="../../tutorial-simulation/">beginner tutorial</a>. Stage 1 of the
 <a href="../../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">integration plan</a>.</p>
 </blockquote>
 <p><strong>What you will have at the end:</strong> six virtual drives on IDs 1–6, the Robot PC with all
@@ -1792,29 +1821,35 @@ drives, so they show whether the bus itself works on your PC:</p>
 <p><strong>Expected:</strong> <code>OK</code> at the end (14 tests at the time of writing). On Windows outside
 WSL the pty tests are reported as <em>skipped</em>; that is why this tutorial uses WSL.</p>
 <h2 id="step-3-build-the-simulated-doppelstep-drive">Step 3: Build the simulated doppelstep drive<a class="headerlink" href="#step-3-build-the-simulated-doppelstep-drive" title="Permanent link">&para;</a></h2>
+<p>The first time, build the toolchain image and fetch Zephyr into its Docker volume:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>app<span class="w"> </span>-d<span class="w"> </span>build-native
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>build
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>bash<span class="w"> </span>scripts/west-init.sh
 </code></pre></div>
-<p>The first build downloads the Zephyr image and takes several minutes. <strong>Expected:</strong> the
+<p>Then build the drive (again after every change to the firmware):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>app<span class="w"> </span>-d<span class="w"> </span>build-native
+</code></pre></div>
+<p>The first time takes several minutes. <strong>Expected:</strong> the
 build ends with a <code>zephyr.exe</code> in <code>build-native/zephyr/</code>. Details are in the
 <a href="https://systemfromscratch.com/sfs-doppelstep/getting-started/">doppelstep getting started guide</a>.</p>
 <h2 id="step-4-test-one-drive-on-its-own">Step 4: Test one drive on its own<a class="headerlink" href="#step-4-test-one-drive-on-its-own" title="Permanent link">&para;</a></h2>
 <p>Start one drive and talk to it with the doppelstep smoke test before you start six:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl1<span class="w"> </span>-p<span class="w"> </span><span class="m">5555</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>sleep<span class="w"> </span><span class="m">3</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python3<span class="w"> </span>tools/sim/dxl_smoke_test.py<span class="w"> </span>--tcp<span class="w"> </span>localhost:5555
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl1<span class="w"> </span>-p<span class="w"> </span><span class="m">5555</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sleep<span class="w"> </span><span class="m">3</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>python3<span class="w"> </span>tools/sim/dxl_smoke_test.py<span class="w"> </span>--tcp<span class="w"> </span>localhost:5555
 </code></pre></div>
 <p><strong>Expected:</strong> the smoke test reports success; the drive answers PING with model
 number 1020, the XM430-W350 it emulates. Leave <code>dxl1</code> running.</p>
 <h2 id="step-5-start-all-six-drives">Step 5: Start all six drives<a class="headerlink" href="#step-5-start-all-six-drives" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl<span class="k">$((</span><span class="nv">i</span><span class="o">+</span><span class="m">1</span><span class="k">))</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$((</span><span class="m">5555</span><span class="o">+</span><span class="nv">i</span><span class="k">))</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">done</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>docker<span class="w"> </span>ps<span class="w"> </span>--filter<span class="w"> </span><span class="nv">name</span><span class="o">=</span>dxl<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Names}}  {{.Ports}}'</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DOPPEL</span><span class="s2">"</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl<span class="k">$((</span><span class="nv">i</span><span class="o">+</span><span class="m">1</span><span class="k">))</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$((</span><span class="m">5555</span><span class="o">+</span><span class="nv">i</span><span class="k">))</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">done</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>docker<span class="w"> </span>ps<span class="w"> </span>--filter<span class="w"> </span><span class="nv">name</span><span class="o">=</span>dxl<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Names}}  {{.Ports}}'</span>
 </code></pre></div>
 <p><strong>Expected:</strong> six containers <code>dxl1</code> … <code>dxl6</code> on ports 5555 … 5560.</p>
 <p>Every drive starts on the factory ID 1. You do not change that yourself: the bus moves
@@ -1824,13 +1859,13 @@ the others.</p>
 <h2 id="step-6-start-the-robot-pc-in-sil-mode">Step 6: Start the Robot PC in SIL mode<a class="headerlink" href="#step-6-start-the-robot-pc-in-sil-mode" title="Permanent link">&para;</a></h2>
 <p>If a Robot PC with mock hardware is still running, stop it first (both use the same
 service and fixed address):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>down
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>down
 </code></pre></div>
 <p>Start the Robot PC with the SIL override, in its own terminal; it stays in the
 foreground and shows the log:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>robot_pc
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>robot_pc
 </code></pre></div>
 <h2 id="step-7-read-the-start-log">Step 7: Read the start log<a class="headerlink" href="#step-7-read-the-start-log" title="Permanent link">&para;</a></h2>
 <p>Wait for <code>Configured and activated gripper_controller</code>. On the way you should see these
@@ -1858,8 +1893,8 @@ lines, in this order. Tick them off:</p>
 without real-time privileges.</p>
 <h2 id="step-8-run-the-smoke-test">Step 8: Run the smoke test<a class="headerlink" href="#step-8-run-the-smoke-test" title="Permanent link">&para;</a></h2>
 <p>In a second terminal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>smx_smoke_test.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>smx_smoke_test.sh
 </code></pre></div>
 <p>The test runs in the <code>probe</code> container, a second ROS 2 host on the same Docker network,
 the way the Operator PC will connect later. It checks four things:</p>
@@ -1874,36 +1909,36 @@ virtual bus and the doppelstep firmware of six drives, and the positions came ba
 same way.</p>
 <h2 id="step-9-try-it-yourself">Step 9: Try it yourself<a class="headerlink" href="#step-9-try-it-yourself" title="Permanent link">&para;</a></h2>
 <p>All commands run in the <code>probe</code> container. Open a shell there:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>bash
 </code></pre></div>
 <p>Look at the joint states (values in radians):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>--once<span class="w"> </span>/joint_states
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>--once<span class="w"> </span>/joint_states
 </code></pre></div>
 <p>Move one joint, for example the base (<code>j1_base</code>) by 0.5 rad in 3 s and back:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ros2<span class="w"> </span>action<span class="w"> </span>send_goal<span class="w"> </span>/arm_controller/follow_joint_trajectory<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>control_msgs/action/FollowJointTrajectory<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="s2">"{trajectory: {joint_names: [j1_base, j2_shoulder, j3_elbow, j4_forearm_roll, j5_wrist],</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="s2">    points: [{positions: [0.5, 0, 0, 0, 0], time_from_start: {sec: 3}},</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="s2">             {positions: [0, 0, 0, 0, 0],   time_from_start: {sec: 6}}]}}"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>action<span class="w"> </span>send_goal<span class="w"> </span>/arm_controller/follow_joint_trajectory<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>control_msgs/action/FollowJointTrajectory<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="s2">"{trajectory: {joint_names: [j1_base, j2_shoulder, j3_elbow, j4_forearm_roll, j5_wrist],</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="s2">    points: [{positions: [0.5, 0, 0, 0, 0], time_from_start: {sec: 3}},</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="s2">             {positions: [0, 0, 0, 0, 0],   time_from_start: {sec: 6}}]}}"</span>
 </code></pre></div>
 <p>Check the controllers and the hardware:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>control<span class="w"> </span>list_controllers
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ros2<span class="w"> </span>control<span class="w"> </span>list_hardware_components
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ros2<span class="w"> </span>control<span class="w"> </span>list_controllers
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ros2<span class="w"> </span>control<span class="w"> </span>list_hardware_components
 </code></pre></div>
 <p><code>j2_shoulder</code> drives <strong>two</strong> drives (IDs 2 and 3) and <code>j3_elbow</code> includes the 57/11
 gearbox: the transmission matrices printed at start (<code>transmission_to_joint_matrix_</code>)
 show this mapping.</p>
 <h2 id="step-10-save-and-judge-the-log">Step 10: Save and judge the log<a class="headerlink" href="#step-10-save-and-judge-the-log" title="Permanent link">&para;</a></h2>
 <p>After about 30 s of running, save the log of the Robot PC:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>logs<span class="w"> </span>--no-color<span class="w"> </span>robot_pc<span class="w"> </span>&gt;<span class="w"> </span>sil_run.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>logs<span class="w"> </span>--no-color<span class="w"> </span>robot_pc<span class="w"> </span>&gt;<span class="w"> </span>sil_run.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 </code></pre></div>
 <p>Count the messages that matter:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"FastSyncRead TxRx failed"</span><span class="w"> </span>sil_run.log<span class="w">   </span><span class="c1"># expected: 10 (the fallback at start)</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"\] SyncRead Rx Fail"</span><span class="w"> </span>sil_run.log<span class="w">         </span><span class="c1"># failed normal Sync Reads, expected: 0</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"Overrun detected"</span><span class="w"> </span>sil_run.log<span class="w">            </span><span class="c1"># control cycles longer than 40 ms, expected: 0</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>grep<span class="w"> </span><span class="s2">"read incomplete"</span><span class="w"> </span>sil_run.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w">         </span><span class="c1"># which drive did not answer in time</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>grep<span class="w"> </span><span class="s2">"\[smx_dxl_bus\] INFO reads:"</span><span class="w"> </span>sil_run.log<span class="w">    </span><span class="c1"># bus summary every 10 s</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"FastSyncRead TxRx failed"</span><span class="w"> </span>sil_run.log<span class="w">   </span><span class="c1"># expected: 10 (the fallback at start)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"\] SyncRead Rx Fail"</span><span class="w"> </span>sil_run.log<span class="w">         </span><span class="c1"># failed normal Sync Reads, expected: 0</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"Overrun detected"</span><span class="w"> </span>sil_run.log<span class="w">            </span><span class="c1"># control cycles longer than 40 ms, expected: 0</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>grep<span class="w"> </span><span class="s2">"read incomplete"</span><span class="w"> </span>sil_run.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w">         </span><span class="c1"># which drive did not answer in time</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>grep<span class="w"> </span><span class="s2">"\[smx_dxl_bus\] INFO reads:"</span><span class="w"> </span>sil_run.log<span class="w">    </span><span class="c1"># bus summary every 10 s</span>
 </code></pre></div>
 <p>How to read them:</p>
 <table>
@@ -1945,9 +1980,9 @@ show this mapping.</p>
 <p>The log stays in your repository folder; it is not committed (delete it when you are
 done, or attach it to an issue).</p>
 <h2 id="step-11-stop-everything">Step 11: Stop everything<a class="headerlink" href="#step-11-stop-everything" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>down
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>docker<span class="w"> </span>stop<span class="w"> </span>dxl1<span class="w"> </span>dxl2<span class="w"> </span>dxl3<span class="w"> </span>dxl4<span class="w"> </span>dxl5<span class="w"> </span>dxl6
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ROBOT</span><span class="s2">"</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>down
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>docker<span class="w"> </span>stop<span class="w"> </span>dxl1<span class="w"> </span>dxl2<span class="w"> </span>dxl3<span class="w"> </span>dxl4<span class="w"> </span>dxl5<span class="w"> </span>dxl6
 </code></pre></div>
 <p>The drives can also keep running between Robot PC starts: a new Robot PC finds them
 again, and in SIL it switches off torque that an earlier run left on.</p>
@@ -2034,8 +2069,9 @@ again, and in SIL it switches off torque that an earlier run left on.</p>
 </ul>
 <h2 id="what-next">What next<a class="headerlink" href="#what-next" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Plan with <strong>MoveIt 2 from the Operator PC</strong> against the SIL Robot PC: see
-  <a href="../../operator-pc/">Operator PC</a>.</li>
+<li>Plan with <strong>MoveIt 2 from the Operator PC</strong> against the SIL Robot PC: the
+  <a href="../../tutorial-simulation/">beginner tutorial</a> starts all three parts and moves the
+  arm from RViz2.</li>
 <li>Results and open questions of all SIL runs: <a href="../../dynamixel/compatibility-spec/">DYNAMIXEL compatibility
   specification</a>.</li>
 <li>The same check on one real drive (B-G431B-ESC1 on ST-LINK VCP) is Stage 2 of the

@@ -539,6 +539,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tutorial-simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: the whole robot in simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../beginners/" class="md-nav__link">
         
   
@@ -1700,9 +1728,9 @@ only the device behind each ID changes.</p>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Compose override <code>docker/docker-compose.sil.yml</code>: <code>robot_pc</code> with the real hardware interface on the virtual bus, gripper as mock</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>dynamixel_hardware_interface</code> configuration in <code>smartmanipulator_x_description</code> (port, baud, IDs 1–6, J2 pair, elbow gearbox), selected by <code>hardware:=sil|real</code></li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>robot.launch.py</code>: <code>hardware:=mock|sil|real</code>; <code>real</code> stays refused until Stage 2</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Run end to end with doppelstep <code>native_sim</code> and record the findings in the compatibility specification (SIL runs 1–8, 2026-11-15)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Run end to end with doppelstep <code>native_sim</code> and record the findings in the compatibility specification (SIL runs 1–9, 2026-11-15)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>smx_smoke_test.sh</code> against the SIL profile: <strong>PASS</strong> (2026-11-15); no read timeouts at 25 Hz since SIL run 8</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Operator PC (MoveIt 2) plans and executes against the SIL Robot PC</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Operator PC (MoveIt 2) plans and executes against the SIL Robot PC (SIL run 9, 2026-11-15)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> SIL in CI, if the doppelstep simulations can be built there</li>
 </ul>
 <p><strong>Exit:</strong> the Operator PC plans and executes a trajectory; the doppelstep sims follow it; smoke test green.</p>
