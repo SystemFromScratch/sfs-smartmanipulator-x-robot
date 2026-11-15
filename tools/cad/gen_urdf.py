@@ -141,7 +141,7 @@ header = f"""<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="smartmanipulator_x">
 
   <xacro:arg name="use_mock_hardware" default="true"/>
-  <!-- The electronics box of the original Moveo; off for the SmartFusion2 build. -->
+  <!-- The electronics box of the original Moveo; off for this build. -->
   <xacro:arg name="electronics_box" default="false"/>
 """
 footer = """

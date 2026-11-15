@@ -17,9 +17,9 @@
 """Hero illustration of SmartManipulator-X, built with svgkit.
 
 The scene shows what the project does differently: the unchanged ROBOTIS ROS 2 stack on
-the Robot PC sends DYNAMIXEL Protocol 2.0 packets over USB (blue request, green reply);
-the SmartFusion2 answers them as virtual DYNAMIXEL devices and drives the stepper motors
-through six TMC5160 drivers (the glowing cable). The arm is the real robot description:
+the Robot PC sends DYNAMIXEL Protocol 2.0 packets over the bus (blue request, green reply);
+six doppelstep drives answer them as DYNAMIXEL XM430 servos and drive the stepper motors
+(the glowing cable). The arm is the real robot description:
 the visual STL meshes of smartmanipulator_x_description placed by forward kinematics
 from the URDF (hero_robot.py), animated as frames between two poses.
 
@@ -50,13 +50,13 @@ EDGE = "#2a4870"
 ACCENT = "#2f8cff"
 GLOW = "#5ea6ff"
 
-HERO_LABEL = ("SmartManipulator-X: a Robot PC running ROS 2 sends DYNAMIXEL packets over USB "
-              "to a SmartFusion2 controller, which answers as virtual DYNAMIXEL servos and "
-              "drives the stepper motors of a BCN3D Moveo arm through six TMC5160 drivers")
+HERO_LABEL = ("SmartManipulator-X: a Robot PC running ROS 2 sends DYNAMIXEL packets over the bus "
+              "to six doppelstep drives, which answer as DYNAMIXEL servos and "
+              "drive the stepper motors of a BCN3D Moveo arm")
 
 
 def robot_pc(iso: Iso) -> None:
-    """A small industrial PC with ROS 2 in Docker."""
+    """The Robot PC (Raspberry Pi CM4 on a CM4-Duino) with ROS 2 in Docker."""
     iso.box(0.6, 4.2, 1.0, 4.2, -0.4, 1.2, MOTOR_TOP, MOTOR_LEFT, MOTOR_RIGHT, EDGE, 1.2)
     for i in range(5):  # cooling fins on the top
         y = 1.4 + i * 0.6
@@ -68,7 +68,7 @@ def robot_pc(iso: Iso) -> None:
 
 
 def controller_board(iso: Iso) -> None:
-    """M2S Hello FPGA Kit with the SmartFusion2 and six TMC5160 driver modules."""
+    """Drive carrier: the DYNAMIXEL bus feeding six doppelstep drives (B-G431B-ESC1)."""
     p = iso.p
     iso.box(7.0, 15.4, 0.0, 6.4, -0.4, 0, "url(#boardTop)", "#0a1628", "#071122", "#1e3a66", 1.2)
     traces = []
@@ -82,26 +82,26 @@ def controller_board(iso: Iso) -> None:
         iso.path(trace, "#1d5fbf", 1.3, ' opacity="0.7"')
     # USB connector on the left edge
     iso.box(7.0, 7.7, 2.3, 3.2, 0, 0.45, ARM_LIGHT, ARM_MID, ARM_DARK)
-    # SmartFusion2 with pins
+    # bus hub chip with pins
     for i in range(6):
         c = 2.15 + i * 0.45
         iso.box(c + 7.0 - 0.08 + 1.0, c + 7.0 + 0.08 + 1.0, 4.45, 4.7, 0, 0.12,
                 "#8fa6c6", "#6b819f", "#5a6f8b")
         iso.box(11.95, 12.2, c - 0.08, c + 0.08, 0, 0.12, "#8fa6c6", "#6b819f", "#5a6f8b")
     iso.box(9.0, 12.0, 1.7, 4.5, 0, 0.7, "url(#chipTop)", "#0a1322", "#060d18", ACCENT, 1.0)
-    iso.text(10.5, 2.95, 0.71, "SmartFusion2", 0.36, "#e6edf7", 800, 0.02)
-    iso.text(10.5, 3.6, 0.71, "VIRTUAL DYNAMIXEL", 0.21, GLOW, 600, 0.05)
+    iso.text(10.5, 2.95, 0.71, "doppelstep", 0.36, "#e6edf7", 800, 0.02)
+    iso.text(10.5, 3.6, 0.71, "XM430 × 6", 0.21, GLOW, 600, 0.05)
     iso.led(9.4, 1.95, 0.71)
-    # six TMC5160 modules with their heat sinks
+    # six doppelstep drives (B-G431B-ESC1) with their heat sinks
     for i in range(6):
         y0 = 0.35 + i * 0.95
         iso.box(13.1, 14.9, y0, y0 + 0.75, 0, 0.3, "#14243c", "#0c182b", "#09121f", EDGE)
         iso.box(13.5, 14.5, y0 + 0.12, y0 + 0.63, 0.3, 0.55, "#3a4f6e", "#24354f", "#1c2a40")
-    iso.text(14.0, 6.2, 0.01, "TMC5160 × 6", 0.24, "#6b7d99", 600, 0.04)
+    iso.text(14.0, 6.2, 0.01, "B-G431B-ESC1 × 6", 0.24, "#6b7d99", 600, 0.04)
 
 
 def usb_link(iso: Iso) -> None:
-    """USB cable with Protocol 2.0 packets: a request to the board, a reply back."""
+    """DYNAMIXEL bus with Protocol 2.0 packets: a request to the drives, a reply back."""
     p = iso.p
     cable = [p(4.2, 2.75, 0.3), p(5.0, 2.75, -0.3), p(6.4, 2.75, -0.3), p(7.0, 2.75, 0.22)]
     iso.path(cable, "#0e2a4f", 7)

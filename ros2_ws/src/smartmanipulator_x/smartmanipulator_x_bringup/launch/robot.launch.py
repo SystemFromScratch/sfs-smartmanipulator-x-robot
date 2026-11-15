@@ -21,7 +21,7 @@ def _require_mock_hardware(context, *args, **kwargs):
     if value not in ("true", "1", "yes"):
         raise RuntimeError(
             "use_mock_hardware:=false is not available yet: the real-hardware "
-            "ros2_control configuration (SmartFusion2 / Doppelstep over "
+            "ros2_control configuration (doppelstep over "
             "dynamixel_hardware_interface) has not been verified. "
             "See docs/dynamixel/compatibility-spec.md."
         )

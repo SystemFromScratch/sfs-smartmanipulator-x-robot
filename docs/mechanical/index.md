@@ -1,14 +1,18 @@
-# BCN3D Moveo Mechanics
+# BCN3D Moveo mechanics
+
+The arm is a BCN3D Moveo. This page says where the mechanical design comes
+from, how the ROS model is generated from its CAD, which conventions the model
+uses, and what is still to be measured on the assembled arm.
 
 ## Mechanical source
 
 The target arm mechanics are based on the [BCN3D Moveo project](https://github.com/BCN3D/BCN3D-Moveo), not on the OpenMANIPULATOR-X geometry. The upstream repository provides CAD files, STL files, assembly/user documentation, a bill of materials, and original firmware. Its README describes an educational, additively manufactured arm controlled by Arduino-based electronics.
 
-This project replaces/adapts the control electronics; it does not claim that the original Moveo firmware or electronics are part of the SmartFusion2 control path. Refer to the upstream repository and its license for the authoritative mechanical files, assembly details, and attribution requirements.
+This project replaces/adapts the control electronics; it does not claim that the original Moveo firmware or electronics are part of the SmartManipulator-X control path. Refer to the upstream repository and its license for the authoritative mechanical files, assembly details, and attribution requirements.
 
 ## ROS model integration
 
-The intended home for the project-owned ROS model is:
+The project-owned ROS model is in:
 
 ```text
 ros2_ws/src/smartmanipulator_x/smartmanipulator_x_description/
@@ -25,7 +29,7 @@ The model in that package is generated from the BCN3D Moveo CAD: a STEP export o
 
 Conventions of the model:
 
-- Zero pose: arm straight up, gripper fully open. The SmartFusion2 start pose (arm placed by hand before power-up) must match it, or the zero offsets must be set in the controller.
+- Zero pose: arm straight up, gripper fully open. The start pose (arm placed by hand before power-up) must match it, or the zero offsets must be set in the drives (Homing Offset).
 - Positive J2, J3 and J5 bend the arm forward (+x, away from the electronics box of the original Moveo); positive J1 and J4 turn counter-clockwise seen from the tip of their axis.
 - `gripper` is the servo gear angle, 0 (open) to 1.45 rad (closed). The idler gear, pivot arms and fingers are mimic joints.
 - The original electronics box is available with the xacro argument `electronics_box:=true`; it is off by default because this build uses other electronics.
@@ -38,11 +42,11 @@ When integrating the model:
 - Record the source revision and any project-specific changes to CAD/STL-derived geometry.
 - Establish the base frame, link frames, joint axes, zero positions, and units from the source design and assembled robot.
 - Verify joint ranges and collision geometry against the physical arm; do not inherit OpenMANIPULATOR-X limits or joint names.
-- Define and document each Moveo joint-to-stepper mapping, transmission, microstepping, homing/reference method, and position scaling only after the hardware is selected and measured.
+- Define and document each Moveo joint-to-stepper mapping, transmission, microstepping, homing/reference method, and position scaling once they are measured on the assembled arm (the motors are listed in [Joint motors](../hardware/wiring.md#joint-motors)).
 - Keep MoveIt planning groups, `ros2_control` joints, Gazebo joints, and physical motor mapping consistent.
 - Preserve upstream license and attribution notices for imported or adapted assets. Do not assume that the project repository's license changes third-party asset licensing.
 
-The electronics are selected in the controller project: six BTT TMC5160T Pro drivers and the stepper motors per joint listed in [Axes and motors](../hardware/wiring.md#axes-and-motors) (J1 base, J2 shoulder with two motors, J3 elbow, J4 forearm roll, J5 wrist), plus an MG996R gripper servo; the joint-to-motor assignment is in `include/motor/motor_axes.h` of the controller firmware. Joint naming in the ROS model, dimensions, limits, gear ratios and the sensing approach remain to be verified for the selected mechanical build. They are deliberately not inferred here from the project name.
+The electronics are described in [Wiring](../hardware/wiring.md): one doppelstep drive per stepper motor, with the motor of each joint listed in [Joint motors](../hardware/wiring.md#joint-motors) (J1 base, J2 shoulder with two motors, J3 elbow, J4 forearm roll, J5 wrist), plus an MG996R [gripper servo](../hardware/gripper-servo.md). Joint limits, motor directions and gear ratios are still to be measured on the assembled arm; there are no encoders or limit switches yet, so the start pose is set by hand.
 
 ## Acceptance checks
 

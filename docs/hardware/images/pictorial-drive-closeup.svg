@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" width="1100" height="520" font-family="Segoe UI, DejaVu Sans, Arial, sans-serif" role="img" aria-label="Close-up of one drive on the robot: four motor wires to U, V and W, two supply wires to the + and − pads, two bus wires to J3 pin 2 (DATA) and J3 pin 5 (GND)">
+  <title>Close-up of one drive on the robot: four motor wires to U, V and W, two supply wires to the + and − pads, two bus wires to J3 pin 2 (DATA) and J3 pin 5 (GND)</title>
+  <style>
+    .h { font-weight: 700; font-size: 16px; fill: #202124; }
+    .t { fill: #202124; font-size: 13px; }
+    .s { fill: #5f6368; font-size: 12px; }
+    .w { fill: #ffffff; font-size: 11px; font-weight: 600; }
+    .k { fill: #e8eaed; font-size: 10px; }
+    .tag { fill: #ffffff; stroke: #dadce0; stroke-width: 1; }
+    .step { fill: #1a73e8; }
+    .stept { fill: #ffffff; font-weight: 700; font-size: 14px; }
+  </style>
+  <rect x="420" y="120" width="46.0" height="230.0" rx="5" fill="#173a7a" stroke="#0b2150" stroke-width="1.5" />
+  <rect x="470.0" y="120" width="100.0" height="230.0" rx="5" fill="#173a7a" stroke="#0b2150" stroke-width="1.5" />
+  <circle cx="443.0" cy="148.0" r="15.0" fill="#2a6fdb" stroke="#123d8a" stroke-width="1.5"/>
+  <rect x="429.0" y="190.0" width="28.0" height="28.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="429.0" y="328.0" width="28.0" height="16.0" rx="2" fill="#c7c9cc" stroke="#7b7e82" stroke-width="1.5" />
+  <rect x="478.0" y="154.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="509.0" y="154.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="540.0" y="154.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="478.0" y="198.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="509.0" y="198.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="540.0" y="198.0" width="25.0" height="34.0" rx="0" fill="#2b2b2b" stroke="none" stroke-width="1.5" />
+  <rect x="478.0" y="248.0" width="25.0" height="22.0" rx="0" fill="#3c4043" stroke="none" stroke-width="1.5" />
+  <rect x="509.0" y="248.0" width="25.0" height="22.0" rx="0" fill="#3c4043" stroke="none" stroke-width="1.5" />
+  <rect x="540.0" y="248.0" width="25.0" height="22.0" rx="0" fill="#3c4043" stroke="none" stroke-width="1.5" />
+  <rect x="480.0" y="112.0" width="22.0" height="16.0" rx="2" fill="#d4a73a" stroke="#8a6d1f" stroke-width="1" />
+  <text class="s" x="491.0" y="107.0" text-anchor="middle">U</text>
+  <rect x="511.0" y="112.0" width="22.0" height="16.0" rx="2" fill="#d4a73a" stroke="#8a6d1f" stroke-width="1" />
+  <text class="s" x="522.0" y="107.0" text-anchor="middle">V</text>
+  <rect x="542.0" y="112.0" width="22.0" height="16.0" rx="2" fill="#d4a73a" stroke="#8a6d1f" stroke-width="1" />
+  <text class="s" x="553.0" y="107.0" text-anchor="middle">W</text>
+  <rect x="510.0" y="330.0" width="26.0" height="26.0" rx="2" fill="#d4a73a" stroke="#8a6d1f" stroke-width="1" />
+  <text class="s" x="523.0" y="347.0" text-anchor="middle">+</text>
+  <rect x="542.0" y="330.0" width="26.0" height="26.0" rx="2" fill="#d4a73a" stroke="#8a6d1f" stroke-width="1" />
+  <text class="s" x="555.0" y="347.0" text-anchor="middle">−</text>
+  <rect x="476.0" y="288.0" width="5.0" height="9.0" rx="0" fill="#d4a73a" stroke="none" stroke-width="1.5" />
+  <rect x="482.5" y="288.0" width="5.0" height="9.0" rx="0" fill="#d4a73a" stroke="none" stroke-width="1.5" />
+  <rect x="489.0" y="288.0" width="5.0" height="9.0" rx="0" fill="#d4a73a" stroke="none" stroke-width="1.5" />
+  <rect x="495.5" y="288.0" width="5.0" height="9.0" rx="0" fill="#d4a73a" stroke="none" stroke-width="1.5" />
+  <rect x="502.0" y="288.0" width="5.0" height="9.0" rx="0" fill="#d4a73a" stroke="none" stroke-width="1.5" />
+  <text class="w" x="492.0" y="312.0" text-anchor="middle">J3</text>
+  <text class="h" x="404" y="150" text-anchor="end">doppelstep drive</text>
+  <text class="s" x="404" y="168" text-anchor="end">B-G431B-ESC1, seen from above</text>
+  <rect x="820" y="180" width="90.0" height="90.0" rx="6" fill="#262626" stroke="#000" stroke-width="1.5" />
+  <rect x="824.0" y="184.0" width="82.0" height="14.0" rx="3" fill="#b8babd" stroke="#7b7e82" stroke-width="1.5" />
+  <rect x="861.0" y="154.0" width="8.0" height="30.0" rx="2" fill="#c7c9cc" stroke="#7b7e82" stroke-width="1.5" />
+  <path d="M826.0 204.0 L904.0 204.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 211.0 L904.0 211.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 218.0 L904.0 218.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 225.0 L904.0 225.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 232.0 L904.0 232.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 239.0 L904.0 239.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 246.0 L904.0 246.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M826.0 253.0 L904.0 253.0" stroke="#3a3a3a" stroke-width="1"/>
+  <path d="M847.0 270.0 L847.0 284.0" stroke="#202124" stroke-width="5.0"/>
+  <path d="M859.0 270.0 L859.0 284.0" stroke="#1e8e3e" stroke-width="5.0"/>
+  <path d="M871.0 270.0 L871.0 284.0" stroke="#d93025" stroke-width="5.0"/>
+  <path d="M883.0 270.0 L883.0 284.0" stroke="#1a73e8" stroke-width="5.0"/>
+  <text class="t" x="865.0" y="140" text-anchor="middle">stepper motor</text>
+  <path d="M847.0 284.0 L847.0 298.0 L760 298.0 L760 90 L491.0 90 L491.0 112.0" fill="none" stroke="#00000055" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M847.0 284.0 L847.0 298.0 L760 298.0 L760 90 L491.0 90 L491.0 112.0" fill="none" stroke="#202124" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M859.0 284.0 L859.0 308.0 L746 308.0 L746 78 L549.0 78 L549.0 112.0" fill="none" stroke="#00000055" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M859.0 284.0 L859.0 308.0 L746 308.0 L746 78 L549.0 78 L549.0 112.0" fill="none" stroke="#1e8e3e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M871.0 284.0 L871.0 318.0 L732 318.0 L732 66 L522.0 66 L522.0 112.0" fill="none" stroke="#00000055" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M871.0 284.0 L871.0 318.0 L732 318.0 L732 66 L522.0 66 L522.0 112.0" fill="none" stroke="#d93025" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M883.0 284.0 L883.0 328.0 L718 328.0 L718 54 L557.0 54 L557.0 112.0" fill="none" stroke="#00000055" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M883.0 284.0 L883.0 328.0 L718 328.0 L718 54 L557.0 54 L557.0 112.0" fill="none" stroke="#1a73e8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="764.0" y="387" width="192.0" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="860.0" y="401" text-anchor="middle">black A+ → U · red B+ → V</text>
+  <rect x="767.6" y="411" width="184.8" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="860.0" y="425" text-anchor="middle">green A− and blue B− → W</text>
+  <path d="M523.0 356.0 L523.0 430 L330 430" fill="none" stroke="#00000055" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M523.0 356.0 L523.0 430 L330 430" fill="none" stroke="#d93025" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.0 356.0 L555.0 450 L330 450" fill="none" stroke="#00000055" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M555.0 356.0 L555.0 450 L330 450" fill="none" stroke="#202124" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="165.6" y="417" width="148.8" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="240.0" y="431" text-anchor="middle">+24 V from the fuse</text>
+  <rect x="140.39999999999998" y="443" width="199.20000000000002" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="240.0" y="457" text-anchor="middle">− to the ground star point</text>
+  <path d="M484.0 297.0 L484.0 300 L330 300" fill="none" stroke="#00000055" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M484.0 297.0 L484.0 300 L330 300" fill="none" stroke="#1e8e3e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.5 297.0 L503.5 315 L330 315" fill="none" stroke="#00000055" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M503.5 297.0 L503.5 315 L330 315" fill="none" stroke="#202124" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="145.6" y="287" width="148.8" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="220.0" y="301" text-anchor="middle">bus DATA → J3 pin 2</text>
+  <rect x="149.2" y="313" width="141.6" height="19" rx="4" fill="#ffffff" stroke="#dadce0" stroke-width="1" />
+  <text class="s" x="220.0" y="327" text-anchor="middle">bus GND → J3 pin 5</text>
+  <text class="t" x="40" y="352" text-anchor="start">J3 pins 1, 3 and 4 stay free.</text>
+  <text class="s" x="40" y="372" text-anchor="start">Pad positions are simplified: follow the</text>
+  <text class="s" x="40" y="388" text-anchor="start">labels printed on the board.</text>
+  <text class="s" x="600" y="470" text-anchor="start">The micro-USB stays unplugged on the robot.</text>
+  <path d="M40 500 L70 500" stroke="#d93025" stroke-width="5" stroke-linecap="round"/>
+  <text class="s" x="80" y="504" text-anchor="start">motor supply (+)</text>
+  <path d="M270 500 L300 500" stroke="#202124" stroke-width="5" stroke-linecap="round"/>
+  <text class="s" x="310" y="504" text-anchor="start">ground (−)</text>
+  <path d="M500 500 L530 500" stroke="#1e8e3e" stroke-width="5" stroke-linecap="round"/>
+  <text class="s" x="540" y="504" text-anchor="start">bus DATA</text>
+</svg>

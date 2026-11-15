@@ -1,5 +1,10 @@
 # Operator PC
 
+The Operator PC is the computer the operator works on: it plans and
+visualizes motions and talks to the Robot PC over ROS 2 DDS. Its software
+lives in a separate repository; this page describes its role and what it must
+agree on with the Robot PC.
+
 ## Responsibility
 
 The Operator PC owns motion planning, operator visualization, and simulation workflows:
@@ -9,7 +14,7 @@ The Operator PC owns motion planning, operator visualization, and simulation wor
 - Gazebo simulation and simulation-specific `ros2_control` integration.
 - ROS 2 DDS communication with the Robot PC over the configured network.
 
-It does not own the SmartFusion2 USB connection, motor hardware, or physical `ros2_control` hardware interface. Do not pass `/dev/ttyACM0` through to the Operator PC.
+It does not own the DYNAMIXEL bus, the doppelstep drives, or the physical `ros2_control` hardware interface. Do not pass any serial device through to the Operator PC.
 
 ## Separate repository
 
@@ -22,12 +27,12 @@ Consume the canonical robot description from `smartmanipulator_x_description` (i
 The intended MoveIt application should work with either the physical Robot PC or simulation. The robot model, joint names, limits, planning groups, and controller-facing joint semantics must agree in both modes:
 
 ```text
-Real robot: MoveIt -> DDS -> Robot PC ros2_control -> verified DYNAMIXEL path -> SmartFusion2
+Real robot: MoveIt -> DDS -> Robot PC ros2_control -> DYNAMIXEL bus -> doppelstep drives
 Simulation: MoveIt -> Gazebo ros2_control integration -> simulated Moveo joints
 ```
 
-Use the physical path only after SmartFusion2 compatibility and robot bringup are verified. Gazebo integration and MoveIt configuration belong to the Operator PC repository.
+Use the physical path only after doppelstep compatibility and robot bring-up are verified. Gazebo integration and MoveIt configuration belong to the Operator PC repository.
 
 ## DDS checklist
 
-For two-host operation, configure matching ROS 2 domain IDs and verify that both hosts use reachable network interfaces. Check DDS discovery, routing/multicast support, and firewall rules in the deployment network. SSH can be used for administration, but it is not a substitute for DDS connectivity. Simulation-only runs can be local to the Operator PC and do not require physical hardware.
+On the robot the Robot PC is reached over **Wi-Fi** (the CM4-Duino has no Ethernet connector). For two-host operation, configure matching ROS 2 domain IDs and verify that both hosts use reachable network interfaces. Check DDS discovery, routing/multicast support, and firewall rules in the deployment network. SSH can be used for administration, but it is not a substitute for DDS connectivity. Simulation-only runs can be local to the Operator PC and do not require physical hardware.

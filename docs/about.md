@@ -7,8 +7,8 @@
 </div>
 
 SmartManipulator-X is designed, written and maintained by **Anton Vynohradov** and
-published by **SystemFromScratch®** — secure embedded systems and compliance-ready
-engineering, from concept to certification.
+published by **SystemFromScratch®**: "Secure embedded systems and compliance-ready
+engineering — from concept to certification-ready product."
 
 ## Author
 
@@ -34,7 +34,7 @@ remotely worldwide.
 | --- | --- |
 | Embedded software | Bare-metal, RTOS and Linux firmware in C/C++, built to be maintained for years |
 | BSP & drivers | Bootloaders, Zephyr drivers and Linux kernel work for MCUs, SoCs and SoC FPGAs |
-| Security & compliance | Secure boot, threat modelling, MISRA C/C++, EU Cyber Resilience Act (CRA) readiness |
+| Security & compliance | Secure boot, threat modeling, MISRA C/C++, EU Cyber Resilience Act (CRA) readiness |
 | Industries | Industrial IoT, automotive, robotics, medical and consumer electronics |
 
 **Technology:** C · C++ · Python · Zephyr RTOS · FreeRTOS · Embedded Linux · Yocto ·
@@ -42,8 +42,8 @@ Buildroot · ARM Cortex-M · STM32 · Microchip FPGA · RISC-V · CAN / ISO-TP �
 Docker · Git · CI/CD · MISRA C/C++ · EU CRA
 
 For SmartManipulator-X, Anton designed the system architecture, the Robot PC image and
-its ROS 2 configuration, the robot description generated from the BCN3D Moveo CAD, the
-SmartFusion2 controller firmware with its motor tester, and this documentation.
+its ROS 2 configuration, the robot description generated from the BCN3D Moveo CAD, the doppelstep
+stepper drives, and this documentation.
 
 ## SystemFromScratch®
 
@@ -55,16 +55,19 @@ regulations that govern them.
 
 | Service | What it covers |
 | --- | --- |
-| Embedded software development | Bare-metal, RTOS and Linux firmware for performance, reliability and long-term maintainability |
-| BSP & device drivers | Board support packages, bootloaders and low-level drivers for MCUs, SoCs, FPGAs and custom hardware |
-| RTOS & Embedded Linux | Zephyr, FreeRTOS and Embedded Linux (Yocto, Buildroot): porting, configuration, integration, reproducible builds |
-| Hardware bring-up & integration | Schematic review, first boot, validation and production support, including SoC FPGA and motor-control platforms |
-| Cybersecurity & CRA readiness | Secure boot, firmware integrity, threat modelling and a secure development lifecycle for the EU Cyber Resilience Act |
-| Compliance & consulting | MISRA C/C++, static analysis, code and architecture reviews, compliance roadmaps |
+| Hardware design with partners | We choose proven, available parts with you, so your product is not tied to one expensive supplier. |
+| Hardware bring-up & integration | The first power-on of a new board is where schedules slip. We take it from first boot to a working system. |
+| BSP & device drivers | Board support packages, bootloaders and drivers that make your hardware usable and keep timing exact. |
+| RTOS & Embedded Linux | A maintained, secure foundation — Zephyr, FreeRTOS or Embedded Linux — instead of home-grown code that only one person understands. |
+| Embedded software development | Your devices talk to each other reliably — CAN, RS-485, UART, USB — even when the hardware underneath changes. |
+| System integration | Everything works together end to end, and can be tested on a laptop before the hardware exists. |
+| Cybersecurity, CRA & compliance | Security and code quality designed in from the start — secure boot, signed updates, MISRA — so audits and EU Cyber Resilience Act conformity are not a last-minute patch. |
 
 SmartManipulator-X is one of the open-source projects in the SystemFromScratch®
 portfolio: public engineering work that can be inspected line by line, from the ROS 2
-host down to the stepper driver.
+host down to the stepper driver. It is also teaching material for several levels, from
+readers who only want to work on robotics algorithms in simulation to engineers who
+build and bring up the electronics ([connection guide for beginners](beginners.md)).
 
 ## Contact
 
@@ -99,11 +102,11 @@ in this documentation to identify the publisher of SmartManipulator-X; the Apach
 2.0 grants no rights to use them, and they may not be used to endorse or promote products
 derived from SmartManipulator-X without prior written permission.
 
-ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd. SmartFusion2
-and Libero are trademarks of Microchip Technology Inc. TRINAMIC and TMC5160 are
-trademarks of Analog Devices, Inc. BIGTREETECH is a trademark of Shenzhen Big Tree
-Technology Co., Ltd. ROS is a trademark of Open Source Robotics Foundation, Inc. BCN3D is
-a trademark of BCN3D Technologies. SmartManipulator-X is not affiliated with or endorsed
+ROBOTIS, DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd. Raspberry Pi
+is a trademark of Raspberry Pi Ltd. Waveshare is a trademark of Waveshare Electronics.
+STM32 is a registered trademark of STMicroelectronics International N.V. ROS is a
+trademark of Open Source Robotics Foundation, Inc. BCN3D is a trademark of BCN3D
+Technologies. SmartManipulator-X is not affiliated with or endorsed
 by these companies; their names are used only to identify the products the project
 builds on.
 

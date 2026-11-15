@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="docs/assets/images/hero-3d.svg" alt="A Robot PC running ROS 2 sends DYNAMIXEL packets over USB to a SmartFusion2 board with six TMC5160 drivers, which moves a BCN3D Moveo arm" width="720">
+  <img src="docs/assets/images/hero-3d.svg" alt="A Robot PC running ROS 2 sends DYNAMIXEL packets to six doppelstep stepper drives, which move a BCN3D Moveo arm" width="720">
 </p>
 
 <h1 align="center">SmartManipulator-X</h1>
 
 <p align="center">
-  <b>A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack, through a SmartFusion2 controller that answers as DYNAMIXEL servos.</b><br>
-  ROS 2 Jazzy in Docker · ros2_control · DYNAMIXEL Protocol 2.0 · Zephyr on SmartFusion2
+  <b>A BCN3D Moveo arm driven by the unchanged ROBOTIS OpenMANIPULATOR-X ROS 2 stack, through doppelstep stepper drives that answer as DYNAMIXEL servos.</b><br>
+  ROS 2 Jazzy in Docker · ros2_control · DYNAMIXEL Protocol 2.0 · Raspberry Pi CM4 (CM4-Duino)
 </p>
 
 <p align="center">
@@ -26,30 +26,45 @@
 ## Overview
 
 SmartManipulator-X combines the ROS 2 control approach of ROBOTIS OpenMANIPULATOR-X with
-the mechanical design of [BCN3D Moveo](https://github.com/BCN3D/BCN3D-Moveo). A
-SmartFusion2 controller replaces the DYNAMIXEL actuators: it drives the stepper motors
-and the gripper servo and presents them to the ROS 2 host as virtual DYNAMIXEL devices
-over Protocol 2.0, over USB CDC — not as a USB-to-DYNAMIXEL bridge.
+the mechanical design of [BCN3D Moveo](https://github.com/BCN3D/BCN3D-Moveo). Every
+stepper joint has a [doppelstep](https://github.com/SystemFromScratch/sfs-doppelstep)
+drive that answers on a DYNAMIXEL Protocol 2.0 bus as an XM430-W350 servo, so the stock
+ROBOTIS hardware interface is meant to drive the arm without project-specific code. On
+the robot, the Robot PC will be a Raspberry Pi Compute Module 4 on a Waveshare CM4-Duino
+board that reaches the Operator PC over Wi-Fi.
 
-This repository is the **Robot PC**: Ubuntu 24.04 with ROS 2 Jazzy in Docker, the project
-ROS 2 packages, the robot description generated from the Moveo CAD, diagnostics, and the
-documentation of the whole system.
+This repository is the **Robot PC**: ROS 2 Jazzy in Docker, the project ROS 2 packages,
+the robot description generated from the Moveo CAD, the CM4-Duino deployment,
+diagnostics, and the documentation of the whole system.
+
+SmartManipulator-X is part of the [SystemFromScratch®](https://systemfromscratch.com/)
+portfolio and is also meant for education. **All parts are open source** (Apache-2.0):
+the Robot PC, the Operator PC and the doppelstep drive firmware. New to electronics but
+interested in robotics algorithms? Start with the
+[connection guide for beginners](docs/beginners.md): level 1 needs only a computer with
+Docker.
 
 | Component | Repository |
 | --- | --- |
-| Robot PC: ROS 2 control, robot description, documentation | this repository |
-| Operator PC: MoveIt 2, RViz2, Gazebo | [sfs-smartmanipulator-x-operator](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator) |
+| Robot PC: ROS 2 control, robot description, CM4-Duino deployment, documentation | this repository |
+| Operator PC: MoveIt 2, RViz2 | [sfs-smartmanipulator-x-operator](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-operator) |
+| Joint drives: stepper drive firmware that answers as a DYNAMIXEL servo | [sfs-doppelstep](https://github.com/SystemFromScratch/sfs-doppelstep) |
 | Engineering rules for coding agents, shared by all repositories | [sfs-smartmanipulator-x-skills](https://github.com/SystemFromScratch/sfs-smartmanipulator-x-skills) |
-| SmartFusion2 controller firmware and FPGA design | SmartManipulator-X-Controller, SmartManipulator-X-Libero |
 
 ## Project status
 
-- [x] Robot PC image (ROS 2 Jazzy, ROBOTIS DYNAMIXEL SDK and hardware interface)
-- [x] Simulation with mock hardware on a Docker network, smoke test from a second host
+Full table: [Project status](docs/status.md). Next steps and decisions:
+[integration plan](docs/plan/doppelstep-cm4.md).
+
+- [x] Robot PC image (ROS 2 Jazzy, ROBOTIS DYNAMIXEL SDK and hardware interface), amd64
+- [x] Simulation with mock hardware on a Docker network; smoke test and Operator PC container connected over DDS
 - [x] Robot description generated from the BCN3D Moveo CAD
-- [ ] Joint limits measured on the arm (the URDF values are placeholders)
-- [ ] Control Table, protocol behavior and timing verified against the ROBOTIS Jazzy sources ([compatibility specification](docs/dynamixel/compatibility-spec.md))
-- [ ] Real-hardware `ros2_control` path (`robot.launch.py` refuses `use_mock_hardware:=false` until then)
+- [x] CM4-Duino documented, vendor files archived
+- [ ] Robot PC ↔ doppelstep in simulation (SIL), real-hardware `ros2_control` path
+- [ ] One doppelstep drive on the bench (ST-LINK virtual COM port)
+- [ ] Robot PC on the CM4-Duino (arm64 image, deployment, DYNAMIXEL bus, Wi-Fi)
+- [ ] Full arm: six drives, joint limits measured, emergency stop
+- [ ] Gripper as a separate project (virtual DYNAMIXEL on ID 7)
 
 ## Quick start
 
@@ -64,7 +79,7 @@ docker compose -f docker/docker-compose.yml run --rm probe smx_smoke_test.sh    
 ```
 
 The Compose file creates the network `smx_net` (`10.77.0.0/24`), which stands in for the
-Ethernet link to the Operator PC. The smoke test passes when it receives `/joint_states`,
+network link (Wi-Fi on the robot) to the Operator PC. The smoke test passes when it receives `/joint_states`,
 finds `joint_state_broadcaster`, `arm_controller` and `gripper_controller` active, and
 `arm_controller` executes a short trajectory. Stop with **Ctrl+C** or
 `docker compose -f docker/docker-compose.yml down`.
@@ -73,18 +88,19 @@ In VS Code, **Ctrl+Shift+B** offers *Robot PC: Start (mock hardware)*, *Stop*,
 *Rebuild and restart*, *Build image*, *Rebuild image (no cache)* and
 *Docs: Build PDF manual*; the smoke test is under **Tasks: Run Test Task**.
 
-## Real hardware (Linux)
+## Real hardware
 
-Connect the SmartFusion2 board and check that it enumerates (`ls -l /dev/ttyACM0`; set
-`SMX_SERIAL_DEVICE` in `docker/.env` for another path, template `docker/env.example`).
-Start a Robot PC shell with the device:
+Not usable yet: the real-hardware `ros2_control` path is the next stage of the
+[integration plan](docs/plan/doppelstep-cm4.md). For device diagnostics on a Linux host,
+set `SMX_SERIAL_DEVICE` in `docker/.env` (template `docker/env.example`) and start a
+Robot PC shell with the device:
 
 ```bash
 docker compose -f docker/docker-compose.yml -f docker/docker-compose.hw.yml run --rm robot_pc bash
 ```
 
-The real-hardware `ros2_control` path is not configured yet; use this shell for device
-diagnostics. Details: [Robot PC](docs/robot-pc/index.md).
+Details: [Robot PC](docs/robot-pc/index.md), [DYNAMIXEL bus](docs/dynamixel/bus.md),
+[CM4-Duino](docs/hardware/cm4-duino/index.md).
 
 ## Project structure
 
@@ -92,9 +108,10 @@ diagnostics. Details: [Robot PC](docs/robot-pc/index.md).
 docker/                         Robot PC image, Compose services, DDS profile
 ros2_ws/src/smartmanipulator_x/ bringup, config, description (from the Moveo CAD), tests
 ros2_robot.repos                upstream ROBOTIS sources built into the image
+deploy/cm4-duino/               CM4-Duino deployment files (planned)
 tools/cad/                      STEP → URDF pipeline of the robot description
 tools/diagnostics/              smoke test over DDS
-tools/docs/                     PDF manual builder, hero illustration, Mermaid rendering
+tools/docs/                     PDF manual builder, hero illustration, diagram generators
 docs/, overrides/, mkdocs.yml   documentation (website and PDF manual)
 ```
 
@@ -133,6 +150,14 @@ Third-party sources keep their own licenses: the ROBOTIS packages checked out th
 SystemFromScratch® is a registered trademark. The Apache License 2.0 grants no rights to
 use the SystemFromScratch® name or logo; they may not be used to endorse or promote
 products derived from SmartManipulator-X without prior written permission. ROBOTIS,
-DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd.; SmartFusion2 is a
-trademark of Microchip Technology Inc.; SmartManipulator-X is not affiliated with or
-endorsed by them.
+DYNAMIXEL and OpenMANIPULATOR are trademarks of ROBOTIS Co., Ltd. Raspberry Pi is a
+trademark of Raspberry Pi Ltd. Waveshare is a trademark of Waveshare Electronics. STM32
+is a registered trademark of STMicroelectronics International N.V. ROS is a trademark of
+Open Source Robotics Foundation, Inc. BCN3D is a trademark of BCN3D Technologies.
+SmartManipulator-X is not affiliated with or endorsed by these companies.
+
+Third-party documents are kept only as backup copies and are not covered by the Apache
+License 2.0: the Waveshare files in `docs/hardware/cm4-duino/vendor/` (© Waveshare, a
+discontinued board) and the datasheets in `docs/hardware/datasheets/` (© their
+publishers). They are not published on the documentation website, which links to the
+originals on the publishers' websites.

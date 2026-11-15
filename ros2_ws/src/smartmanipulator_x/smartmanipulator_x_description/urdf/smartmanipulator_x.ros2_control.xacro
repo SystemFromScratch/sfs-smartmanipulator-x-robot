@@ -7,7 +7,7 @@
 
     use_mock_hardware=true   mock_components/GenericSystem (now)
     use_mock_hardware=false  dynamixel_hardware_interface/DynamixelHardware
-                             with SmartFusion2 or Doppelstep: not configured
+                             with doppelstep: not configured
                              yet, see docs/dynamixel/compatibility-spec.md.
                              The bringup launch file refuses to start it.
 -->

@@ -2,7 +2,7 @@
 #
 # Joint names come from smartmanipulator_x_description. The update rate is
 # a starting value for mock hardware; the rate for the real DYNAMIXEL bus
-# must be confirmed against the SmartFusion2 / Doppelstep timing before
+# must be confirmed against the doppelstep timing before
 # hardware use (docs/dynamixel/compatibility-spec.md).
 
 controller_manager:
