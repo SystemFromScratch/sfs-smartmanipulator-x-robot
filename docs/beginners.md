@@ -48,8 +48,9 @@ use — joint names, topics, controllers — is the
 [joint contract](robot-pc/index.md#joint-contract) of the Robot PC.
 
 One step further, still without hardware: in the
-[SIL tutorial](robot-pc/sil-tutorial.md) the Robot PC drives six simulated doppelstep
-drives over a virtual DYNAMIXEL bus, with the same software it will use on the arm.
+[tutorial: the whole robot in simulation](tutorial-simulation.md) you move the arm from
+RViz2, and six simulated doppelstep drives carry out the motion with the same Robot PC
+software that will run on the arm. It assumes no experience with Linux, Docker or ROS.
 
 ## Level 2: one joint on the desk
 

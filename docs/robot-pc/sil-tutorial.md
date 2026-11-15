@@ -7,7 +7,8 @@ drives** instead of motors. You need no electronics, only a PC.
 
 > **Status (2026-11-15):** SIL works end to end and `smx_smoke_test.sh` passes. Since
 > SIL run 8 the controllers run at 25 Hz in SIL, and after the start there are no
-> failed reads and no overruns (see [known limitations](#known-limitations)). Stage 1 of the
+> failed reads and no overruns (see [known limitations](#known-limitations)). New to all
+> this? Start with the [beginner tutorial](../tutorial-simulation.md). Stage 1 of the
 > [integration plan](../plan/doppelstep-cm4.md#stage-1-sil-on-the-pc-no-hardware).
 
 **What you will have at the end:** six virtual drives on IDs 1–6, the Robot PC with all
@@ -85,12 +86,22 @@ WSL the pty tests are reported as *skipped*; that is why this tutorial uses WSL.
 
 ## Step 3: Build the simulated doppelstep drive
 
+The first time, build the toolchain image and fetch Zephyr into its Docker volume:
+
+```bash
+cd "$DOPPEL"
+docker compose build
+docker compose run --rm zephyr bash scripts/west-init.sh
+```
+
+Then build the drive (again after every change to the firmware):
+
 ```bash
 cd "$DOPPEL"
 docker compose run --rm zephyr west build -b native_sim/native/64 -s app -d build-native
 ```
 
-The first build downloads the Zephyr image and takes several minutes. **Expected:** the
+The first time takes several minutes. **Expected:** the
 build ends with a `zephyr.exe` in `build-native/zephyr/`. Details are in the
 [doppelstep getting started guide](https://systemfromscratch.com/sfs-doppelstep/getting-started/).
 
@@ -307,8 +318,9 @@ again, and in SIL it switches off torque that an earlier run left on.
 
 ## What next
 
-- Plan with **MoveIt 2 from the Operator PC** against the SIL Robot PC: see
-  [Operator PC](../operator-pc/index.md).
+- Plan with **MoveIt 2 from the Operator PC** against the SIL Robot PC: the
+  [beginner tutorial](../tutorial-simulation.md) starts all three parts and moves the
+  arm from RViz2.
 - Results and open questions of all SIL runs: [DYNAMIXEL compatibility
   specification](../dynamixel/compatibility-spec.md).
 - The same check on one real drive (B-G431B-ESC1 on ST-LINK VCP) is Stage 2 of the

@@ -16,7 +16,7 @@ drive. The gripper follows afterwards as a separate project.
 | --- | --- | --- |
 | Operator PC → Robot PC (DDS) in Docker on one computer | **Done** | Operator PC container on `smx_net`; commands arrive and the mock-hardware simulation follows them |
 | Operator PC → Robot PC over Wi-Fi, two computers | Planned | Stage 4 |
-| Robot PC → doppelstep in simulation (SIL) | **Done** (2026-11-15) | Six `native_sim` drives, smoke test PASS ([SIL](robot-pc/index.md#sil-simulated-doppelstep-drives)); MoveIt from the Operator PC still to try |
+| Robot PC → doppelstep in simulation (SIL) | **Done** (2026-11-15) | Six `native_sim` drives, smoke test PASS, MoveIt from the Operator PC plans and executes ([SIL](robot-pc/index.md#sil-simulated-doppelstep-drives), [tutorial](tutorial-simulation.md)) |
 | Robot PC → one doppelstep on the bench (ST-LINK VCP) | Planned | Stage 2; the B-G431B-ESC1 is ready |
 | Robot PC on the CM4-Duino → DYNAMIXEL bus | Planned | Stage 3 |
 | Full arm (six drives) | Planned | Stage 4 |

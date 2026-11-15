@@ -93,6 +93,8 @@ documentation preview under **Tasks: Run Task**.
 
 ## Next steps
 
+- [Tutorial: the whole robot in simulation](tutorial-simulation.md): drives, Robot PC
+  and Operator PC together, step by step for beginners.
 - [Tutorial: checking SIL step by step](robot-pc/sil-tutorial.md): the Robot PC
   with six simulated doppelstep drives instead of mock joints.
 - [Robot PC](robot-pc/index.md): the joint contract, how the Operator PC joins

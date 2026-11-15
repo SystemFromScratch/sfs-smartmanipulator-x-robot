@@ -172,6 +172,19 @@ read errors are the ten expected Fast Sync Read attempts before the fallback.
 100 Hz), not the DynamixelSDK timeout. A Sync Read of all drives, including their
 return delay times, must therefore finish well within one period.
 
+### SIL run 9 (2026-11-15): MoveIt from the Operator PC
+
+Same setup as run 8, with the Operator PC (`move_group`, RViz2) on `smx_net`. Two
+MoveGroup goals (plan and execute) to the SRDF poses `ready` (0, 0.5, 0.8, 0, 0.6 rad)
+and `home` (all 0): both `SUCCEEDED`, `Completed trajectory execution with status
+SUCCEEDED` in `move_group`, no `SyncRead Rx Fail`, no overrun, no incomplete read on
+the bus. This meets the exit of Stage 1.
+
+Observed: after each motion the joints stand 5–6 encoder steps (0.008–0.011 rad) from
+the goal, for example `j2_shoulder` 0.492 instead of 0.5. Within the 0.01 rad tolerance
+of the goal; not investigated yet whether the cause is the simulated drive (position
+loop, step resolution) or the trajectory controller.
+
 How to repeat the check: [SIL tutorial](../robot-pc/sil-tutorial.md).
 
 Do not claim full XM430 emulation or production readiness based only on successful packet exchange. Register behavior, mechanical mapping, and physical motion all require separate evidence.

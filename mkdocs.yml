@@ -36,6 +36,7 @@ nav:
   - Guide:
       - Overview: overview.md
       - Getting started: getting-started.md
+      - "Tutorial: the whole robot in simulation": tutorial-simulation.md
       - Connection guide for beginners: beginners.md
       - Development: development.md
       - Project status: status.md

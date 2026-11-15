@@ -69,9 +69,9 @@ only the device behind each ID changes.
 - [x] Compose override `docker/docker-compose.sil.yml`: `robot_pc` with the real hardware interface on the virtual bus, gripper as mock
 - [x] `dynamixel_hardware_interface` configuration in `smartmanipulator_x_description` (port, baud, IDs 1–6, J2 pair, elbow gearbox), selected by `hardware:=sil|real`
 - [x] `robot.launch.py`: `hardware:=mock|sil|real`; `real` stays refused until Stage 2
-- [x] Run end to end with doppelstep `native_sim` and record the findings in the compatibility specification (SIL runs 1–8, 2026-11-15)
+- [x] Run end to end with doppelstep `native_sim` and record the findings in the compatibility specification (SIL runs 1–9, 2026-11-15)
 - [x] `smx_smoke_test.sh` against the SIL profile: **PASS** (2026-11-15); no read timeouts at 25 Hz since SIL run 8
-- [ ] Operator PC (MoveIt 2) plans and executes against the SIL Robot PC
+- [x] Operator PC (MoveIt 2) plans and executes against the SIL Robot PC (SIL run 9, 2026-11-15)
 - [ ] SIL in CI, if the doppelstep simulations can be built there
 
 **Exit:** the Operator PC plans and executes a trajectory; the doppelstep sims follow it; smoke test green.
