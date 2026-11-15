@@ -60,7 +60,7 @@ Full table: [Project status](docs/status.md). Next steps and decisions:
 - [x] Simulation with mock hardware on a Docker network; smoke test and Operator PC container connected over DDS
 - [x] Robot description generated from the BCN3D Moveo CAD
 - [x] CM4-Duino documented, vendor files archived
-- [ ] Robot PC ↔ doppelstep in simulation (SIL), real-hardware `ros2_control` path
+- [x] Robot PC ↔ six doppelstep drives in simulation (SIL) through the real-hardware `ros2_control` path; MoveIt from the Operator PC plans and executes ([tutorial](docs/tutorial-simulation.md))
 - [ ] One doppelstep drive on the bench (ST-LINK virtual COM port)
 - [ ] Robot PC on the CM4-Duino (arm64 image, deployment, DYNAMIXEL bus, Wi-Fi)
 - [ ] Full arm: six drives, joint limits measured, emergency stop

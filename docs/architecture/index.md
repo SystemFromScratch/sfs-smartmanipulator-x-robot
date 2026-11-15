@@ -68,7 +68,7 @@ The Robot PC image is intentionally separate from the Operator PC runtime. MoveI
 | Mode | Hardware in `ros2_control` | Bus | State |
 | --- | --- | --- | --- |
 | Mock | `mock_components/GenericSystem` | – | Done |
-| SIL | `dynamixel_hardware_interface` | Virtual bus joining doppelstep `native_sim` instances | Planned (Stage 1) |
+| SIL | `dynamixel_hardware_interface` | Virtual bus joining doppelstep `native_sim` instances | Done ([tutorial](../tutorial-simulation.md)) |
 | Bench | `dynamixel_hardware_interface` | One B-G431B-ESC1 over its ST-LINK virtual COM port | Planned (Stage 2) |
 | Robot | `dynamixel_hardware_interface` | CM4-Duino UART0, six drives | Planned (Stages 3–4) |
 

@@ -50,7 +50,7 @@ actually reads and writes is checked in the
 
 | Situation | Link | Status |
 | --- | --- | --- |
-| Simulation (SIL) | Firmware as `native_sim` on the PC, serial port over TCP (`tools/sim/run_native.py run --tcp 5555`) | Works in the doppelstep repository; integration with the Robot PC is [planned](../plan/doppelstep-cm4.md#stage-1-sil-on-the-pc-no-hardware) |
+| Simulation (SIL) | Firmware as `native_sim` on the PC, serial port over TCP (`tools/sim/run_native.py run --tcp 5555`) | Works; six instances drive the Robot PC over a virtual DYNAMIXEL bus ([SIL](../robot-pc/index.md#sil-simulated-doppelstep-drives), [tutorial](../tutorial-simulation.md)) |
 | Bench | PC ↔ ST-LINK **virtual COM port** of the board; SWD and RTT logging stay available at the same time | Planned (decision D6) |
 | Arm | Single-wire half-duplex DYNAMIXEL bus from the CM4-Duino to all drives, on pad J3-2 (USART2_TX, PB3) and J3-5 (GND) | Planned, see [DYNAMIXEL bus](../dynamixel/bus.md) and [Wiring](wiring.md#joint-drives-b-g431b-esc1) |
 
