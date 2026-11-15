@@ -862,6 +862,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/sil-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: checking SIL step by step
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../robot-pc/cm4-duino/" class="md-nav__link">
         
   
@@ -1521,10 +1549,11 @@ CAD, the documentation and the CI workflows. The drive firmware lives in the
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── tools/
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   ├── cad/                          STEP → URDF pipeline for the robot description
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── diagnostics/smx_smoke_test.sh end-to-end check over DDS
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   └── docs/                         PDF manual builder, diagrams, MkDocs hook
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>├── docs/, overrides/, mkdocs.yml     this documentation
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>├── requirements-docs.txt             documentation tools (.venv)
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>└── .vscode/tasks.json                Robot PC and documentation tasks
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   ├── sim/                          SIL: virtual DYNAMIXEL bus, start script, tests
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   └── docs/                         PDF manual builder, diagrams, MkDocs hook
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>├── docs/, overrides/, mkdocs.yml     this documentation
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>├── requirements-docs.txt             documentation tools (.venv)
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>└── .vscode/tasks.json                Robot PC and documentation tasks
 </code></pre></div>
 <p>Generated directories (<code>ros2_ws/build/</code>, <code>ros2_ws/install/</code>, <code>ros2_ws/log/</code>,
 <code>site/</code>, <code>build/</code>, <code>docs/downloads/</code>, <code>.venv/</code>) are ignored.</p>
@@ -1558,6 +1587,16 @@ the default, so the picker always appears.</p>
 <td>Robot PC: Start (mock hardware)</td>
 <td>build</td>
 <td><code>docker compose -f docker/docker-compose.yml up --build robot_pc</code></td>
+</tr>
+<tr>
+<td>Robot PC: Start (SIL, simulated doppelstep drives)</td>
+<td>build</td>
+<td><code>up --build robot_pc</code> with <code>docker/docker-compose.sil.yml</code></td>
+</tr>
+<tr>
+<td>Tests: Virtual DYNAMIXEL bus</td>
+<td>test</td>
+<td><code>python3 -m unittest discover -s tools/sim/tests -v</code></td>
 </tr>
 <tr>
 <td>Robot PC: Stop</td>
@@ -1712,6 +1751,11 @@ builder finds <code>C:\msys64\mingw64\bin</code> by itself), on Ubuntu
 <td><code>documentation.yml</code></td>
 <td>Push to <code>main</code>; manual</td>
 <td>Builds the PDF manual into <code>docs/downloads/</code>, then <code>mkdocs gh-deploy</code> publishes the website with the PDF to GitHub Pages</td>
+</tr>
+<tr>
+<td><code>tests.yml</code></td>
+<td>Push to <code>main</code> or a pull request touching <code>tools/sim/</code>; manual</td>
+<td>Unit tests of the virtual DYNAMIXEL bus</td>
 </tr>
 </tbody>
 </table>

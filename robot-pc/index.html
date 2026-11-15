@@ -18,7 +18,7 @@
         <link rel="prev" href="../plan/doppelstep-cm4/">
       
       
-        <link rel="next" href="cm4-duino/">
+        <link rel="next" href="sil-tutorial/">
       
       
         
@@ -815,6 +815,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sil-simulated-doppelstep-drives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL: simulated doppelstep drives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#operator-pc-on-the-same-network" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -878,6 +889,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sil-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: checking SIL step by step
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1475,6 +1514,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sil-simulated-doppelstep-drives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL: simulated doppelstep drives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#operator-pc-on-the-same-network" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1595,8 +1645,12 @@
 <td><code>robot_pc</code> service (mock hardware by default), <code>probe</code> service (profile <code>tools</code>), network <code>smx_net</code></td>
 </tr>
 <tr>
+<td><code>docker/docker-compose.sil.yml</code></td>
+<td>Override for the SIL setup: virtual DYNAMIXEL bus to simulated doppelstep drives, <code>hardware:=sil</code></td>
+</tr>
+<tr>
 <td><code>docker/docker-compose.hw.yml</code></td>
-<td>Override that passes the controller's USB device (Linux hosts)</td>
+<td>Override that passes a serial device into the container (Linux hosts)</td>
 </tr>
 <tr>
 <td><code>docker/env.example</code></td>
@@ -1608,7 +1662,7 @@
 </tr>
 <tr>
 <td><code>smartmanipulator_x_bringup/launch/robot.launch.py</code></td>
-<td><code>robot_state_publisher</code>, <code>ros2_control_node</code>, controller spawner</td>
+<td><code>robot_state_publisher</code>, <code>ros2_control_node</code>, controller spawner; <code>hardware:=mock</code> (default), <code>sil</code> or <code>real</code> (refused until the bench stage)</td>
 </tr>
 <tr>
 <td><code>smartmanipulator_x_config/config/controllers.yaml</code></td>
@@ -1621,6 +1675,10 @@
 <tr>
 <td><code>tools/diagnostics/smx_smoke_test.sh</code></td>
 <td>Discovery, controller state, and trajectory check from another host</td>
+</tr>
+<tr>
+<td><code>tools/sim/smx_dxl_bus.py</code>, <code>tools/sim/smx_sil_start.sh</code>, <code>tools/sim/smx_bus_timing.py</code></td>
+<td>Virtual DYNAMIXEL bus, start script of the SIL setup, bus timing diagnostics</td>
 </tr>
 </tbody>
 </table>
@@ -1675,31 +1733,114 @@
 </tbody>
 </table>
 <p>Lengths, joint axes, and meshes come from the BCN3D Moveo CAD (<a href="../mechanical/">BCN3D Moveo mechanics</a>); joint limits are placeholders until measured on the arm. The gripper also has mimic joints (<code>gripper_idler_gear</code>, <code>gripper_pivot_*</code>, <code>gripper_finger_*</code>) that follow <code>gripper</code>; they are not in <code>ros2_control</code>. On the real robot, <code>dynamixel_hardware_interface</code> can map the two shoulder motors onto one joint with its <code>transmission_to_joint_matrix</code> and <code>joint_to_transmission_matrix</code> parameters; this is still to be configured and verified.</p>
+<h3 id="sil-simulated-doppelstep-drives">SIL: simulated doppelstep drives<a class="headerlink" href="#sil-simulated-doppelstep-drives" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Status (2026-11-15):</strong> works end to end with six doppelstep <code>native_sim</code> drives;
+<code>smx_smoke_test.sh</code> passes, without read timeouts since SIL run 8. Findings of all runs
+are in the <a href="../dynamixel/compatibility-spec/#sil-run-8-2026-11-15-pass-no-read-timeouts">compatibility specification</a>. Stage 1 of the <a href="../plan/doppelstep-cm4/#stage-1-sil-on-the-pc-no-hardware">integration plan</a>.</p>
+</blockquote>
+<p>New to SIL? Follow the <a href="sil-tutorial/">step-by-step tutorial</a>.</p>
+<p>In the SIL setup (software in the loop) the Robot PC uses its real hardware path,
+<code>dynamixel_hardware_interface</code> and DynamixelSDK, but the drives are the doppelstep
+firmware running on the PC as Zephyr <code>native_sim</code>. A small tool joins them into one
+virtual DYNAMIXEL bus:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> robot_pc container                                     Docker host (Linux or WSL 2)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> ros2_control -&gt; DynamixelSDK -&gt; /dev/ttyDXL (pty)
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>                                  smx_dxl_bus.py  ── TCP 5555 ──&gt; doppelstep native_sim (ID 1)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>                                                  ── TCP 5556 ──&gt; doppelstep native_sim (ID 2)
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                                                  ...         ──&gt; ... (ID 6)
+</code></pre></div>
+<ul>
+<li>Every byte the host sends goes to all drives; only the addressed drive answers,
+  as on the shared wire. What a drive sends also reaches the other drives: Fast
+  Sync Read, which the hardware interface uses, needs it, because the drives build
+  one common answer packet in turn. The host does not receive an echo of its own
+  packets, like with the bus interface of the CM4-Duino.</li>
+<li>Fast Sync Read and Fast Bulk Read are dropped by default: doppelstep answers them
+  only for its own ID, so six drives would send six packets where the host expects
+  one. Without an answer the ROBOTIS interface falls back to normal Sync Read after
+  10 attempts (expect ten <code>FastSyncRead TxRx failed</code> lines at start). See the
+  <a href="../dynamixel/compatibility-spec/#sil-run-2-2026-11-15">compatibility specification</a>.</li>
+<li>Answers to Sync Read and Bulk Read reach the host in the order of the request, as on
+  a real bus where each device waits for its turn; the simulated drives answer at once
+  (<a href="../dynamixel/compatibility-spec/#sil-run-3-2026-11-15">SIL run 3</a>).</li>
+<li><code>smx_bus_timing.py</code> measures PING and Sync Read answer times on the bus, for
+  diagnosing timeouts.</li>
+<li>Timing: a simulated drive polls its serial port every 10 ms, so a Sync Read of six
+  drives takes up to about 25 ms instead of well under 1 ms. In the control loop the
+  hardware interface waits for an answer for one control period only
+  (<code>setPacketTimeout(period_ms)</code>), so SIL runs the controllers at <strong>25 Hz</strong>
+  (<code>SMX_UPDATE_RATE</code>, period 40 ms); at 50 Hz a few Sync Reads per second timed out
+  (<a href="../dynamixel/compatibility-spec/#sil-run-8-2026-11-15-pass-no-read-timeouts">SIL run 8</a>).
+  <code>baud_rate</code> 9600 (<code>SMX_BAUD_RATE</code>) only lengthens the DynamixelSDK timeout of the
+  reads at start; the virtual bus ignores the baud rate. The bus reports each
+  incomplete read (<code>read incomplete: missing ID …</code>) and a timing summary every 10 s.
+  The communication error timeout of the interface is 5 s in SIL (500 ms otherwise),
+  long enough for the 10 Fast Sync Read attempts before the fallback. The real bus
+  keeps 100 Hz and 1 Mbps.</li>
+<li>The simulated drives keep running between Robot PC starts. If a run was killed, they
+  may still have torque on; in SIL the hardware interface therefore switches torque
+  off at start (<code>disable_torque_at_init</code>). With <code>hardware:=real</code> it refuses to start
+  instead, which is the safe behaviour on the arm.</li>
+<li>A freshly started drive answers on the factory ID 1; the tool first moves each
+  drive to its joint ID (<code>--assign-ids</code>), over that drive's own connection.</li>
+<li>The gripper stays on mock hardware (separate project).</li>
+</ul>
+<p>Start the six simulated drives from the doppelstep repository
+(<a href="https://systemfromscratch.com/sfs-doppelstep/getting-started/">getting started</a>), one per terminal or in the background:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># in the sfs-doppelstep repository (WSL 2 or Linux, Docker); build once:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>zephyr<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>native_sim/native/64<span class="w"> </span>-s<span class="w"> </span>app<span class="w"> </span>-d<span class="w"> </span>build-native
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># six drives, each in its own container with its own flash file and bus link:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>dxl<span class="k">$((</span><span class="nv">i</span><span class="o">+</span><span class="m">1</span><span class="k">))</span><span class="w"> </span>-p<span class="w"> </span><span class="k">$((</span><span class="m">5555</span><span class="o">+</span><span class="nv">i</span><span class="k">))</span>:5555<span class="w"> </span>zephyr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>python3<span class="w"> </span>tools/sim/run_native.py<span class="w"> </span>run<span class="w"> </span>--tcp<span class="w"> </span><span class="m">5555</span><span class="w"> </span>--link<span class="w"> </span>/tmp/ttyDXL<span class="w"> </span>--<span class="w"> </span>--flash<span class="o">=</span>/tmp/flash.bin
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">done</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># stop them: docker stop dxl1 dxl2 dxl3 dxl4 dxl5 dxl6</span>
+</code></pre></div>
+<p><code>--link</code> and <code>--flash</code> keep the instances apart: by default all of them would use the
+same bus link and flash file in the shared build directory, and an ID written to one
+drive would land in the flash of the others.</p>
+<p>Stop a Robot PC that still runs with mock hardware first: both use the <code>robot_pc</code> service and its fixed address. Then start the Robot PC with the SIL override, and check it as usual from a second host:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.sil.yml<span class="w"> </span>up<span class="w"> </span>--build<span class="w"> </span>robot_pc
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>probe<span class="w"> </span>smx_smoke_test.sh
+</code></pre></div>
+<p>For one-off commands in the image (xacro, <code>ls</code>, connection checks) use the <code>probe</code> service: <code>docker compose run robot_pc</code> fails with <em>Address already in use</em> while the Robot PC runs, because of the fixed address.</p>
+<p><code>SMX_SIL_DEVICES</code> and <code>SMX_SIL_IDS</code> in <code>docker/.env</code> change the addresses and IDs,
+for example to start with one drive: <code>SMX_SIL_DEVICES=host.docker.internal:5555</code> and
+<code>SMX_SIL_IDS=1</code> (the other joints then have no drive and the hardware interface
+reports them missing). On a Linux host without Docker Desktop,
+<code>host.docker.internal</code> is mapped to the host by <code>extra_hosts</code>.</p>
+<p>The arm configuration for <code>sil</code> and <code>real</code> is in
+<code>smartmanipulator_x_description/urdf/smartmanipulator_x.ros2_control.xacro</code>: IDs 1–6,
+extended position mode, ID 3 mirrored, and transmission matrices that map the two
+shoulder drives onto <code>j2_shoulder</code> and include the 57/11 elbow gearbox. The values
+still to confirm in SIL are listed in the
+<a href="../dynamixel/compatibility-spec/">compatibility specification</a>.</p>
 <h3 id="operator-pc-on-the-same-network">Operator PC on the same network<a class="headerlink" href="#operator-pc-on-the-same-network" title="Permanent link">&para;</a></h3>
 <p>The Operator PC container joins the network by name. In its Compose file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">services</span><span class="p">:</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">operator_pc</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">ROS_DOMAIN_ID</span><span class="p">:</span><span class="w"> </span><span class="s">"42"</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">RMW_IMPLEMENTATION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rmw_fastrtps_cpp</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">FASTDDS_DEFAULT_PROFILES_FILE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/smx/fastdds_udp.xml</span><span class="w">  </span><span class="c1"># copy of docker/dds/fastdds_udp.xml</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">smx_net</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nt">networks</span><span class="p">:</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nt">smx_net</span><span class="p">:</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">external</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">operator_pc</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">ROS_DOMAIN_ID</span><span class="p">:</span><span class="w"> </span><span class="s">"42"</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">RMW_IMPLEMENTATION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rmw_fastrtps_cpp</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">FASTDDS_DEFAULT_PROFILES_FILE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/smx/fastdds_udp.xml</span><span class="w">  </span><span class="c1"># copy of docker/dds/fastdds_udp.xml</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">smx_net</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nt">networks</span><span class="p">:</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">smx_net</span><span class="p">:</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="nt">external</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>Start the Robot PC first; it creates <code>smx_net</code>. On Windows, run the Operator PC container from a WSL 2 distribution so RViz2 can use WSLg (mount <code>/tmp/.X11-unix</code> and <code>/mnt/wslg</code>, pass <code>DISPLAY</code>, <code>WAYLAND_DISPLAY</code>, and <code>XDG_RUNTIME_DIR</code>). ROS 2 installed natively on Windows does not discover containers on <code>smx_net</code>: Docker Desktop does not route multicast between the host and its container networks.</p>
 <h3 id="moving-to-the-robot">Moving to the robot<a class="headerlink" href="#moving-to-the-robot" title="Permanent link">&para;</a></h3>
 <p>The image has no host-specific state. On the CM4 (arm64) it is pulled as a multi-architecture image, and <code>smx_net</code> is replaced by the real network (Wi-Fi): drop the <code>networks</code> entries and use <code>network_mode: host</code>. <code>ROS_DOMAIN_ID</code> and the Fast DDS profile stay the same. The planned deployment is described in <a href="cm4-duino/">Robot PC on the CM4-Duino</a>.</p>
 <h2 id="hardware-shell">Hardware shell<a class="headerlink" href="#hardware-shell" title="Permanent link">&para;</a></h2>
 <p>Build and start an interactive Robot PC shell with a serial device from the repository root:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.hw.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>robot_pc<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.yml<span class="w"> </span>-f<span class="w"> </span>docker/docker-compose.hw.yml<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>robot_pc<span class="w"> </span>bash
 </code></pre></div>
 <p>On a development PC the device is the ST-LINK virtual COM port of a doppelstep board (typically <code>/dev/ttyACM0</code>) or a USB-UART adapter; on the robot it is <code>/dev/ttyDXL</code>. Set <code>SMX_SERIAL_DEVICE</code> in <code>docker/.env</code> (template: <code>docker/env.example</code>) to the device path and make sure the host user may open it. Docker Desktop on Windows does not pass a COM port into a Linux container; use a Linux host, or <code>usbipd-win</code> with WSL 2.</p>
 <p>Inside the container, inspect the available packages with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ros2<span class="w"> </span>pkg<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(dynamixel_sdk|dynamixel_interfaces|dynamixel_hardware_interface|smartmanipulator_x_)'</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ros2<span class="w"> </span>pkg<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(dynamixel_sdk|dynamixel_interfaces|dynamixel_hardware_interface|smartmanipulator_x_)'</span>
 </code></pre></div>
-<p><code>robot.launch.py</code> refuses <code>use_mock_hardware:=false</code> until the real-hardware <code>ros2_control</code> configuration is verified (Stage 1 of the <a href="../plan/doppelstep-cm4/">integration plan</a>). No physical bring-up is validated yet.</p>
+<p><code>robot.launch.py</code> refuses <code>hardware:=real</code> until the real-hardware path is verified in SIL and on the bench (Stages 1 and 2 of the <a href="../plan/doppelstep-cm4/">integration plan</a>). No physical bring-up is validated yet.</p>
 <h2 id="network-and-operation">Network and operation<a class="headerlink" href="#network-and-operation" title="Permanent link">&para;</a></h2>
 <p>The Robot PC communicates with the Operator PC using ROS 2 DDS over the configured network. Configure the same <code>ROS_DOMAIN_ID</code> on both computers and validate DDS discovery, selected network interfaces, multicast/unicast policy, and firewall behavior on the actual network. Do not use SSH as the ROS transport.</p>
 <p>Do not enable motor motion until the actuator mapping, motor-driver configuration, limits, homing behavior, and an appropriate stop/safety procedure have been reviewed on the assembled robot. Test incrementally: mock hardware, simulated drives (SIL), one drive on the bench, one physical joint, then the complete mechanism.</p>
@@ -1762,13 +1903,13 @@
         
         
           
-          <a href="cm4-duino/" class="md-footer__link md-footer__link--next" aria-label="Next: Robot PC on the CM4-Duino">
+          <a href="sil-tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Tutorial: checking SIL step by step">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Robot PC on the CM4-Duino
+                Tutorial: checking SIL step by step
               </div>
             </div>
             <div class="md-footer__button md-icon">

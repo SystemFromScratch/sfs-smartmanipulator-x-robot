@@ -733,6 +733,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../robot-pc/sil-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: checking SIL step by step
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
         
   
@@ -1009,6 +1037,78 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Verification record">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-1-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 1 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-2-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 2 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-3-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 3 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-4-2026-11-15-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 4 (2026-11-15): pass
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-7-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 7 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-8-2026-11-15-pass-no-read-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 8 (2026-11-15): pass, no read timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1410,6 +1510,78 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Verification record">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-1-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 1 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-2-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 2 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-3-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 3 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-4-2026-11-15-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 4 (2026-11-15): pass
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-7-2026-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 7 (2026-11-15)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sil-run-8-2026-11-15-pass-no-read-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIL run 8 (2026-11-15): pass, no read timeouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1519,9 +1691,9 @@
 </tr>
 <tr>
 <td>Update rate, latency, retries, timeouts</td>
-<td>Controller rate 100 Hz (<code>controllers.yaml</code>)</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td>Controller rate 100 Hz (<code>controllers.yaml</code>); the read timeout of the host is one control period</td>
+<td>SIL only: 25 Hz, no read timeouts; the simulated drives answer a Sync Read of six IDs within about 25 ms. Real bus: Unverified</td>
+<td>SIL run 8, 2026-11-15</td>
 </tr>
 <tr>
 <td>Moveo joint-to-drive mapping, shoulder pair</td>
@@ -1532,8 +1704,14 @@
 <tr>
 <td>Unmodified stock hardware-interface compatibility</td>
 <td>Expected</td>
-<td>Unverified</td>
-<td>Unverified</td>
+<td><strong>Works in SIL</strong> with Sync Read and answers in request order; needs the two doppelstep changes of Stage 0 for a real bus</td>
+<td>SIL runs 1–8, 2026-11-15</td>
+</tr>
+<tr>
+<td>Host configuration (<code>smartmanipulator_x.ros2_control.xacro</code>)</td>
+<td><code>DynamixelHardware</code>, <code>port_name</code>, <code>baud_rate</code>, <code>dynamixel_model_folder</code> = <code>/param/dxl_model</code>, <code>error_timeout_ms</code> 500 (5000 in SIL), 5 joints / 6 transmissions, gpio <code>type dxl</code>, Operating Mode 4, Drive Mode 1 on ID 3</td>
+<td>Renders with <code>hardware:=sil</code>; <code>param/dxl_model/xm430_w350.model</code> exists in the <code>dynamixel_hardware_interface</code> share of the image. Runs in SIL: all items written, controllers active</td>
+<td>xacro output and <code>ls</code> in the Robot PC image; SIL runs 4 and 8, 2026-11-15</td>
 </tr>
 </tbody>
 </table>
@@ -1548,6 +1726,131 @@
 <li>Single-wire physical layer: the same tests through the half-duplex interface at the chosen baud rate.</li>
 <li>One physical joint on the arm with its scaling, limits, reference method and stop behavior (Stage 4).</li>
 </ol>
+<h3 id="sil-run-1-2026-11-15">SIL run 1 (2026-11-15)<a class="headerlink" href="#sil-run-1-2026-11-15" title="Permanent link">&para;</a></h3>
+<p>Robot PC image built from this repository (ROBOTIS <code>jazzy</code> branches), six doppelstep
+<code>native_sim</code> drives (firmware 52, model 1020) in Docker, <code>tools/sim/smx_dxl_bus.py</code>,
+<code>hardware:=sil</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Observed</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Port, baud change on the pseudo-terminal</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>PING of IDs 1–6, model 1020 → <code>xm430_w350.model</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td>Torque state read, <code>Operating Mode</code> 4, <code>Return Delay Time</code> 0, <code>Drive Mode</code> 0 / 1 (ID 3) written</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>Read path: <strong>Fast Sync Read</strong> through indirect addresses (address 634, 10 bytes: Present Position, Velocity, Current)</td>
+<td>Set up OK; first readings wrong (j2 206080 rad, j4 3.3·10⁶ rad)</td>
+</tr>
+<tr>
+<td>Write path: Sync Write through indirect addresses (address 224, 4 bytes: Goal Position)</td>
+<td>Set up OK</td>
+</tr>
+<tr>
+<td><code>Torque Enable</code> write at activation</td>
+<td><strong>Crash</strong>: <code>stack smashing detected</code> in DynamixelSDK <code>Protocol2PacketHandler::writeTxRx</code></td>
+</tr>
+<tr>
+<td><code>error_timeout_sec</code></td>
+<td>Not a parameter of the interface; the name is <code>error_timeout_ms</code> (default 500 ms)</td>
+</tr>
+</tbody>
+</table>
+<p>Cause: the first version of the virtual bus did not pass a drive's bytes to the other
+drives. Fast Sync Read needs that (the drives append their parts to one common status
+packet in turn), so the host received a malformed answer; a stray long status packet
+then reached <code>writeTxRx</code>, which reads the status into an 11-byte buffer on the stack.
+Fixed in the bus (drive-to-drive forwarding, test <code>test_other_drives_hear_the_answer</code>)
+and in the xacro (<code>error_timeout_ms</code>). Note for the real bus: a malformed or late long
+status packet can crash the host process in DynamixelSDK; bus noise must not produce
+one silently.</p>
+<h3 id="sil-run-2-2026-11-15">SIL run 2 (2026-11-15)<a class="headerlink" href="#sil-run-2-2026-11-15" title="Permanent link">&para;</a></h3>
+<p>Same setup with drive-to-drive forwarding in the bus. Same result: wrong positions
+(j2 −718751 rad, j4 2.2·10⁶ rad), then the crash at <code>Torque Enable</code>.</p>
+<p>Cause, from the source of <code>dynamixel_hardware_interface</code> (<code>5613760</code>, 2026-11-02) and
+the doppelstep documentation:</p>
+<ul>
+<li>The interface always tries <strong>Fast Sync Read</strong> first (<code>use_fast_read_protocol_</code> is
+  hard-coded <code>true</code>, no hardware parameter). It falls back to normal Sync Read only if
+  the first 10 Fast Sync Read attempts fail; after one success it keeps Fast Sync Read
+  for good.</li>
+<li>doppelstep answers Fast Sync/Bulk Read only for its own ID
+  (<a href="https://systemfromscratch.com/sfs-doppelstep/dynamixel/">DYNAMIXEL emulation</a>): with six drives the host gets six packets
+  instead of one chained packet, accepts the first as a success and decodes the rest
+  as garbage.</li>
+</ul>
+<p><strong>This also applies to the real bus</strong> with six doppelstep drives. Options: (a) doppelstep
+chains Fast Sync/Bulk Read answers like the X series (listens to the drive before it),
+or (b) doppelstep stays silent on a Fast Sync/Bulk Read that lists other IDs too, so
+the host falls back to Sync Read. Tracked in Stage 0 of the
+<a href="../../plan/doppelstep-cm4/#stage-0-bus-decisions-and-half-duplex-driver-doppelstep">integration plan</a>.</p>
+<p>SIL workaround: the virtual bus drops Fast Sync/Bulk Read (<code>--fast-read drop</code>, the
+default), which is the behaviour of option (b).</p>
+<h3 id="sil-run-3-2026-11-15">SIL run 3 (2026-11-15)<a class="headerlink" href="#sil-run-3-2026-11-15" title="Permanent link">&para;</a></h3>
+<p>With Fast Sync Read dropped by the bus, the interface fell back to Sync Read as
+designed, but every Sync Read of IDs 1–6 ended in <code>COMM_RX_TIMEOUT</code> (−3001) and the
+activation stopped after 500 ms (<code>Dynamixel Start Fail … SYNC_READ_FAIL</code>). No crash.</p>
+<p>Measured with <code>tools/sim/smx_bus_timing.py</code> on the virtual bus: PING 3–17 ms per drive
+(the 10 ms polling of the doppelstep pseudo-terminal); a Sync Read of six IDs gets all
+six answers within 13–21 ms, below the DynamixelSDK timeout (35 ms at 1 Mbps), but
+<strong>in random order</strong>, for example ID 2, 1, 5, 3, 4, 6. DynamixelSDK reads the answers in
+the order of the request and drops an answer with another ID, so the later IDs time out.</p>
+<p><strong>This also applies to the real bus</strong>: each doppelstep answers a Sync Read (and Bulk
+Read) at once instead of waiting for its turn, so on one wire the answers of six drives
+would collide. The X series answers in the order of the request (a device sends after
+the status packet of the ID before it). Tracked in Stage 0 of the
+<a href="../../plan/doppelstep-cm4/#stage-0-bus-decisions-and-half-duplex-driver-doppelstep">integration plan</a>.</p>
+<p>SIL workaround: the virtual bus passes Sync/Bulk Read answers to the host in request
+order (<code>--read-order request</code>, the default), which is the behaviour of a real bus.</p>
+<h3 id="sil-run-4-2026-11-15-pass">SIL run 4 (2026-11-15): pass<a class="headerlink" href="#sil-run-4-2026-11-15-pass" title="Permanent link">&para;</a></h3>
+<p>Virtual bus with Fast Sync Read dropped and Sync Read answers in request order.
+Fast Sync Read fails 10 times, the interface switches to Sync Read, reads plausible
+positions, enables torque on IDs 1–6 and activates; <code>joint_state_broadcaster</code>,
+<code>arm_controller</code> and <code>gripper_controller</code> become active. <code>smx_smoke_test.sh</code> from a
+second container: <strong>PASS</strong> (trajectory executed by the six simulated doppelstep drives).</p>
+<p>Timing in SIL run 4: each Sync Read took 10–20 ms (10 ms polling of the simulated
+drives), so the 100 Hz controller loop overran in most cycles, and about 2–3 Sync Reads
+per second timed out. SIL was then changed to 50 Hz and <code>baud_rate</code> 9600 (run 7); run 8
+found the real cause of the timeouts and moved SIL to 25 Hz.
+Simulation-only: on a real bus an answer takes well under 1 ms.</p>
+<h3 id="sil-run-7-2026-11-15">SIL run 7 (2026-11-15)<a class="headerlink" href="#sil-run-7-2026-11-15" title="Permanent link">&para;</a></h3>
+<p>50 Hz, <code>baud_rate</code> 9600, error timeout 5 s, reorder timeout of the bus 100 ms. Start and
+fallback to Sync Read as in run 4. In about 35 s: 82 <code>SyncRead Rx Fail</code> (about 2.3 per
+second, each recovered in the next cycle) and 31 overruns. A normal Sync Read takes
+about 20–21 ms, the whole 50 Hz cycle, and a failed cycle ends after about 21 ms as
+well: the host gives up after about 20 ms whatever the baud rate, so the expected
+longer DynamixelSDK packet timeout at 9600 is not in effect. Open: the bus now logs each
+incomplete read (missing ID, delay of every answer) and a latency summary every 10 s;
+the next run is to show whether one drive is late or the timeout of the host is fixed.</p>
+<h3 id="sil-run-8-2026-11-15-pass-no-read-timeouts">SIL run 8 (2026-11-15): pass, no read timeouts<a class="headerlink" href="#sil-run-8-2026-11-15-pass-no-read-timeouts" title="Permanent link">&para;</a></h3>
+<p>Same setup as run 7. The bus diagnostics answered the open question: <strong>no read was
+incomplete</strong> (all six answers arrived every time; last answer after p50 12.7 / p95 21 /
+max 25.6 ms), yet the host reported 96 <code>SyncRead Rx Fail</code> (−3001, <code>COMM_RX_TIMEOUT</code>)
+and 24 overruns in about 30 s. Cause: in the control loop
+<code>dynamixel_hardware_interface</code> sets the packet timeout to the control period,
+<code>port_handler-&gt;setPacketTimeout(period_ms)</code> in <code>Dynamixel::ProcessReadCommunication</code>,
+which replaces the timeout DynamixelSDK derives from the baud rate. At 50 Hz the host
+gives up after 20 ms, and every Sync Read whose last answer comes later fails. This is
+why changing the baud rate had no effect.</p>
+<p>Fix: SIL runs the controllers at <strong>25 Hz</strong> (<code>SMX_UPDATE_RATE</code>, period 40 ms). Result:
+<code>smx_smoke_test.sh</code> <strong>PASS</strong>, 0 <code>SyncRead Rx Fail</code> and 0 overruns after start; the only
+read errors are the ten expected Fast Sync Read attempts before the fallback.</p>
+<p><strong>For the real bus:</strong> the read timeout of the host is one control period (10 ms at
+100 Hz), not the DynamixelSDK timeout. A Sync Read of all drives, including their
+return delay times, must therefore finish well within one period.</p>
+<p>How to repeat the check: <a href="../../robot-pc/sil-tutorial/">SIL tutorial</a>.</p>
 <p>Do not claim full XM430 emulation or production readiness based only on successful packet exchange. Register behavior, mechanical mapping, and physical motion all require separate evidence.</p>
 
 

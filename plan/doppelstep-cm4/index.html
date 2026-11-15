@@ -895,6 +895,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../robot-pc/sil-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: checking SIL step by step
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../robot-pc/cm4-duino/" class="md-nav__link">
         
   
@@ -1660,17 +1688,22 @@ only the device behind each ID changes.</p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Single-wire half-duplex USART driver in doppelstep (<code>single-wire;</code> on <code>&amp;usart2</code>, PB3, open-drain; turnaround vs. Return Delay Time)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Confirm D7 and D8, write them into the <a href="../../dynamixel/compatibility-spec/">compatibility specification</a></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Fast Sync/Bulk Read with several drives</strong> (found in SIL, <a href="../../dynamixel/compatibility-spec/#sil-run-2-2026-11-15">compatibility specification</a>): doppelstep either chains the answers like the X series or stays silent when the request lists other IDs, so the ROBOTIS interface falls back to Sync Read</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Sync Read / Bulk Read turn-taking</strong> (found in SIL, <a href="../../dynamixel/compatibility-spec/#sil-run-3-2026-11-15">compatibility specification</a>): each drive answers only after the status packet of the ID before it in the request; today all answer at once, which collides on a shared wire</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Configure IDs 1–6 and the baud rate on each doppelstep (EEPROM area)</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Check Secondary (Shadow) ID support in doppelstep for the mirrored J2 pair, otherwise use <code>transmission_to_joint_matrix</code></li>
 </ul>
 <p><strong>Exit:</strong> the doppelstep driver passes its SIL tests in single-wire mode; D7 and D8 recorded.</p>
 <h2 id="stage-1-sil-on-the-pc-no-hardware">Stage 1: SIL on the PC, no hardware<a class="headerlink" href="#stage-1-sil-on-the-pc-no-hardware" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Virtual DXL bus: small Python tool that connects N doppelstep <code>native_sim</code> instances (<code>tools/sim/run_native.py run --tcp &lt;port&gt;</code>) into one shared half-duplex bus and exposes it as a pty (<code>socat</code> / pty bridge) at <code>/dev/ttyDXL</code></li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> New Compose profile <code>sil</code>: <code>robot_pc</code> with the real hardware interface on the virtual bus, gripper as mock (or virtual DXL)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>dynamixel_hardware_interface</code> configuration in <code>smartmanipulator_x_description</code> (ports, IDs, J2 transmission)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Remove the <code>use_mock_hardware:=false</code> guard in <code>robot.launch.py</code> once SIL passes</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Extend <code>smx_smoke_test.sh</code> for the SIL profile; run it in CI if the sims fit into the runner</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Virtual DXL bus <code>tools/sim/smx_dxl_bus.py</code>: connects N doppelstep <code>native_sim</code> instances over TCP into one half-duplex bus at <code>/dev/ttyDXL</code> (pty), assigns the joint IDs; unit tests with fake drives</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Compose override <code>docker/docker-compose.sil.yml</code>: <code>robot_pc</code> with the real hardware interface on the virtual bus, gripper as mock</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>dynamixel_hardware_interface</code> configuration in <code>smartmanipulator_x_description</code> (port, baud, IDs 1–6, J2 pair, elbow gearbox), selected by <code>hardware:=sil|real</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>robot.launch.py</code>: <code>hardware:=mock|sil|real</code>; <code>real</code> stays refused until Stage 2</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Run end to end with doppelstep <code>native_sim</code> and record the findings in the compatibility specification (SIL runs 1–8, 2026-11-15)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>smx_smoke_test.sh</code> against the SIL profile: <strong>PASS</strong> (2026-11-15); no read timeouts at 25 Hz since SIL run 8</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Operator PC (MoveIt 2) plans and executes against the SIL Robot PC</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> SIL in CI, if the doppelstep simulations can be built there</li>
 </ul>
 <p><strong>Exit:</strong> the Operator PC plans and executes a trajectory; the doppelstep sims follow it; smoke test green.</p>
 <h2 id="stage-2-one-b-g431b-esc1-on-the-bench-pc-st-link-vcp">Stage 2: one B-G431B-ESC1 on the bench (PC, ST-LINK VCP)<a class="headerlink" href="#stage-2-one-b-g431b-esc1-on-the-bench-pc-st-link-vcp" title="Permanent link">&para;</a></h2>

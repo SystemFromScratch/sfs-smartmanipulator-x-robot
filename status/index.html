@@ -818,6 +818,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../robot-pc/sil-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial: checking SIL step by step
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../robot-pc/cm4-duino/" class="md-nav__link">
         
   
@@ -1437,8 +1465,8 @@ drive. The gripper follows afterwards as a separate project.</p>
 </tr>
 <tr>
 <td>Robot PC → doppelstep in simulation (SIL)</td>
-<td>Planned</td>
-<td>Stage 1: virtual bus of <code>native_sim</code> instances</td>
+<td><strong>Done</strong> (2026-11-15)</td>
+<td>Six <code>native_sim</code> drives, smoke test PASS (<a href="../robot-pc/#sil-simulated-doppelstep-drives">SIL</a>); MoveIt from the Operator PC still to try</td>
 </tr>
 <tr>
 <td>Robot PC → one doppelstep on the bench (ST-LINK VCP)</td>
@@ -1484,13 +1512,18 @@ drive. The gripper follows afterwards as a separate project.</p>
 </tr>
 <tr>
 <td>Real-hardware <code>ros2_control</code> path</td>
-<td>Planned</td>
-<td><code>robot.launch.py</code> refuses <code>use_mock_hardware:=false</code> until Stage 1 passes</td>
+<td><strong>In progress</strong></td>
+<td><code>hardware:=sil</code> uses it on the virtual bus; <code>hardware:=real</code> refused until Stage 2</td>
 </tr>
 <tr>
 <td><code>dynamixel_hardware_interface</code> configuration (ports, IDs, shoulder transmission)</td>
-<td>Planned</td>
-<td>Stage 1</td>
+<td><strong>Done</strong>, verified in SIL</td>
+<td>Gear and pulley ratios still placeholders until measured</td>
+</tr>
+<tr>
+<td>doppelstep multi-drive bus behaviour (Fast Sync Read, Sync Read turn-taking)</td>
+<td>Open</td>
+<td>Found in SIL; needed before the real bus (<a href="../dynamixel/compatibility-spec/#sil-run-3-2026-11-15">compatibility specification</a>)</td>
 </tr>
 <tr>
 <td>Per-target hardware configuration (<code>sim</code>, <code>sil</code>, <code>hw-pc</code>, <code>hw-cm4</code>)</td>
